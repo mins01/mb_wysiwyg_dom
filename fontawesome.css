@@ -1,0 +1,193 @@
+﻿@charset "utf-8";
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+/* http://weloveiconfonts.com/ */
+/* fontawesome */
+[class*="fontawesome-"]::before
+,[class*="fontawesome-"]::after {
+  font-family: 'FontAwesome', sans-serif;
+}
+
+.mbw-button{border-width:0; border-radius: 5px;padding:1px;margin:1px;
+height:32px; 
+width:32px; 
+position:relative;
+vertical-align:top;
+
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e2e2e2+0,dbdbdb+50,d1d1d1+51,fefefe+100;Grey+Gloss+%231 */
+background: #e2e2e2; /* Old browsers */
+background: -moz-linear-gradient(top,  #e2e2e2 0%, #dbdbdb 50%, #d1d1d1 51%, #fefefe 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #e2e2e2 0%,#dbdbdb 50%,#d1d1d1 51%,#fefefe 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #e2e2e2 0%,#dbdbdb 50%,#d1d1d1 51%,#fefefe 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
+}
+
+.mbw-button:not(.mbw-btn_t_section):hover{
+	box-shadow: 1px 1px 3px #666;
+}
+.mbw-button::before{
+	font-size:14px;
+	line-height:32px;
+	position:absolute;
+	top:0;left:0;right:0;bottom:0;
+	}
+.mbw-button::after{
+	font-size:13px;
+	line-height:32px;
+	position:absolute;
+	top:0;left:0;right:0;bottom:0;
+}
+.mbw-btn_t_section{width:4px; }
+.mbw-btn_t_section::before{ content: " "; font-size:0;text-indent: -999px;  }
+
+
+
+.mbw-btn_bold::before{
+	content: "\f032";
+}
+.mbw-btn_Italic::before{
+	content: "\f033";
+}
+.mbw-btn_Underline::before{
+	content: "\f0cd";
+}
+.mbw-btn_StrikeThrough::before{
+	content: "\f0cc";
+}
+.mbw-btn_ForeColor::before{
+	content: "T";
+	color:red;
+	font-weight:bold;
+	font-size:20px;
+}
+.mbw-btn_HiliteColor::before{
+	content: "T";
+	color:#fff;
+	font-weight:bold;
+	font-size:20px;
+}
+.mbw-button.mbw-btn_HiliteColor{
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#efc5ca+0,d24b5a+50,ba2737+51,f18e99+100;Red+Gloss+%233 */
+background: #efc5ca; /* Old browsers */
+background: -moz-linear-gradient(top,  #efc5ca 0%, #d24b5a 50%, #ba2737 51%, #f18e99 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #efc5ca 0%,#d24b5a 50%,#ba2737 51%,#f18e99 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #efc5ca 0%,#d24b5a 50%,#ba2737 51%,#f18e99 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efc5ca', endColorstr='#f18e99',GradientType=0 ); /* IE6-9 */
+
+}
+.mbw-btn_SuperScript::before{
+	content: "T";
+}
+.mbw-btn_SuperScript::after{
+	content: "s";
+	vertical-align: super;
+	bottom:16px;left:16px;
+	font-size: smaller;
+	line-height:1.2em;
+}
+.mbw-btn_SubScript::before{
+	content: "T";
+}
+.mbw-btn_SubScript::after{
+	content: "s";
+	vertical-align: sub;
+	top:16px;left:16px;
+	font-size: smaller;
+	line-height:1.2em;
+}
+.mbw-btn_RemoveFormat::before{
+	content: "\f00d";
+}
+
+.mbw-btn_JustifyLeft::before{
+	content: "\f036";
+}
+.mbw-btn_JustifyCenter::before{
+	content: "\f037";
+}
+.mbw-btn_JustifyRight::before{
+	content: "\f038";
+}
+.mbw-btn_Indent::before{
+	content: "\f03c";
+}
+.mbw-btn_Outdent::before{
+	content: "\f03b";
+}
+.mbw-btn_InsertOrderedList::before{
+	content: "\f0cb";
+}
+.mbw-btn_InsertUnorderedList::before{
+	content: "\f0ca";
+}
+
+.mbw-btn_Help::before{
+	content: "\f0fd";
+}
+
+
+.mbw-btn_FontName::before{
+	content: "Font";
+}
+.mbw-btn_FontSize::before{
+	content: "\f035";
+}
+.mbw-btn_FormatBlock::before{
+	content: "Fmt";
+}
+.mbw-btn_CreateLink::before{
+	content: "\f0c1";
+}
+.mbw-btn_UnLink::before{
+	content: "\f0c1";
+}
+.mbw-btn_UnLink::after{
+	content: "\f0c4";
+	vertical-align: sub;
+	bottom:13px;left:13px;
+	font-size: smaller;
+	line-height:1.2em;
+}
+.mbw-btn_InsertTable::before{
+	content: "\f0ce";
+}
+.mbw-btn_InsertImage::before{
+	content: "\f03e";
+}
+.mbw-btn_InsertMedia::before{
+	content: "\f01d";
+}
+
+
+.mbw-btn_InsertIFrame::before{
+	content: "\f0f6";
+}
+.mbw-btn_InsertIFrame::after{
+	content: "ifrm";
+	bottom:13px;left:0px;
+	font-size: smaller;
+	line-height:1.2em;
+}
+
+.mbw-btn_InsertFolder::before{
+	content: "\f10d";
+}
+
+.mbw-btn_InsertChar::before{
+	content: "chr";
+}
+
+.mbw-btn_InsertHorizontalRule::before{
+
+	content: "─";
+}
+.mbw-btn_Undo::before{
+	content: "\f112";
+}
+.mbw-btn_Redo::before{
+	content: "\f064";
+}
+.mbw-btn_Test::before{
+	content: "Tst";
+}
+
+

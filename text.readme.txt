@@ -1,0 +1,39 @@
+//========================================== 폴더
+icon [dir]		//사용되는 아이콘 팩이 있는 폴더
+upload [dir]	//이미지 첨부시 업로드 되는 폴더
+
+//========================================== 중요파일
+
+mb_wysiwyg.css	//스타일시트 파일
+mb_wysiwyg.js		//위지윅 소스 js파일
+
+//========================================== 예제파일
+
+mb_wysiwyg.html	//예제 html
+mb_wysiwyg.once.html	//예제 html
+
+
+//========================================== 위지윅관련 팝업파일
+
+pop.colortable.html		// 팝업:팝업 컬러픽커 사용시 사용 
+pop.createlink.html		// 팝업:링크 만들기 
+pop.css				// 팝업용 스타일시트 파일
+pop.help.html			// 팝업:도움말 
+pop.insertchar.html		// 팝업:특수문자 삽입
+pop.insertimage.action.php	// 이미지 업로드 동작 파일
+pop.insertimage.html		// 팝업:이미지 삽입 
+pop.inserttable.html		// 팝업:테이블삽입
+set.toolbar.js
+
+//================================================== 실험을 위한 파일
+pop.insertimage_old.php	
+test.php
+_none.html
+
+//================================================== 
+readme.txt				// 팝업:지금 읽고 계신 파일
+
+//==================================================
+더 자세한 건
+text.document.txt , pop.help.html ,mb_wysiwyg.once.html
+을 참고해주세요.

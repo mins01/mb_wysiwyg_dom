@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<title>무제 문서</title>
+</head>
+
+<body>
+<h1>예제 : euc-kr</h1>
+<script>
+function tetete(){
+alert('폼 서브밋 되었습니다.');
+return true;
+}
+</script>
+<form action="test.php" onsubmit="wysiwyg.submit();return tetete();">
+  <p>
+    <input type=submit value='실험전송'>
+  </p>
+  <p>      <textarea id='b_text'>aaaaaaaaaaaaaaaㄴㄴ<div><ul><li>ㄴㅇㄴㅇ</li><ul><li>ㅁㄴㅇㅁㄴㅇ</li></ul><li>ㅁㄴㅇㅁㄴㅇ</li></ul></div></textarea>
+    </p>
+  <link href="./mb_wysiwyg.css" rel="stylesheet" type="text/css">
+<p>
+<textarea id='b_text2'>
+<span></span>
+<IMG 
+title="xxx
+ccc
+tgg"
+src="http://www.google.com/logos/Logo_25gry.gif">
+<IMG src=http://www.google.com/logos/Logo_25gry.gif />
+<IMG src="http://www.google.com/logos/Logo_25gry.gif">
+<INPUT type=button value='태스xm'>
+실험용 b_text2</textarea>
+
+<script src="./set.toolbar.js" charset='UTF-8'></script>
+<script src="./mb_wysiwyg.js" charset='UTF-8'></script>
+<script src="./set.toolbar.js" charset='UTF-8'></script>
+<script>
+document.write('첫번째 에디터를 생성합니다.');
+var wysiwyg = new mb_wysiwyg(document.getElementById('b_text'),600,300,null,'좋은하루');
+//wysiwyg.path="."; // mb_wysiwyg.js 파일이 있는 경로를 적어줘야한다.(ver 20070724 부턴 안적어도 됨, 자동으로 처리);
+wysiwyg.icon_pack="black_16px";
+wysiwyg.mk_wysiwyg();
+</script>
+
+<script>
+document.write('2번째 에디터를 생성합니다.');
+var wysiwyg2 = new mb_wysiwyg(document.getElementById('b_text2'),600,300);
+//wysiwyg2.path="."; // mb_wysiwyg.js 파일이 있는 경로를 적어줘야한다.(ver 20070724 부턴 안적어도 됨, 자동으로 처리);
+wysiwyg2.icon_pack="wr_24px";
+wysiwyg2.c_table_type = false; 
+wysiwyg2.mk_wysiwyg();
+</script>
+<p>
+<div id='test'>실험용입니다.</div>
+<div id='test'>실험용입니다.</div>
+<div id='test'>실험용입니다.</div>
+
+</form>
+
+</body>
+</html>

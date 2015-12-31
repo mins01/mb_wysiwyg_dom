@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<!--
+저작권:mins가 가집니다.
+허락받지 않고서는 쓸 수 없습니다.
+-=---------------------------------=-
+테이블 삽입 : 테이블을 설정 생성 해서 삽입
+-->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert Image</title>
+<link href="pop.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+
+
+//==============================
+// 업로드 사용 설정부분
+//==============================
+var use_upload=true;	//true:업로드 사용함, false:업로드 사용안함
+
+
+</script>
+<script type="text/javascript">
+//<!--
+if(window.dialogArguments){
+ opener = window.dialogArguments;
+}
+
+if(window.parent != window.self){
+	opener = window.parent;
+}
+if(opener.mb_wysiwyg.ta_wysiwyg){
+var ta_wysiwyg = opener.mb_wysiwyg.ta_wysiwyg;
+}
+
+if(opener==null){
+alert('Not Exist Parent Window');
+closeSelf();
+}
+
+//---------------------------------------------chnage mode
+function ch_mode(bool){
+var ta1 = document.getElementById('div:url');
+var ta2 = document.getElementById('div:upload');
+var btn_url = document.getElementById('btn:url');
+var btn_upload = document.getElementById('btn:upload');
+if(!use_upload){
+btn_upload.style.display='none';
+}
+
+	if(bool){
+	ta1.style.display='none';
+	ta2.style.display='block';
+	btn_url.style.backgroundColor='';
+	btn_url.style.borderColor='#cccccc';
+	btn_upload.style.backgroundColor='#eeeeee';
+	btn_upload.style.borderColor='#8ABDFF';
+	preview_upload();	
+	}else{
+	ta2.style.display='none';
+	ta1.style.display='block';
+	btn_url.style.backgroundColor='#eeeeee';
+	btn_url.style.borderColor='#8ABDFF';
+	btn_upload.style.backgroundColor='';
+	btn_upload.style.borderColor='#cccccc';	
+	preview_url();
+	}
+	btn_upload.blur();
+	btn_url.blur();
+}
+//----------------------------------------------init value
+//var url = "<?=$uploaded_file_url?>";
+//var v_width = parseInt("<?=$_REQUEST['v_width']?>");
+//var v_height = parseInt("<?=$_REQUEST['v_height']?>");
+//var timedata = parseInt("<?=$_REQUEST['timedata']?>");
+var url = '';
+var v_width = '';
+var v_height = '';
+var timedata = '';
+var error_msg = '';
+var max_size = 200*1024;  //====== 
+//document.frm_upload.timedata.value="<?=$timedata?>";
+function init_vlaue(){
+	if(error_msg!=''){
+	alert(error_msg);
+	ch_mode(true);
+	}else if(url!=''){
+	var frm = document.frm_url;	
+		frm.url.value= url;
+		if(isFinite(v_width))
+		frm.v_width.value= v_width;
+		if(isFinite(v_height))
+		frm.v_height.value= v_height;
+		ch_mode(false);
+		preview_url_setsize(frm.v_height);
+		alert('Upload Success\n\nPress Insert');
+	}
+	
+}
+function init_value_upload(url,width,height,timedata,error_msg)
+{
+	if(error_msg!=''){
+	alert(error_msg);
+	ch_mode(true);
+	}else if(url!=''){
+	var frm = document.frm_url;	
+		frm.url.value= url;
+		if(isFinite(v_width))
+		frm.v_width.value= v_width;
+		if(isFinite(v_height))
+		frm.v_height.value= v_height;
+		ch_mode(false);
+		preview_url_setsize(frm.v_height);
+		alert('Upload Success\n\nPress Insert');
+	}
+	var frm2 = document.frm_upload;	
+	frm2.timedata.value = timedata;
+	ch_mode(false);
+}
+//---------------------------------------------url
+function preview_url(){
+var frm = document.frm_url;
+frm.ta_img_file.src = frm.url.value;
+}
+function insert_image_url(){
+	var frm = document.frm_url;
+	var ta = frm.ta_img_file;
+	if(!opener){alert('not exist parent page'); closeSelf();}
+	ta.removeAttribute('name');
+	ta.removeAttribute('id');
+	//ta_wysiwyg._pasteHTML(ta);
+	ta_wysiwyg.InsertImage(ta);
+	closeSelf();
+	return false;
+}
+//---------------------------------------------upload
+function preview_upload(){
+	var frm = document.frm_upload;
+	frm.ta_img_file.src = 'file:///'+(frm.file.value);
+	frm.ta_img_file.onerror = function(){
+		this.style.display="none";
+		document.getElementById('preview_upload').style.backgroundImage="URL('"+'file:///'+(frm.file.value)+"')";
+	}
+}
+function image_upload(){
+var frm = document.frm_upload;
+preview_upload();
+if(parseInt(frm.ta_img_file.fileSize))
+frm.v_size.value = parseInt(frm.ta_img_file.fileSize);
+	if(parseInt(frm.v_size.value) && frm.v_size.value <= max_size){
+		return true;
+	}else if(frm.v_size.value==''){
+		return true;
+	}else{
+		alert('file size too big! \n['+frm.v_size.value+'>'+max_size+'] byte');
+		return false;
+	}
+
+}
+//---------------------------------------------COMM
+function preview_url_getsize(this_s){
+var frm = this_s.form;
+
+frm.ta_img_file.removeAttribute('width');
+frm.ta_img_file.removeAttribute('height');
+
+frm.v_width.value = frm.ta_img_file.width;
+frm.v_height.value = frm.ta_img_file.height;
+
+if(parseInt(frm.ta_img_file.fileSize))
+frm.v_size.value = parseInt(frm.ta_img_file.fileSize);
+
+}
+function preview_url_setsize(this_s){
+var frm = this_s.form;
+frm.ta_img_file.removeAttribute('width');
+frm.ta_img_file.removeAttribute('height');
+if(frm.v_width.value)
+frm.ta_img_file.width = frm.v_width.value;
+if(frm.v_height&&frm.v_height.value)
+frm.ta_img_file.height = frm.v_height.value;
+if(frm.border&&frm.border.value)
+frm.ta_img_file.border = frm.border.value;
+}
+//--------------------------------------------
+
+function closeSelf(){
+		ta_wysiwyg.close_window_modal();
+		self.close();
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.preview{
+	width:90%; height:200px;
+	overflow:auto;	
+}
+-->
+</style>
+</head>
+<body onLoad="ch_mode(false); init_vlaue();"> 
+<fieldset class="fieldset"><legend class="legend">Insert Image / Upload Image</legend>
+<div>
+  <input name="btn:url" type="button" id="btn:url" style=" border:2px solid #cccccc;padding:1px;font-size:12px; " onClick="ch_mode(false);"  value="Insert Image : URL">
+  <input name="btn:upload" type="button"  id="btn:upload" style=" border:2px solid #cccccc;padding:1px;font-size:12px; " onClick="ch_mode(true);"  value="UpLoad Image : File">
+</div>
+<div id="div:url">
+        <form name="frm_url"  onSubmit="insert_image_url(); return false;">
+          <table width="100%"  border="0" cellpadding="0" cellspacing="0" class="border" style="table-layout:fixed;">
+            <tr>
+              <td><table width="100%"  border="0" cellpadding="0" cellspacing="1" class="table">
+                  <tr>
+                    <td width="80" height="26" align="center" class="title_p10">URL</td>
+                    <td><input name="url" type="text" class="textbox" style="width:98%; " onChange="preview_url(this);" onkeyup="preview_url(this);"></td>
+                  </tr>
+                  <tr>
+                    <td height="26" align="center" class="title_p10">Setting</td>
+                    <td><input name="v_width" type="text" class="textbox" id="v_width" onKeyUp="preview_url_setsize(this);" size="5" maxlength="10">
+                      x
+                        <input name="v_height" type="text" class="textbox" id="v_height"  onKeyUp="preview_url_setsize(this);" size="5" maxlength="10">
+                        <select name="border" class="textbox" id="border" onchange="preview_url_setsize(this);">
+                          <option value="0" selected="selected">border</option>
+                        </select>
+                        <script type="text/javascript">
+				  var ta_select = document.frm_url.border;
+				  var option = document.createElement('option');
+				  for(var i=0;i<=10;i++){
+					  option1 = option.cloneNode(true);
+					  option1.innerHTML = i;
+					  option1.value = i;
+					  ta_select.appendChild(option1)	;				  
+				  }
+				        </script>(size :
+                      <input name="v_size" type="text" class="textbox" id="v_size22"   size="10" maxlength="20" readonly="true">
+                      Byte)
+                      <input name="button" type="button" class="btn" onClick="preview_url_getsize(this);" value="getSize"></td>
+                  </tr>
+                  <tr class="none">
+                    <td height="26" align="center" class="none">&nbsp;</td>
+                    <td align="right" class="none"><input name="Input" type="submit" class="btn" value="Insert">
+                    <input name="submit" type="button"  class="btn" value="Cancel" onClick="closeSelf()"></td>
+                  </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td align="center"><div id="preview" class="border12px" style="background-color:#eeeeee; height:200px;padding:5px; width:auto;overflow:auto; "><img src="" name="ta_img_file" id="ta_img_file" border="0" style="background-color:#ffffff; "></div></td>
+            </tr>
+          </table>
+        </form>
+    </div><div id="div:upload">
+        <form name="frm_upload" enctype="multipart/form-data" action="pop.insertimage.action.php" method="post" target="hiddeniframe" onSubmit="return image_upload();">
+          <table width="100%"  border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed">
+            <tr>
+              <td><table width="100%"  border="0" cellpadding="0" cellspacing="1" class="table">
+                  <tr>
+                    <td width="80" height="26" align="center" class="title_p10">Upload</td>
+                    <td><input name="file" type="file" class="textbox" style="width:98%; " onChange="preview_upload();" size="50" >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td height="26" align="center" class="title_p10">Info</td>
+                    <td><input name="v_width" type="text" class="textbox" size="5" maxlength="10" onKeyUp="preview_url_setsize(this);">
+                      x
+                        <input name="v_height" type="text" class="textbox" size="5" maxlength="10"  onKeyUp="preview_url_setsize(this);">
+                      (size :
+                      <input name="v_size" type="text" class="textbox" id="v_size4"   size="10" maxlength="20" readonly="true">
+                      Byte)
+                      <input name="button2" type="button" class="btn" onClick="preview_url_getsize(this);" value="getSize"></td>
+                  </tr>
+                  <tr>
+                    <td height="26" align="center" class="none">&nbsp;</td>
+                    <td align="right" class="none"><input name="timedata" type="hidden" id="timedata">
+                      <script type="text/javascript">
+					document.write('<input type="hidden" name="MAX_FILE_SIZE" value="'+max_size+'" /> ')
+					
+					  </script>
+( MAX SIZE :
+<script type="text/javascript"> document.write(max_size); </script>
+Byte )                      <input name="Input2" type="submit" class="btn"  value="Upload">
+                      <input name="submit2" type="button"  class="btn" value="Cancel" onClick="closeSelf()">                      </td>
+                  </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td align="center"><div id="preview_upload" class="border12px" style=" background-repeat:no-repeat; background-position:center; background-color:#eeeeee; height:200px; overflow:auto; padding:5px; "><img src="" name="ta_img_file" id="ta_img_file" border="0" style="background-color:#ffffff; " onload="if(!this.fileSize){this.style.display='none';}" ></div></td>
+            </tr>
+          </table>
+        </form>
+    </div>
+</fieldset>
+<iframe style="display:none; " width="663" height="50" name="hiddeniframe"></iframe> 
+</body>
+</html>

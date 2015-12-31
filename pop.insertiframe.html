@@ -1,0 +1,158 @@
+<!--
+저작권:mins가 가집니다.
+허락받지 않고서는 쓸 수 없습니다.
+-=---------------------------------=-
+테이블 삽입 : 테이블을 설정 생성 해서 삽입
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Insert Table</title>
+<link href="pop.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+form{margin:0px; padding:0px;}
+body {
+	border-style:none;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+</style>
+<script type="text/javascript" src="js_layer_colorpicker.js"></script>
+<script type="text/javascript">
+if(window.dialogArguments){
+ opener = window.dialogArguments;
+}
+if(window.parent != window.self){
+	opener = window.parent;
+}
+if(opener.mb_wysiwyg.ta_wysiwyg){
+var ta_wysiwyg = opener.mb_wysiwyg.ta_wysiwyg;
+}
+
+var ta_preview = null;
+var ta_out =null;
+
+function init(){
+	ta_preview = document.getElementById('preview');
+	ta_out =document.createElement('iframe');
+//	ta_out.innerHTML='IFrame이 지원 안되는 브라우저입니다.';
+	ta_preview.appendChild(ta_out);
+}
+
+function preview(){
+	var frm = document.frm_setting;
+	ta_out.width = Number(frm.width.value);
+	ta_out.height = Number(frm.height.value);
+	ta_out.border = Number(frm.border.value);
+	ta_out.frameBorder = Number(frm.border.value);
+	ta_out.style.borderWidth =ta_out.frameBorder+'px';
+	ta_out.style.borderStyle = frm.border_style.value;
+	ta_out.style.borderColor = frm.border_color.value;
+	
+
+	if(frm.extend.checked){
+		ta_out.style.position='relative';
+		ta_out.style.zIndex='9999';
+	}else{
+		ta_out.style.position='';
+		ta_out.style.zIndex='';
+	}
+	if(ta_out.src!=frm.src.value){
+		try{
+			ta_out.src = frm.src.value;
+		}catch(e){
+			ta_out.src='';
+		}
+	}
+	
+	//ta_preview.innerHTML = '';
+
+}
+function insert_table(){
+var ta_preview = document.getElementById('preview');	//for preview
+	if(!opener){alert('not exist parent page'); closeSelf();}
+	var ta_preview = document.getElementById('preview');	
+	if(ta_preview.firstChild){
+		//opener.ta_wysiwyg._pasteHTML(ta_preview.firstChild);
+		ta_wysiwyg.InsertIFrame(ta_preview.firstChild);
+		closeSelf();
+	}else{
+	alert('not exist a table.');
+	}
+}
+
+function closeSelf(){
+		ta_wysiwyg.close_window_modal();
+		self.close();
+}
+</script>
+</head>
+<body onload="init();preview();"> 
+<fieldset class="fieldset"><legend class="legend">Insert Iframe</legend><table width="100%" border="0" cellpadding="2" cellspacing="0" class="table"> 
+        <tr> 
+          <td height="22" class="title_p10">Setting</td> 
+        </tr> 
+        <tr> 
+          <td align="center" valign="middle"><form name="frm_setting" id="frm_setting" action="javascript:void(0);"> 
+              <table width="500" border="0" cellpadding="0" cellspacing="1" class="table"> 
+                <tr> 
+                  <td width="100" height="22" class="title_p10">Width</td> 
+                  <td width="150" height="22" class="txt_p10"><input name="width" type="text" class="textbox" id="width" onblur="preview();" value="550" size="8" maxlength="5" /></td>
+                  <td width="100" height="22" class="title_p10">Height</td> 
+                  <td width="150" height="22" class="txt_p10"><input name="height" type="text" class="textbox" id="height"  onblur="preview();" value="300" size="8" maxlength="5"  /></td> 
+                </tr> 
+                <tr> 
+                  <td height="22" class="title_p10">URL</td> 
+                  <td height="22" colspan="3" class="txt_p10"><input name="src" type="text" class="textbox" size="60" onblur="preview();" />
+				</td> 
+                </tr>
+                <tr>
+                  <td height="22" class="title_p10">Border</td>
+                  <td height="22" class="txt_p10"><input name="border" type="text" class="textbox" id="border"   onblur="preview();" value="0" size="8" maxlength="5" /></td>
+                  <td height="22" class="title_p10">BorderColor</td>
+                  <td height="22" class="txt_p10">  <input name="border_color" id="border_color" type="text" class="textbox" size="7" maxlength="7" />
+                    <img src="icon/color_swatch.gif" width="16" height="16" hspace="2" align="absmiddle" id='color_swatch' />
+<script type="text/javascript">
+js_layer_colorpicker(document.getElementById('border_color'),-80,0,document.getElementById('color_swatch'));
+</script>                    </td>
+                </tr>
+                <tr>
+                  <td height="22" class="title_p10">BorderStyle</td>
+                  <td height="22" class="txt_p10"><select name="border_style" id="border_style" style="border-style: "
+				   onchange="if(this.value==''){this.form.border.value=0;}preview();">
+				  <option value="" selected="selected">=none=</option>
+					<option value="solid">solid</option>
+					<option value="dashed">dashed</option>
+					<option value="dotted">dotted</option>
+					<option value="double">double</option>
+					<option value="groove">groove</option>
+					<option value="inset">inset</option>
+					<option value="outset">outset</option>
+					<option value="ridge">ridge</option>
+                  </select></td>
+                  <td height="22" class="title_p10" title="iframe이 부모의 너비를 초과해도 보여준다.
+iframe의 너비가 클 경우 체크(비추천)">Extend</td>
+                  <td height="22" class="txt_p10"><input title="iframe이 부모의 너비를 초과해도 보여준다.
+iframe의 너비가 클 경우 체크(비추천)" name="extend" type="checkbox" id="extend" value="y" onclick="preview();" />
+                  Extend</td>
+                </tr>
+                <tr align="right">
+                  <td height="24" colspan="4" class="none"><input name="button" type="button" class="btn" onclick="preview()" value="Preview" />
+                  <input type="button" class="btn" value="Insert" onclick="insert_table()" /> <input type="button" class="btn" value="Cancel" onclick="closeSelf();" /></td>
+                </tr> 
+            </table> 
+            </form></td> 
+        </tr> 
+        <tr> 
+          <td height="22" class="title_p10">Preview</td> 
+        </tr> 
+        <tr> 
+          <td align="center"><div id="preview" class="border12px" style="width:90%; background-color:#eeeeee; height:300px; overflow:auto; padding:5px; "></div></td> 
+        </tr> 
+    </table>
+</fieldset>
+</body>
+</html>
