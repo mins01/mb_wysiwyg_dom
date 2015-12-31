@@ -2310,9 +2310,9 @@ mb_wysiwyg.prototype.mk_button_btn = function(name,title,command)
 	image_btn.type="button";
 	image_btn.align="absmiddle"
 	//image_btn.appendChild(document.createTextNode(name));
-	console.log('mbw-'+name)
+	//console.log('mbw-'+name)
 	//image_btn.className='imgbtn_0';
-	image_btn.className='mbw-button fontawesome- mbw-'+name
+	image_btn.className='mbw-button mbw-'+name
 	return image_btn;
 }
 

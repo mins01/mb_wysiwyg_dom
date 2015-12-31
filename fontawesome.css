@@ -2,16 +2,19 @@
 @import url(http://weloveiconfonts.com/api/?family=fontawesome);
 /* http://weloveiconfonts.com/ */
 /* fontawesome */
-[class*="fontawesome-"]::before
-,[class*="fontawesome-"]::after {
-  font-family: 'FontAwesome', sans-serif;
-}
 
-.mbw-button{border-width:0; border-radius: 5px;padding:1px;margin:1px;
+.mbw-button::before
+,.mbw-button::after {
+  font-family: 'FontAwesome', sans-serif !important;
+}
+.mbw-button{border:1px #ccc outset; border-radius: 5px;padding:1px;margin:1px;
 height:32px; 
 width:32px; 
 position:relative;
 vertical-align:top;
+font-size:14px;
+
+
 
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e2e2e2+0,dbdbdb+50,d1d1d1+51,fefefe+100;Grey+Gloss+%231 */
 background: #e2e2e2; /* Old browsers */
@@ -36,7 +39,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', end
 	position:absolute;
 	top:0;left:0;right:0;bottom:0;
 }
-.mbw-btn_t_section{width:4px; }
+.mbw-btn_t_section{width:4px; font-size:0px;text-indent: -999px;  }
 .mbw-btn_t_section::before{ content: " "; font-size:0;text-indent: -999px;  }
 
 
