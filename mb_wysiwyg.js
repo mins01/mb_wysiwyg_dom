@@ -1659,6 +1659,7 @@ mb_wysiwyg.prototype.setIframeHtml = function(text){
 	if(this.ctrlContType==0){ //body의 내용만
 		try{
 			this.ifrm_document.body.innerHTML = text;
+			document.getElementsByName('head')[0].innerHTML=this.ifrm_css+this.ifrm_meta; //설정된 해더로 재 설정.
 		}catch(e){
 			var str = '<html><head>'+this.ifrm_css+this.ifrm_meta+'</head><body>'+text+'</body></html>'
 			this.ifrm_document.open();
