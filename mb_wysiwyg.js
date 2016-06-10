@@ -827,6 +827,7 @@ mb_wysiwyg.prototype._FormatBlock = function(name,title,command){
 		var input_temp = this.mk_element('button');
 		//input_temp.type='button';
 		input_temp.className="btn_100p";
+		input_temp.type="button"
 		
 		var tmp_arr = format_arr;
 		for(i=0,m=tmp_arr.length;i<m;i++){
