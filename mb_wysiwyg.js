@@ -707,6 +707,22 @@ mb_wysiwyg.prototype.selectedHtml = function(){
 	}
 	return html;
 }
+mb_wysiwyg.prototype.selectedText = function(){
+	var text = "";
+	if(this.browsername=="MSIE"){
+		var rng = this._getRNG();
+		text = rng.text;
+	}else{
+		var sel = this._getSEL();
+
+		var container = document.createElement("div");
+		for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+		container.appendChild(sel.getRangeAt(i).cloneContents());
+		}
+		var text = container.innerText;
+	}
+	return text;
+}
 mb_wysiwyg.prototype.currentElement = function(){
 	var rng = this._getRNG();
 	var sel = this._getSEL();

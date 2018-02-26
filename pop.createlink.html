@@ -43,7 +43,7 @@
 		try{
 			var ce = this_s.currentElement();
 			var cp = this_s.currentParent('A',5);
-			var tx = this_s.stripTags(this_s.selectedHtml());	
+			var tx = this_s.stripTags(this_s.selectedText());	
 		}catch(e){
 			var ce = null,cp=null,tx='';
 		}
@@ -58,7 +58,7 @@
 		}
 		var t = title.indexOf(':');
 		if(t <= 10 && t != -1){
-			url = title;
+			url = title
 		}
 		var target = '_blank';
 		set_url(url,target,title)
