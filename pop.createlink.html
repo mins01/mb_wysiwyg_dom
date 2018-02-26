@@ -1,159 +1,168 @@
-<!DOCTYPE html>
+<!DOCTYPE html>
 
-<html lang="ko">
-<head>
+<html lang="ko">
+<head>
 	<!--
-
+
 	저작권:mins가 가집니다.
-
+
 	허락받지 않고서는 쓸 수 없습니다.
-
-	-=---------------------------------=-
-	링크 생성
-	-->
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Create Link</title>
+
+	-=---------------------------------=-
+	링크 생성
+	-->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Create Link</title>
 	<link href="pop.css" rel="stylesheet" type="text/css">
-
-	<style type="text/css">
-		<!--
-		html{font-size:12px}
-		html,body{}
-		body {
-		margin-left: 0px;
-		margin-top: 0px;
-		margin-right: 0px;
-		margin-bottom: 0px;
-		border-style:none;
-		}
-		-->
-	</style>
-	<script type="text/javascript">
-	if(window.dialogArguments){
-		opener = window.dialogArguments;
-	}
-	if(window.parent != window.self){
-		opener = window.parent;
-	}
-	var ta_wysiwyg = null;
-	if(opener.mb_wysiwyg.ta_wysiwyg){
-		ta_wysiwyg = opener.mb_wysiwyg.ta_wysiwyg;
-	}
-
-	function initPage(){
-		var this_s = ta_wysiwyg;
-		var ce = this_s.currentElement();
-		var cp = this_s.currentParent('A',5);
-		var tx = this_s.stripTags(this_s.selectedHtml());
-//		alert('cp:'+cp);		alert('ce:'+ce);		alert('tx:'+tx);
-		var url = cp?cp.href:'';
-		var title = '';
-		if(tx.length>1){
-			title=tx;
-		}else if(cp){
-			title=this_s.stripTags(cp.innerHTML);
-		}
-		var target = '_blank';
-		set_url(url,target,title)
-
-	}
-	//window.onload = function(){ alert('y');initPage();alert('x'); }
-	function set_url(url,target,title){
-		var frm = document.frm_createlink;
-		//alert(url);
-		frm.v_url.value=url;
-		frm.v_target.value=target; frm.v_title.value=title; 
-	}
-	function ch_protocol(){
-		var frm = document.frm_createlink;
-		var ta1 = frm.v_protocol;
-		var ta2 = frm.v_url;
-		var str = ta2.value;
-		var fnd = str.indexOf('://');
-		if(fnd == -1)
-		fnd = str.indexOf(':');
-		else
-		fnd +=2;
-		if(fnd != -1){
-			str = str.substr((fnd+1));
-		}
-		ta2.focus();
-		str = ta1.value+str;
-		ta2.value = str;
-		ta2.focus();
-	}
-	function createlink(){
-		if(!opener){alert('not exist parent page'); closeSelf();}
-		var frm = document.frm_createlink;
-		// var protocol = frm.v_protocol;
-		var url = frm.v_url.value;
-		var target = frm.v_target.value;
-		var title = frm.v_title.value;
-		if(!opener){alert('not exist parent page'); closeSelf(); return false;}
-		if(url.length>0){
-		ta_wysiwyg.CreateLink(url,target,title);
-		closeSelf();
-		}else{
-			alert('not exist a link.');
-		}
-		return false;
-	}
-	function closeSelf(){
-		ta_wysiwyg.close_window_modal();
-		self.close();
-	}
-	</script>
-	<style type="text/css">
-	body{}
-	.title{font-size:1.5em; font-weight:bold; text-align:center;}
-	.elements {line-height:24px;}
-	.elements input
-	,.elements select
-	,.elements textarea{line-height:20px;padding:0 1px 0 0;margin:0;}
-	.elements input[type=button]
-	,.elements input[type=submit]
-	,.elements input[type=reset]
-	{border:2px outset gray;}
-	.clearB{clear:both}
-	.element{white-space: nowrap;margin:0 10px;}
-	.element .label{margin:0 10px;font-weight:bold;}
-	</style>
-</head>
-
-<body onload="ch_protocol();">
-<div style="">
-<div class="title"></div>
-<fieldset class="fieldset">
-	<legend class="legend">Create Link</legend>
-
-	<div class="elements" style="text-align:center">
-		<form name="frm_createlink" onSubmit="return createlink()" > 
-			<label class="element">
-			<span class="label">Protocol:</span>
-			<select name="v_protocol" id="v_protocol" onchange="ch_protocol();"><option value="http://" selected="selected">http://</option><option value="https://">https://</option><option value="mailto:">mailto:</option><option value="file://">file://</option><option value="ftp://">ftp://</option><option value="gopher://">gopher://</option><option value="news:">news:</option><option value="telnet:">telnet</option><option value="wias:">wias:</option><option value="javascript:">javascript:</option></select>
-			</label>
-
-			<label class="element">
-			<span class="label">Target:</span>
-			<select name="v_target" id="v_target"><option value="">none</option><option value="_self">_self</option><option value="_blank" selected="selected">_blank</option><option value="_top">_top</option><option value="_parent">_parent</option></select>
-			</label>
-			<div class="clearB"></div>
-			<label class="element">
-			<span class="label">URL:</span>
-			<input name="v_url" class="textbox" id="v_url" style="max-width: 100%; min-width:100px;width:200px;" type="text"></label>
-
-			<div class="clearB"></div>
-			<label class="element">
-			<span class="label">Title:</span>
-			<input name="v_title" class="textbox" id="v_title" style="max-width: 100%; min-width:100px;width:200px;" type="text"></label>
-
-			<dd><input name="submit" class="btn" value="Create Link" type="submit"> <input name="submit" class="btn" value="Cancel" onclick="closeSelf()" type="button"></dd>
-			</dl>
-			</form>
-	</div>
-</fieldset>
-</div>
-<script>
-	initPage();
-</script>
+
+	<style type="text/css">
+		html{font-size:12px}
+		html,body{}
+		body {
+		margin-left: 0px;
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		border-style:none;
+		}
+	</style>
+	<script type="text/javascript">
+	if(window.dialogArguments){
+		opener = window.dialogArguments;
+	}
+	if(window.parent != window.self){
+		opener = window.parent;
+	}
+	var ta_wysiwyg = null;
+	if(opener.mb_wysiwyg.ta_wysiwyg){
+		ta_wysiwyg = opener.mb_wysiwyg.ta_wysiwyg;
+	}
+
+	function initPage(){
+		var this_s = ta_wysiwyg;
+		try{
+			var ce = this_s.currentElement();
+			var cp = this_s.currentParent('A',5);
+			var tx = this_s.stripTags(this_s.selectedHtml());	
+		}catch(e){
+			var ce = null,cp=null,tx='';
+		}
+		
+//		alert('cp:'+cp);		alert('ce:'+ce);		alert('tx:'+tx);
+		var url = cp?cp.href:'';
+		var title = '';
+		if(tx.length>1){
+			title=tx;
+		}else if(cp){
+			title=this_s.stripTags(cp.innerHTML);
+		}
+		var t = title.indexOf(':');
+		if(t <= 10 && t != -1){
+			url = title;
+		}
+		var target = '_blank';
+		set_url(url,target,title)
+
+	}
+	//window.onload = function(){ alert('y');initPage();alert('x'); }
+	function set_url(url,target,title){
+		var frm = document.frm_createlink;
+		//alert(url);
+		frm.v_url.value=url;
+		frm.v_url.focus();
+		frm.v_url.select();
+		frm.v_target.value=target; frm.v_title.value=title; 
+	}
+	function ch_protocol(){
+		var frm = document.frm_createlink;
+		var ta1 = frm.v_protocol;
+		var ta2 = frm.v_url;
+		var str = ta2.value;
+		var fnd = str.indexOf('://');
+		if(fnd == -1)
+		fnd = str.indexOf(':');
+		else
+		fnd +=2;
+		if(fnd != -1){
+			str = str.substr((fnd+1));
+		}
+		ta2.focus();
+		str = ta1.value+str;
+		ta2.value = str;
+		ta2.focus();
+	}
+	function createlink(){
+		if(!opener){alert('not exist parent page'); closeSelf();}
+		var frm = document.frm_createlink;
+		// var protocol = frm.v_protocol;
+		var url = frm.v_url.value;
+		var target = frm.v_target.value;
+		var title = frm.v_title.value;
+		if(!opener){alert('not exist parent page'); closeSelf(); return false;}
+		if(url.length>0){
+		ta_wysiwyg.CreateLink(url,target,title);
+		closeSelf();
+		}else{
+			alert('not exist a link.');
+		}
+		return false;
+	}
+	function closeSelf(){
+		ta_wysiwyg.close_window_modal();
+		self.close();
+	}
+	</script>
+	<style type="text/css">
+	body{}
+	.title{font-size:1.5em; font-weight:bold; text-align:center;}
+	.elements {line-height:24px;}
+	.elements input
+	,.elements select
+	,.elements textarea{line-height:20px;padding:0 1px 0 0;margin:0;}
+	.elements input[type=button]
+	,.elements input[type=submit]
+	,.elements input[type=reset]
+	{border:2px outset gray;}
+	.clearB{clear:both}
+	.element{white-space: nowrap;margin:0 10px;}
+	.element .label{margin:0 10px;font-weight:bold;}
+	</style>
+</head>
+
+<body onload="ch_protocol();">
+<div style="">
+<div class="title"></div>
+<fieldset class="fieldset">
+	<legend class="legend">Create Link</legend>
+
+	<div class="elements" style="text-align:center">
+		<form name="frm_createlink" onSubmit="return createlink()" > 
+			<label class="element">
+			<span class="label">Protocol:</span>
+			<select name="v_protocol" id="v_protocol" onchange="ch_protocol();"><option value="http://" selected="selected">http://</option><option value="https://">https://</option><option value="mailto:">mailto:</option><option value="file://">file://</option><option value="ftp://">ftp://</option><option value="gopher://">gopher://</option><option value="news:">news:</option><option value="telnet:">telnet</option><option value="wias:">wias:</option><option value="javascript:">javascript:</option></select>
+			</label>
+
+			<label class="element">
+			<span class="label">Target:</span>
+			<select name="v_target" id="v_target"><option value="">none</option><option value="_self">_self</option><option value="_blank" selected="selected">_blank</option><option value="_top">_top</option><option value="_parent">_parent</option></select>
+			</label>
+			<div class="clearB"></div>
+			<label class="element">
+			<span class="label">URL:</span>
+			<input name="v_url" class="textbox" id="v_url" style="max-width: 100%; min-width:100px;width:200px;" type="text"></label>
+
+			<div class="clearB"></div>
+			<label class="element">
+			<span class="label">Title:</span>
+			<input name="v_title" class="textbox" id="v_title" style="max-width: 100%; min-width:100px;width:200px;" type="text"></label>
+
+			<dd><input name="submit" class="btn" value="Create Link" type="submit"> <input name="submit" class="btn" value="Cancel" onclick="closeSelf()" type="button"></dd>
+			</dl>
+			</form>
+	</div>
+</fieldset>
+</div>
+<script>
+	initPage();
+</script>
 </body></html>
