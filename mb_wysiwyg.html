@@ -17,8 +17,13 @@ return true;
   <p>
     <input type=submit value='실험전송'>
   </p>
-  <p>      <textarea id='b_text'>aaaaaaaaaaaaaaaㄴㄴ<div><ul><li>ㄴㅇㄴㅇ</li><ul><li>ㅁㄴㅇㅁㄴㅇ</li></ul><li>ㅁㄴㅇㅁㄴㅇ</li></ul></div></textarea>
-    </p>
+  <p>      
+  <textarea id='b_text'><html lang="ko"><head>	<title>제목없음</title>	<meta http-equiv="Content-Type" content="text/html; charset= utf-8" />	<style>	 html{font-size:12px;}
+</style></head><body marginwidth="0" marginheight="0">내용을입력하세요.
+</body></html></textarea>
+  <input type="button" value="내용을 reset으로 바꿔버림" onclick="document.getElementById('b_text').value='reset';wysiwyg.sync(1)">
+
+   </p>
   <link href="./mb_wysiwyg.css" rel="stylesheet" type="text/css">
 <p>
 <textarea id='b_text2'>
@@ -32,6 +37,7 @@ src="http://www.google.com/logos/Logo_25gry.gif">
 <IMG src="http://www.google.com/logos/Logo_25gry.gif">
 <INPUT type=button value='태스xm'>
 실험용 b_text2</textarea>
+<input type="button" value="내용을 reset으로 바꿔버림" onclick="document.getElementById('b_text2').value='reset';wysiwyg2.sync(1)">
 
 <script src="./set.toolbar.js" charset='UTF-8'></script>
 <script src="./mb_wysiwyg.js" charset='UTF-8'></script>
@@ -41,6 +47,7 @@ document.write('첫번째 에디터를 생성합니다.');
 var wysiwyg = new mb_wysiwyg(document.getElementById('b_text'),600,300,null,'좋은하루');
 //wysiwyg.path="."; // mb_wysiwyg.js 파일이 있는 경로를 적어줘야한다.(ver 20070724 부턴 안적어도 됨, 자동으로 처리);
 wysiwyg.icon_pack="black_16px";
+wysiwyg.ctrlContType="1"; //0일 경우 body내용만 제어함, 1일 경우 html전부 제어함
 wysiwyg.mk_wysiwyg();
 </script>
 
@@ -50,6 +57,7 @@ var wysiwyg2 = new mb_wysiwyg(document.getElementById('b_text2'),600,300);
 //wysiwyg2.path="."; // mb_wysiwyg.js 파일이 있는 경로를 적어줘야한다.(ver 20070724 부턴 안적어도 됨, 자동으로 처리);
 wysiwyg2.icon_pack="wr_24px";
 wysiwyg2.c_table_type = false; 
+//wysiwyg2.ctrlContType="1"; //0일 경우 body내용만 제어함, 1일 경우 html전부 제어함
 wysiwyg2.mk_wysiwyg();
 </script>
 <p>
