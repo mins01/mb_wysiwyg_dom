@@ -1,7 +1,6 @@
 <!--
 저작권:mins가 가집니다.
 허락받지 않고서는 쓸 수 없습니다.
--=---------------------------------=-
 테이블 삽입 : 테이블을 설정 생성 해서 삽입
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -44,10 +43,10 @@ function init(){
 
 function preview(){
 	var frm = document.frm_setting;
-	ta_out.width = Number(frm.width.value);
-	ta_out.height = Number(frm.height.value);
-	ta_out.border = Number(frm.border.value);
-	ta_out.frameBorder = Number(frm.border.value);
+	ta_out.width = frm.width.value;
+	ta_out.height = frm.height.value;
+	ta_out.border = frm.border.value;
+	ta_out.frameBorder = frm.border.value;
 	ta_out.style.borderWidth =ta_out.frameBorder+'px';
 	ta_out.style.borderStyle = frm.border_style.value;
 	ta_out.style.borderColor = frm.border_color.value;
@@ -100,9 +99,9 @@ function closeSelf(){
               <table width="500" border="0" cellpadding="0" cellspacing="1" class="table"> 
                 <tr> 
                   <td width="100" height="22" class="title_p10">Width</td> 
-                  <td width="150" height="22" class="txt_p10"><input name="width" type="text" class="textbox" id="width" onblur="preview();" value="550" size="8" maxlength="5" /></td>
+                  <td width="150" height="22" class="txt_p10"><input name="width" type="text" class="textbox" id="width" onblur="preview();" value="95%" size="8" maxlength="5" /></td>
                   <td width="100" height="22" class="title_p10">Height</td> 
-                  <td width="150" height="22" class="txt_p10"><input name="height" type="text" class="textbox" id="height"  onblur="preview();" value="300" size="8" maxlength="5"  /></td> 
+                  <td width="150" height="22" class="txt_p10"><input name="height" type="text" class="textbox" id="height"  onblur="preview();" value="700" size="8" maxlength="5"  /></td> 
                 </tr> 
                 <tr> 
                   <td height="22" class="title_p10">URL</td> 
@@ -111,7 +110,7 @@ function closeSelf(){
                 </tr>
                 <tr>
                   <td height="22" class="title_p10">Border</td>
-                  <td height="22" class="txt_p10"><input name="border" type="text" class="textbox" id="border"   onblur="preview();" value="0" size="8" maxlength="5" /></td>
+                  <td height="22" class="txt_p10"><input name="border" type="text" class="textbox" id="border"   onblur="preview();" value="1" size="8" maxlength="5" /></td>
                   <td height="22" class="title_p10">BorderColor</td>
                   <td height="22" class="txt_p10">  <input name="border_color" id="border_color" type="text" class="textbox" size="7" maxlength="7" />
                     <img src="icon/color_swatch.gif" width="16" height="16" hspace="2" align="absmiddle" id='color_swatch' />
