@@ -7,9 +7,8 @@
 	저작권:mins가 가집니다.
 
 	허락받지 않고서는 쓸 수 없습니다.
-
-	-=---------------------------------=-
-	링크 생성
+	
+	# 링크 생성
 	-->
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Create Link</title>
@@ -73,24 +72,6 @@
 		frm.v_url.select();
 		frm.v_target.value=target; frm.v_title.value=title; 
 	}
-	function ch_protocol(){
-		var frm = document.frm_createlink;
-		var ta1 = frm.v_protocol;
-		var ta2 = frm.v_url;
-		var str = ta2.value;
-		var fnd = str.indexOf('://');
-		if(fnd == -1)
-		fnd = str.indexOf(':');
-		else
-		fnd +=2;
-		if(fnd != -1){
-			str = str.substr((fnd+1));
-		}
-		ta2.focus();
-		str = ta1.value+str;
-		ta2.value = str;
-		ta2.focus();
-	}
 	function createlink(){
 		if(!opener){alert('not exist parent page'); closeSelf();}
 		var frm = document.frm_createlink;
@@ -129,7 +110,7 @@
 	</style>
 </head>
 
-<body onload="ch_protocol();">
+<body>
 <div style="">
 <div class="title"></div>
 <fieldset class="fieldset">
@@ -137,11 +118,6 @@
 
 	<div class="elements" style="text-align:center">
 		<form name="frm_createlink" onSubmit="return createlink()" > 
-			<label class="element">
-			<span class="label">Protocol:</span>
-			<select name="v_protocol" id="v_protocol" onchange="ch_protocol();"><option value="http://" selected="selected">http://</option><option value="https://">https://</option><option value="mailto:">mailto:</option><option value="file://">file://</option><option value="ftp://">ftp://</option><option value="gopher://">gopher://</option><option value="news:">news:</option><option value="telnet:">telnet</option><option value="wias:">wias:</option><option value="javascript:">javascript:</option></select>
-			</label>
-
 			<label class="element">
 			<span class="label">Target:</span>
 			<select name="v_target" id="v_target"><option value="">none</option><option value="_self">_self</option><option value="_blank" selected="selected">_blank</option><option value="_top">_top</option><option value="_parent">_parent</option></select>
