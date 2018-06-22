@@ -145,7 +145,8 @@ var mb_wysiwyg = function(v_ta, v_width, v_height, init_value,init_title){
 
 	this.mspan = new Array();
 	
-	this.insertimage_filename = 'pop.insertimage.html';  //
+	// this.insertimage_filename = 'pop.insertimage.html';  //old
+	this.insertimage_filename = 'pop.insertimage2.html';  //
 //  this.insertimage_path = this.path+'/insertimage';    //uploaded Image dir
 
 	this.this_outname = 'out_'+this.textarea.id;		//dynamic variable;

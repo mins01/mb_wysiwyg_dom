@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+	<!--
+저작권:mins가 가집니다.
+허락받지 않고서는 쓸 수 없습니다.
+-=---------------------------------=-
+테이블 삽입 : 테이블을 설정 생성 해서 삽입
+-->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert Image</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	  crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	  crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	  crossorigin="anonymous"></script>
+
+	<link href="pop.css" rel="stylesheet" type="text/css">
+	<style>
+		html,
+		body {
+			height: 100%;
+		}
+
+		.ondrop {
+			min-height: 100px;
+			border-color: navy;
+			border-style: dashed;
+			position: relative;
+		}
+
+		.ondrop:hover {
+			border-color: peru;
+		}
+
+		.ondrop::before {
+			text-align: center;
+			left: 0;
+			right: 0;
+			top: 1em;
+			content: "Drag And Drop";
+			color: #999;
+			font-weight: bold;
+			position: absolute;
+			background-color: rgba(255, 255, 255, 0.3)
+		}
+
+		.preview-image {
+			max-width: 100%;
+			margin: 0 auto;
+		}
+
+		.ondragover {
+			box-shadow: inset 0 0 10px #b1c7f0;
+			/* background-color: #abc; */
+		}
+	</style>
+	<script type="text/javascript">
+		//<!--
+		function closeSelf() {
+			try {
+				if (ta_wysiwyg) ta_wysiwyg.close_window_modal();
+				self.close()
+			} catch (e) {
+
+			}
+		}
+		if (window.dialogArguments) {
+			opener = window.dialogArguments;
+		}
+
+		if (window.parent != window.self) {
+			opener = window.parent;
+		}
+		var ta_wysiwyg = null;
+		try {
+			if (opener && opener.mb_wysiwyg && opener.mb_wysiwyg.ta_wysiwyg) {
+				var ta_wysiwyg = opener.mb_wysiwyg.ta_wysiwyg;
+			}
+		} catch (e) {}
+
+		if (opener == null) {
+			alert('Not Exist Parent Window');
+			closeSelf();
+		}
+	</script>
+	<script>
+		// <!--
+		var insertImage = {
+			"onErrorPreviewImage": function (img) {
+				img.style.display = 'none';
+			},
+			"onLoadPreviewImage": function (img) {
+				img.style.display = '';
+			},
+			"ondrop": function (evt) {
+				//이벤트는 중지 시킨다.
+				console.log(evt.type);
+				evt.preventDefault();
+				evt.stopPropagation();
+				var files = evt.dataTransfer.files; //드롭된 파일리스트(FileList)
+				console.log(files);
+				var inputFile = document.getElementById('inputFile');
+				inputFile.files = files; //input type=file 에 파일을 넣어준다.
+				inputFile.form.onchange();
+			},
+			"insertImageByURL": function (url) {
+				console.log('insertImageByURL', url);
+				if (!ta_wysiwyg || !ta_wysiwyg.InsertImage) {
+					return false;
+				}
+
+				var img = document.createElement('img');
+				img.onload = function () {
+					ta_wysiwyg.InsertImage(this);
+					closeSelf();
+				}
+				img.error = function () {
+					alert("Fail Insert Image")
+				}
+				img.src = url
+			},
+			"uploadImageAndInsertImage": function (f) {
+				// var f = document.form_kyc;
+
+				var formData = new FormData();
+				var tmp = formData; //
+				$(f).find("input:not([type='file']) , select").each(function (idx, val) {
+					formData.append(val.name, val.value);
+					// console.log(val.name, val.value);
+				})
+				formData.append('kl_name', '123123');
+
+				$(f).find("input[type='file']").each(function (idx, val) {
+					formData.append(val.name, val.files[0]);
+					console.log(val.name, val.files[0]);
+
+				})
+				// console.log(formData);
+				// return false;
+				var url = 'pop.insertimage2.action.php';
+				try {
+					$.ajax({
+							url: url,
+							type: 'POST', //GET
+							dataType: 'json', //xml, json, script, jsonp, or html
+							data: formData,
+							// contentType: 'multipart/form-data',
+							contentType: false,
+							processData: false,
+						})
+						.done(function (rData) { //통신 성공 시 호출
+							if (rData.result) {
+								console.log("success");
+								insertImage.insertImageByURL(rData['url']);
+								alert(rData.message);
+
+							} else {
+								console.log("fail");
+								alert(rData.message);
+							}
+
+						})
+						.fail(function (e) { //통신 실패 시 호출
+							console.log("error", e);
+						})
+						.always(function () { //성공/실패 후 호출.
+							console.log("complete");
+						});
+
+				} catch (e) {
+					console.log(e);
+					return false;
+				} finally {
+
+				}
+				return false;
+
+
+
+			},
+			'previewImageFromUrl': function () {
+				var inputURL = document.getElementById('inputURL');
+				var img = document.getElementById('preview-image');
+				img.src = inputURL.value;
+				return false;
+			},
+			'previewImageFromLocal': function () {
+				var inputFile = document.getElementById('inputFile');
+				var img = document.getElementById('preview-image');
+				var ta = inputFile;
+				if (ta.files == undefined) { //input file 엘레멘트가 아닌것 같음. 또는 브라우저에서 지원이 안됨.
+					return false;
+				}
+				if (ta.files.length > 0) { //파일 업로드가 있을 경우만
+					for (var i = 0, m = ta.files.length; i < m; i++) { //다중 셀렉트 가능. (하지만 img가 1개이므로 멀티 동작은 무시)
+						var file = ta.files[i];
+						if (file.type.indexOf('image') === -1) {
+							alert("Supported Only Image!");
+							ta.value = "";
+							return false;
+						}
+						(function (file, img) {
+							var fileReader = new FileReader();
+							fileReader.onload = function (event) {
+								img.src = event.target.result;
+							};
+							fileReader.readAsDataURL(file);
+						})(ta.files[i], img)
+					}
+				}
+				return false;
+			}
+
+		}
+		// 파일 드롭 설정
+		var stopevent = function (evt) {
+			console.log(evt.type);
+			evt.preventDefault();
+			evt.stopPropagation();
+		}
+		$(function () {
+			var div_dnd = document.querySelector('.ondrop')
+			var fn_enter = function (evt) {
+				// $(div_dnd).addClass('ondragover')
+				stopevent(evt);
+			}
+			var fn_leave = function (evt) {
+				// $(div_dnd).removeClass('ondragover')
+				stopevent(evt);
+			}
+			div_dnd.ondragstart = fn_enter
+			div_dnd.ondragend = fn_leave
+			div_dnd.ondragover = stopevent
+			div_dnd.ondragenter = fn_enter
+			// div_dnd.ondragleave = fn_leave
+			$(document).on("dragleave", '.ondrop', fn_leave)
+			div_dnd.ondrag = stopevent
+			div_dnd.ondrop = function (evt) {
+
+				insertImage.ondrop(evt)
+				fn_leave(evt)
+			}
+		})
+		// -->
+	</script>
+</head>
+
+<body id="body">
+	<div class="container-fluid">
+		<h1 class="text-center" style="font-size:20px; font-weight: bold">Insert Image</h1>
+		<dl>
+			<dt>Select Image</dt>
+			<dd>
+				<form action="" onsubmit="insertImage.insertImageByURL(this.inputURL.value);return false" onchange="insertImage.previewImageFromUrl()">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">URL</span>
+						</div>
+						<input type="text" class="form-control" name="inputURL" id="inputURL" placeholder="http://..." attern="https?://.+" aria-label="input URL"
+						  required>
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="submit">Insert</button>
+						</div>
+					</div>
+				</form>
+			</dd>
+			<dd>
+				<form action="" enctype="multipart/form-data" onsubmit="insertImage.uploadImageAndInsertImage(this); return false;" onchange="insertImage.previewImageFromLocal()">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">File</span>
+						</div>
+						<div class="custom-file">
+							<input type="file" accept="image/*" id="inputFile" name="inputFile" class="custom-file-input" placeholder="Image File" aria-label="Select Image File"
+							  required>
+							<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+						</div>
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="submit">Insert</button>
+						</div>
+					</div>
+				</form>
+			</dd>
+		</dl>
+		<dl>
+			<dt>Priview</dt>
+			<dd class="card ondrop">
+				<div class="text-center card-body  p-2">
+					<img class="preview-image rounded" id="preview-image" src="about:blank" onerror="insertImage.onErrorPreviewImage(this)" onload="insertImage.onLoadPreviewImage(this)">
+				</div>
+			</dd>
+		</dl>
+
+
+		<ul class="list-unstyled text-right m-3" style="font-size:8px">
+			<li>USED LIB</li>
+			<li>bootstrap : https://getbootstrap.com/</li>
+			<li>jquery : http://jquery.com/</li>
+		</ul>
+	</div>
+</body>
+
+</html>
