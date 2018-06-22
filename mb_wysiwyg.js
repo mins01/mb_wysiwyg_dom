@@ -2262,7 +2262,7 @@ mb_wysiwyg.prototype.window_modal = function(url, name, width, height)
  } */
  if(this._M_UI_POPLAYER){
 	var d = _M.DOM.create('iframe',{"width":"80%","height":"80%","frameborder":"0","src":url
-									,"style":"width:90%;height:90%;margin:5%;border-width:0px;","allowTransparency":"false"});
+									,"style":"width:98%;height:98%;margin:2%;border-width:0px;","allowTransparency":"false"});
 	this._M_UI_POPLAYER.html(d);
 	this._M_UI_POPLAYER.openByElement(this.layout_root);
  }else if (window.showModelessDialog) { 
