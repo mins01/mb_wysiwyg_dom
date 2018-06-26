@@ -23,36 +23,8 @@
 	<link href="pop.css" rel="stylesheet" type="text/css">
 
 
-	<script type="text/javascript">
-		//<!--
-		function closeSelf() {
-			try {
-				if (ta_wysiwyg) ta_wysiwyg.close_window_modal();
-				self.close()
-			} catch (e) {
+	<script src="pop.script.js"></script>
 
-			}
-		}
-		if (window.dialogArguments) {
-			opener = window.dialogArguments;
-		}
-
-		if (window.parent != window.self) {
-			opener = window.parent;
-		}
-		var ta_wysiwyg = null;
-		try {
-			if (opener && opener.mb_wysiwyg && opener.mb_wysiwyg.ta_wysiwyg) {
-				var ta_wysiwyg = opener.mb_wysiwyg.ta_wysiwyg;
-			}
-		} catch (e) {}
-
-		if (opener == null) {
-			alert('Not Exist Parent Window');
-			closeSelf();
-		}
-		// -->
-	</script>
 	<script type="text/javascript">
 		function preview() {
 			var frm = document.frm_setting;
