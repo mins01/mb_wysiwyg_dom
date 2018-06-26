@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ko" class="bootstrap4">
 
 <head>
@@ -13,6 +12,9 @@
 	-->
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Create Link</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	    crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
@@ -166,10 +168,12 @@
 </head>
 
 <body>
-	<form name="frm_createlink" onSubmit="return createlink()">
-		<div class="container-fluid" style="height: 100%;">
-			<div class="d-flex justify-content-center flex-wrap" style="height: 100%;">
-				<div class=" align-self-center" style="width:100%;max-width:1000px;max-height:100%">
+
+	<div class="container-fluid" style="height: 100%;">
+		<div class="d-flex justify-content-center flex-wrap" style="height: 100%;">
+			<div class=" align-self-center" style="width:100%;max-width:1000px;max-height:100%">
+				<form name="frm_createlink" onSubmit="return createlink()">
+
 					<h1 class="text-center" style="font-size:20px; font-weight: bold">Create Link</h1>
 					<dl>
 						<dt class="sr-only">setting</dt>
@@ -202,13 +206,13 @@
 							</div>
 						</dd>
 					</dl>
+				</form>
 
 
-
-				</div>
 			</div>
 		</div>
-	</form>
+
+	</div>
 	<script>
 		initPage();
 	</script>

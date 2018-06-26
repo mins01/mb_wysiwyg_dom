@@ -121,7 +121,7 @@
 </head>
 
 <body onload="preview();">
-	<form name="frm_setting" id="frm_setting">
+	<form name="frm_setting" id="frm_setting" onsubmit="insert_table();return false;" action="#" style="height: 100%;">
 		<div class="container-fluid" style="height: 100%;">
 			<div class="d-flex justify-content-center flex-wrap" style="height: 100%;">
 				<div class=" align-self-center" style="width:100%;max-width:1000px;max-height:100%">
@@ -138,9 +138,9 @@
 						</dd>
 						<dd>
 							<div class="text-right">
-								<input name="button" type="button" class="btn btn-success" onclick="preview()" value="Preview" />
-								<input type="button" class="btn btn-info" value="Insert" onclick="insert_table()" />
-								<input type="button" class="btn btn-danger" value="Cancel" onclick="closeSelf();" />
+									<button type="button" class="btn btn-success" onclick="preview()" value="Preview">Preview</button>
+									<button type="submit" class="btn btn-info" value="Insert">Insert</button>
+									<button type="button" class="btn btn-danger" value="Cancel" onclick="closeSelf();">Cancel</button>
 							</div>
 						</dd>
 					</dl>
