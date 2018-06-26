@@ -1279,7 +1279,7 @@ mb_wysiwyg.prototype.mk_editer = function(){	//make editer in html
 	this.ifrm = this._mk_Iframe()
 	this.layout_editer_ifrme.appendChild(this.ifrm);
 //	this.layout_editer_ifrme.className="edit_ifame";
-	this.layout_editer_ifrme.className="layout_editer_ifrme noborder";
+	this.layout_editer_ifrme.className="layout_editer_ifrme";
 	this.ifrm.className="edit_ifame";
 
 	this.ifrm_element = this.ifrm;
@@ -1426,7 +1426,7 @@ mb_wysiwyg.prototype._mk_Iframe = function(  )	// Iframe
 	var onfocus =this.ta_variablename+'.mspan_close();';
 
 	var iframe = this.mk_element('iframe');
-	iframe.style.border="none";
+	// iframe.style.border="none";
 	iframe.name = 'ifrm:'+this.id;
 	iframe.id = 'ifrm:'+this.id;
 	iframe.style.width='100%';
@@ -1447,34 +1447,15 @@ mb_wysiwyg.prototype._mk_ModeChange = function(){
 	var this_s=this;
 
 
-
-	var div_out = this.mk_element('table');
+	var div_out = this.mk_element('div');
 	div_out.className="titlebar"
-	div_out.border="0";
-	div_out.align="center";
-	div_out.cellspacing="0";
-	div_out.cellpadding="0"
-	with(div_out.style){
-	width="100%";	
-	//backgroundColor="#cccccc";
-	tableLayout="fixed";
-	height="20px";	
-	}
-	
-	var new_tr = div_out.insertRow(-1);
-	td_left =new_tr.insertCell(-1);
-	td_right =new_tr.insertCell(-1);	
-	
-	td_left.noWrap=true;	
-	td_left.style.textAlign='left';
-	td_left.vAlign='middle';
-	td_left.style.height="20px";
-	td_left.style.overflow="hidden";
-	
-	td_right.style.textAlign='right';
-	//td_right.style.width='260px';
-	td_right.vAlign='middle';	
-	
+
+	var td_left = this.mk_element('div');
+	td_left.className="titlebar-left"
+	var td_right = this.mk_element('div');
+	td_right.className="titlebar-right"
+	div_out.appendChild(td_left)
+	div_out.appendChild(td_right)
 
 	var titlebar =  this.mk_span();
 	titlebar.innerHTML=this.title;
