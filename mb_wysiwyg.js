@@ -11,7 +11,7 @@ var ta_wysiwyg_path = null;
 var ta_arr = new Array();
 var outname= new Object();
 var ck_submit = false;
-var mb_wysiwyg_head_dtd = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+var mb_wysiwyg_head_dtd = '<!DOCTYPE html PUBLIC>';
 var mb_wysiwyg_head_css = '<style> body{ margin:2px;font-family: "돋움",Arial; overflow:scroll;  scrollbar-face-color:rgb(153,153,153); scrollbar-shadow-color:rgb(153,153,153);scrollbar-3dlight-color:rgb(102,102,102);scrollbar-darkshadow-color:rgb(51,51,51);scrollbar-base-color:rgb(153,153,153);scrollbar-arrow-color:rgb(51,51,51);scrollbar-track-color:rgb(204,204,204); }</style>';
 //mb_wysiwyg_head_css : 위지윅 에디터 안의 head에 들어가는 스타일
 //외부 파일에서 따로 정의하면 그 정의된 내용으로 대체된다. 다만 에디터 객체를 만들기 전에 정의해야한다.
@@ -31,6 +31,7 @@ temp = null;
 
 var mb_wysiwyg = function(v_ta, v_width, v_height, init_value,init_title){
 	this.version = '20140424'; //version : date  
+	this.window_modal_type = 'position_fixed';
 	this.path =".";
 	if(ta_wysiwyg_path){
 		this.path = ta_wysiwyg_path;
@@ -2253,6 +2254,52 @@ mb_wysiwyg.prototype.window_open = function(url, name, width, height)
  return win;
 }
 //--------------------------------------------------------showModelessDialog for FF
+
+mb_wysiwyg.Modal = {
+	"layout":null,
+	"init": function () {
+		if(this.layout) return;
+		var layout = this.layout = document.createElement('div');
+		layout.className = 'mb_wysiwyg-Modal-layout fullscreen';
+		var bg = this.bg = document.createElement('div');
+		bg.className = 'mb_wysiwyg-Modal-bg fullscreen';
+		bg.onclick = mb_wysiwyg.Modal.close;
+
+		var box = this.box = document.createElement('div');
+		box.className = 'mb_wysiwyg-Modal-box fullscreen';
+		box.onclick = mb_wysiwyg.Modal.close;
+
+		var iframe = this.iframe = document.createElement('iframe');
+		iframe.className = 'mb_wysiwyg-Modal-iframe';
+		iframe.allowTransparency = true;
+		box.appendChild(iframe);
+		
+
+		
+		var btn_close = this.btn_close = document.createElement('button');
+		btn_close.className = 'mb_wysiwyg-Modal-btn_close ';
+		btn_close.type="button";
+		btn_close.onclick = mb_wysiwyg.Modal.close;
+		btn_close.innerHTML='X';
+
+		this.layout.appendChild(bg)
+		this.layout.appendChild(box);
+		this.layout.appendChild(btn_close);
+		document.body.className +=' mb_wysiwyg-Modal'
+		document.body.appendChild(this.layout);
+	},
+	"open":function(url,name){
+		this.init();
+		document.body.className +=' mb_wysiwyg-Modal-opened'
+		this.iframe.src = url;
+	},
+	"close":function(){
+		document.body.className  = document.body.className.replace(' mb_wysiwyg-Modal-opened',' ');
+		this.iframe.src = 'about:blank';
+		
+		
+	}
+}
 mb_wysiwyg.prototype.window_modal = function(url, name, width, height) 
 { 
 	this.txtRange = this.currentElement();
@@ -2260,7 +2307,9 @@ mb_wysiwyg.prototype.window_modal = function(url, name, width, height)
  if (window.showModalDialog) { 
  window.showModalDialog(url, window, 'dialogWidth:'+width+'px;dialogHeight:'+height+'px'); 
  } */
- if(this._M_UI_POPLAYER){
+ if(this.window_modal_type =='position_fixed'){
+	mb_wysiwyg.Modal.open(url);
+ }else if(this._M_UI_POPLAYER){
 	var d = _M.DOM.create('iframe',{"width":"80%","height":"80%","frameborder":"0","src":url
 									,"style":"width:98%;height:98%;margin:2%;border-width:0px;","allowTransparency":"false"});
 	this._M_UI_POPLAYER.html(d);
@@ -2279,7 +2328,9 @@ mb_wysiwyg.prototype.close_window_modal = function(url, name, width, height)
  if (window.showModalDialog) { 
  window.showModalDialog(url, window, 'dialogWidth:'+width+'px;dialogHeight:'+height+'px'); 
  } */
- if(this._M_UI_POPLAYER){
+ if(this.window_modal_type =='position_fixed'){
+	mb_wysiwyg.Modal.close();
+ }else if(this._M_UI_POPLAYER){
 	this._M_UI_POPLAYER.close();
  }
 }

@@ -1,6 +1,7 @@
 body {
-padding:0px;margin:0px;
- font-family: "돋움","굴림", Seoul, "한강체",Arial, Helvetica, sans-serif;
+    padding:0px;margin:0px;
+    font-family: "돋움","굴림", Seoul, "한강체",Arial, Helvetica, sans-serif;
+    background-color:transparent
 }
 *{
 scrollbar-face-color:rgb(153,153,153); 
