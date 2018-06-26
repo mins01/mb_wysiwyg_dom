@@ -84,8 +84,16 @@ font-size:0px;
 }
 /* 에디터전용 */
 
-.mb_wysiwyg .editer { margin:0px;font-size:0px; border-style:none; border-width:0px; border-color:#CCCCCC;}
-.mb_wysiwyg .editer .edit_div{ margin:0px;font-size:0px; border-style:solid; border-width:1px; border-color:#CCCCCC;}
+.mb_wysiwyg .editer { margin:0px;font-size:0px; border-style:none; border-width:0px; border-color:#CCCCCC; position: relative; }
+.mb_wysiwyg .editer .layout_editer_ifrme{
+  position: absolute;top:0;left:0;right:0;bottom:0;
+}
+.mb_wysiwyg .editer .layout_editer_ifrme iframe{
+  position: absolute;top:0;left:0;right:0;bottom:0;
+  display: block;
+  background-color: #fff
+}
+.mb_wysiwyg .editer .edit_div{ margin:0px;font-size:0px; border-style:solid; border-width:1px; border-color:#CCCCCC; }
 .mb_wysiwyg .editer .edit_textarea{ 
 margin:0px; padding:0px;  font-size:12px; border-style:none; border-width:0px; border-color:#666666;
 background-color:#F2F2F2;
@@ -224,4 +232,85 @@ padding:0px;
   margin:0 auto auto auto;
   border-width: 0;
   display: block
+}
+
+
+.mbw-ctrl-button{
+  background-color: #666666;
+  color: #fff;
+  border: 1px outset gray;
+  padding:0; margin: 1px;
+  min-width:1.5em;;
+  height:1.5em;;
+  line-height: 1.2em;
+}
+
+.mbw-ctrl-button.mbw-stretch{
+ width:4em;
+}
+.mbw-ctrl-button.mbw-stretch[data-isStrech='1']{
+  background-color: #eee;
+  color: #333;
+  border: 1px inset #eee;
+
+}
+.mbw-stretch::before{
+  content: attr(title);
+}
+.mb_wysiwyg .titlebar *{
+  vertical-align: top;
+}
+.mbw-questionmark::before{
+  content: '?';
+}
+.mbw-plusmark::before{
+  content: '+';
+}
+.mbw-zeromark::before{
+  content: '0';
+}
+.mbw-minusmark::before{
+  content: '-';
+}
+.mbw-designmode{
+  width:4em;
+}
+.mbw-designmode::before{
+  content: 'design';
+}
+.mbw-ctrl-button.mbw-designmode[data-isDesignmode='0']{
+  background-color: #eee;
+  color: #333;
+  border: 1px inset #eee;
+}
+.mbw-designmode[data-isDesignmode='0']::before{
+  content: 'html';
+}
+
+
+/*
+화면 늘리기
+*/
+.mb_wysiwyg.stretch{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  padding:5px;
+  width:100% !important;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.mb_wysiwyg.stretch .editer {
+  height:100% !important;
+  
+
+}
+.mb_wysiwyg.stretch .editer .layout_editer_ifrme .edit_ifame,
+.mb_wysiwyg.stretch .editer .layout_editer_textarea .edit_textarea
+{
+  position: absolute;top:0;left:0;right:0;bottom:0;
+  display: block;
+  height:90% !important;
 }

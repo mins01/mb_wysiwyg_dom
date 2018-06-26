@@ -1279,7 +1279,7 @@ mb_wysiwyg.prototype.mk_editer = function(){	//make editer in html
 	this.ifrm = this._mk_Iframe()
 	this.layout_editer_ifrme.appendChild(this.ifrm);
 //	this.layout_editer_ifrme.className="edit_ifame";
-	this.layout_editer_ifrme.className="noborder";
+	this.layout_editer_ifrme.className="layout_editer_ifrme noborder";
 	this.ifrm.className="edit_ifame";
 
 	this.ifrm_element = this.ifrm;
@@ -1296,7 +1296,7 @@ mb_wysiwyg.prototype.mk_editer = function(){	//make editer in html
 	this.layout_editer_textarea.style.height="100%";
 	this.textarea.wrap="off";
 	//this.textarea.wrap="soft";
-	this.layout_editer_textarea.className="noborder";
+	this.layout_editer_textarea.className="layout_editer_textarea noborder";
 	this.textarea.className="edit_textarea";
 	this.textarea.wrap="soft";
 	with(this.textarea.style){
@@ -1491,17 +1491,25 @@ mb_wysiwyg.prototype._mk_ModeChange = function(){
 	input_design.title="디자인 모드";
 	input_design.style.margin="1px";*/
 	
-	var input_design = this.mk_image_btn('designmode','디자인 모드','designmode');
-//	input_design.hspace='2';
-	var input_html = this.mk_image_btn('codemode','코드 모드','codemode');
+// 	var input_design = this.mk_image_btn('designmode','디자인 모드','designmode');
+// //	input_design.hspace='2';
+// 	var input_html = this.mk_image_btn('codemode','코드 모드','codemode');
+
+	var input_design = this.mk_ctrl_button_btn('designmode','디자인모드변경','designmode');
+
 //	input_html.hspace='2';
-	var h_m = this.mk_image_btn('minusmark','높이감소','minusmark');
+	// var h_m = this.mk_image_btn('minusmark','높이감소','minusmark');
+	var h_m = this.mk_ctrl_button_btn('minusmark','높이감소','minusmark');
 //	h_m.hspace='1';
-	var h_i = this.mk_image_btn('zeromark','원래대로','zeromark');
+	// var h_i = this.mk_image_btn('zeromark','원래대로','zeromark');
+	var h_i = this.mk_ctrl_button_btn('zeromark','원래대로','zeromark');
 //	h_i.hspace='0';
-	var h_p = this.mk_image_btn('plusmark','높이증가','plusmark');
+	// var h_p = this.mk_image_btn('plusmark','높이증가','plusmark');
+	var h_p = this.mk_ctrl_button_btn('plusmark','높이증가','plusmark');
 //	h_p.hspace='1';
-	var maker_home =  this.mk_image_btn('questionmark','만든이 홈페이지로','questionmark');
+	var btn_stretch = this.mk_ctrl_button_btn('stretch','stretch','stretch');
+	// var maker_home =  this.mk_image_btn('questionmark','만든이 홈페이지로','questionmark');
+	var maker_home =  this.mk_ctrl_button_btn('questionmark','만든이 홈페이지로','questionmark');
 //	maker_home.hspace='2';
 	
 	maker_home.onclick=function(){
@@ -1509,14 +1517,23 @@ mb_wysiwyg.prototype._mk_ModeChange = function(){
 	}
 
 	this.input_design = input_design;
-	this.input_html = input_html;
+	this.isDesignmode = true;
+	this.input_design.setAttribute('data-isDesignmode',this.isDesignmode?'1':'0');
+
+	// this.input_html = input_html;
+
+	this.btn_stretch = btn_stretch
+	this.isStrech = false;
+	this.btn_stretch.setAttribute('data-isStrech',this.isStrech?'1':'0');
+
 
 	input_design.onclick=function(){
-		this_s.ModeChange(true);this.blur();
+		this_s.ModeChange(!this_s.isDesignmode);this.blur();
+		this_s.input_design.setAttribute('data-isDesignmode',this_s.isDesignmode?'1':'0');
 	}
-	input_html.onclick=function(){
-		this_s.ModeChange(false);this.blur();
-	}
+	// input_html.onclick=function(){
+	// 	this_s.ModeChange(false);this.blur();
+	// }
 	h_m.onclick=function(){
 		this_s.HeightReSize(2);this.blur();
 	}
@@ -1526,15 +1543,33 @@ mb_wysiwyg.prototype._mk_ModeChange = function(){
 	h_p.onclick=function(){
 		this_s.HeightReSize(1);this.blur();
 	}
+	btn_stretch.onclick=function(){
+		this_s.stretch(!this_s.isStrech);this.blur();
+		this_s.btn_stretch.setAttribute('data-isStrech',this_s.isStrech?'1':'0');
+	}
 
 	td_left.appendChild(titlebar);
 	td_right.appendChild(input_design);
-	td_right.appendChild(input_html);
+	// td_right.appendChild(input_html);
 	td_right.appendChild(h_m);
 	td_right.appendChild(h_i);
 	td_right.appendChild(h_p);
+	td_right.appendChild(btn_stretch);
 	td_right.appendChild(maker_home);
 	return div_out;
+}
+//====================================
+// 풀스크린 모드
+//====================================
+mb_wysiwyg.prototype.stretch = function(bool){
+	console.log(bool)
+	if(bool){
+		this.layout_root.className +=' stretch'
+	}else{
+		this.layout_root.className = this.layout_root.className.replace('stretch','').replace(' {2,}',' ');
+	}
+	this.isStrech = bool;
+	
 }
 //====================================
 // 에디터 높이 제어 생성
@@ -1556,6 +1591,7 @@ mb_wysiwyg.prototype.HeightReSize = function(type){
 		this.layout_editer.style.height = this.height;
 	}
 }
+
 //====================================
 // 모드 체인지 동작
 //====================================
@@ -1570,8 +1606,8 @@ mb_wysiwyg.prototype.ModeChange = function(bool,force){		//true:iframe , fase:te
 		this.layout_editer_textarea.style.display='none';
 		this.layout_editer_ifrme.style.display='';
 		this.ModeChangeFocus_ifame();
-		this.input_design.style.backgroundColor='#BBF9B0';
-		this.input_html.style.backgroundColor='';		
+		// this.input_design.style.backgroundColor='#BBF9B0';
+		// this.input_html.style.backgroundColor='';		
 
 	}else{
 		if(this.layout_editer_textarea.style.display=='none' ||force)
@@ -1582,10 +1618,11 @@ mb_wysiwyg.prototype.ModeChange = function(bool,force){		//true:iframe , fase:te
 		this.layout_editer_textarea.style.display='';
 		this.layout_editer_ifrme.style.display='none';
 		this.ModeChangeFocus_textarea();
-		this.input_design.style.backgroundColor='';
-		this.input_html.style.backgroundColor='#BBF9B0';
+		// this.input_design.style.backgroundColor='';
+		// this.input_html.style.backgroundColor='#BBF9B0';
 		
 	}
+	this.isDesignmode = bool;
 	this._init_event();
 }
 //====================================
@@ -2382,21 +2419,25 @@ mb_wysiwyg.prototype.mk_image_btn = function(name,title,command) // DOM으로 �
 // 버튼으로 만들기. class 설정됨
 mb_wysiwyg.prototype.mk_button_btn = function(name,title,command)
 {	
-	var icon = this.icon_path+'/icon.'+command.toLowerCase()+'.gif';
+	// var icon = this.icon_path+'/icon.'+command.toLowerCase()+'.gif';
 	var image_btn = document.createElement('button');
-	//image_btn.style.margin='1px';
-	//image_btn.src = icon;
-	//image_btn.name=name;
-	//image_btn.id=name;
 	image_btn.title=title;
-	//image_btn.alt=title;
 	image_btn.style.cursor='pointer';
 	image_btn.type="button";
 	image_btn.align="absmiddle"
-	//image_btn.appendChild(document.createTextNode(name));
-	//console.log('mbw-'+name)
-	//image_btn.className='imgbtn_0';
 	image_btn.className='mbw-button mbw-'+name
+	return image_btn;
+}
+// 버튼으로 만들기. class 설정됨
+mb_wysiwyg.prototype.mk_ctrl_button_btn = function(name,title,command)
+{	
+	// var icon = this.icon_path+'/icon.'+command.toLowerCase()+'.gif';
+	var image_btn = document.createElement('button');
+	image_btn.title=title;
+	image_btn.style.cursor='pointer';
+	image_btn.type="button";
+	image_btn.align="absmiddle"
+	image_btn.className='mbw-ctrl-button mbw-'+name
 	return image_btn;
 }
 
