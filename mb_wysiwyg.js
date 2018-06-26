@@ -367,7 +367,7 @@ if(cfg_toolbar.length<1){
 
 
 //	this.layout_toolbar.appendChild();
-	this.layout_toolbar.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';
+	// this.layout_toolbar.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';
 	this.layout_toolbar.className="toolbar";
 
 	for(var i=0;i<m;i++)
@@ -837,7 +837,7 @@ mb_wysiwyg.prototype._FormatBlock = function(name,title,command){
 		div1.className='view';
 		div1.style.overflow='visible';
 		div1.style.width='180px';
-		div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
 
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
@@ -942,7 +942,7 @@ mb_wysiwyg.prototype._Zoom = function(name,title,command){		//only IE
 		div1.className='view';
 		div1.style.overflow='visible';
 		div1.style.width='120px';
-		div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
 		
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
@@ -1005,7 +1005,7 @@ mb_wysiwyg.prototype._FontName = function(name,title,command){
 		div1.className='view';
 		div1.style.overflow='visible';
 		div1.style.width='130px';
-		div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
 
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
@@ -1067,7 +1067,7 @@ var this_s = this;
 		div1.className='view';
 		div1.style.overflow='visible';
 		div1.style.width='130px';
-		div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
 
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
@@ -1124,7 +1124,7 @@ mb_wysiwyg.prototype._ForeColor = function(name,title,command){
 		div1.className='view';
 		div1.style.overflow='visible';
 		div1.style.width=Math.floor(color_arr.length*((7*3)+1)+10)+'px';
-		div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
 		
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
@@ -1190,7 +1190,7 @@ mb_wysiwyg.prototype._HiliteColor = function(name,title,command){
 		div1.style.overflow='visible';
 //		div1.style.width='150px';
 		div1.style.width=Math.floor(color_arr.length*((7*3)+1)+10)+'px';
-		div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
 		
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
