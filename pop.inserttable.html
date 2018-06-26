@@ -1,238 +1,243 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" class="bootstrap4">
+
 <head>
-<!--
+	<!--
 저작권:mins가 가집니다.
 허락받지 않고서는 쓸 수 없습니다.
--=---------------------------------=-
+-=-=-=-
 테이블 삽입 : 테이블을 설정 생성 해서 삽입
 -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Insert Table</title>
-<link href="pop.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-form{margin:0px; padding:0px;}
-body {
-	border-style:none;
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-}
-</style>
-<script type="text/javascript" src="js_layer_colorpicker.js"></script>
-<script type="text/javascript">
-if(window.dialogArguments){
- opener = window.dialogArguments;
-}
-if(window.parent != window.self){
-	opener = window.parent;
-}
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Insert Table</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-if(opener.mb_wysiwyg.ta_wysiwyg)
-var ta_wysiwyg = opener.mb_wysiwyg.ta_wysiwyg;
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	  crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	  crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	  crossorigin="anonymous"></script>
+
+	<link href="pop.css" rel="stylesheet" type="text/css">
 
 
-function preview(){
-	var frm = document.frm_setting;
-	if(parseInt(frm.row.value) < 1 || parseInt(frm.col.value) < 1){ return;}
-	var ta_preview = document.getElementById('preview');
-	var ta_out =document.createElement('table');
-	
-	frm.borderWidth.value=parseInt(frm.borderWidth.value)?parseInt(frm.borderWidth.value):'0';
-	
-	frm.width.value = frm.width.value.toString().replace(/[^%0-9]/g,'0');
-	frm.td_width.value = frm.td_width.value.toString().replace(/[^0-9]/g,'0');
-		
-	//frm.borderColor.value = frm.borderColor.value.toString().replace(/[^#0-9a-fA-F]/g,'0');
-	//frm.backgroundColor.value = frm.backgroundColor.value.toString().replace(/[^#0-9a-fA-F]/g,'0');
+	<script type="text/javascript" src="js_layer_colorpicker.js"></script>
 
-	ta_out.width = frm.width.value;
-	ta_out.height = frm.height.value;
-	ta_out.cellPadding = frm.cellPadding.value;
-	ta_out.cellSpacing = frm.cellSpacing.value;
-	
-	ta_out.style.borderColor = frm.borderColor.value;
-	ta_out.style.backgroundColor = frm.backgroundColor.value;	
-	
-	ta_out.style.borderCollapse = frm.borderCollapse.value;
-	ta_out.style.borderStyle = frm.borderStyle.value;	
-	ta_out.style.borderWidth = frm.borderWidth.value+'px';
-	for(var i = 0;i<parseInt(frm.row.value);i++){
-		var new_tr = ta_out.insertRow(-1);
-		for(var j = 0;j<parseInt(frm.col.value);j++){
-			var	new_td =new_tr.insertCell(-1);
-			new_td.innerHTML ='&nbsp;';
-			new_td.style.borderWidth = frm.borderWidth.value+'px';
-			new_td.style.borderColor = frm.borderColor.value;
-			new_td.style.borderStyle = frm.borderStyle.value;
-			if(frm.td_width.value){new_td.style.width = frm.td_width.value+'px';}
+	<script type="text/javascript">
+		//<!--
+		function closeSelf() {
+			try {
+				if (ta_wysiwyg) ta_wysiwyg.close_window_modal();
+				self.close()
+			} catch (e) {
+
+			}
 		}
-	}
-	ta_preview.innerHTML = '';
-	ta_preview.appendChild(ta_out);
-}
-function insert_table(){
-var ta_preview = document.getElementById('preview');	//for preview
-	if(!opener){alert('not exist parent page'); closeSelf();}
-	var ta_preview = document.getElementById('preview');	
-	if(ta_preview.firstChild){
-		ta_wysiwyg.InsertTable(ta_preview.firstChild);
-		closeSelf();
-	}else{
-	alert('not exist a table.');
-	}
-}
+		if (window.dialogArguments) {
+			opener = window.dialogArguments;
+		}
 
-function closeSelf(){
-		ta_wysiwyg.close_window_modal();
-		self.close();
-}
-</script>
+		if (window.parent != window.self) {
+			opener = window.parent;
+		}
+		var ta_wysiwyg = null;
+		try {
+			if (opener && opener.mb_wysiwyg && opener.mb_wysiwyg.ta_wysiwyg) {
+				var ta_wysiwyg = opener.mb_wysiwyg.ta_wysiwyg;
+			}
+		} catch (e) {}
+
+		if (opener == null) {
+			alert('Not Exist Parent Window');
+			closeSelf();
+		}
+		// -->
+	</script>
+	<script type="text/javascript">
+		function preview() {
+			var frm = document.frm_setting;
+			if (parseInt(frm.row.value) < 1 || parseInt(frm.col.value) < 1) {
+				return;
+			}
+			var ta_preview = document.getElementById('preview');
+			var ta_out = document.createElement('table');
+
+			frm.borderWidth.value = parseInt(frm.borderWidth.value) ? parseInt(frm.borderWidth.value) : '0';
+
+			frm.width.value = frm.width.value.toString().replace(/[^%0-9]/g, '0');
+			frm.td_width.value = frm.td_width.value.toString().replace(/[^0-9]/g, '0');
+
+			//frm.borderColor.value = frm.borderColor.value.toString().replace(/[^#0-9a-fA-F]/g,'0');
+			//frm.backgroundColor.value = frm.backgroundColor.value.toString().replace(/[^#0-9a-fA-F]/g,'0');
+
+			ta_out.width = frm.width.value;
+			ta_out.height = frm.height.value;
+			ta_out.cellPadding = frm.cellPadding.value;
+			ta_out.cellSpacing = frm.cellSpacing.value;
+
+			ta_out.style.borderColor = frm.borderColor.value;
+			ta_out.style.backgroundColor = frm.backgroundColor.value;
+
+			ta_out.style.borderCollapse = frm.borderCollapse.value;
+			ta_out.style.borderStyle = frm.borderStyle.value;
+			ta_out.style.borderWidth = frm.borderWidth.value + 'px';
+			for (var i = 0; i < parseInt(frm.row.value); i++) {
+				var new_tr = ta_out.insertRow(-1);
+				for (var j = 0; j < parseInt(frm.col.value); j++) {
+					var new_td = new_tr.insertCell(-1);
+					new_td.innerHTML = '&nbsp;';
+					new_td.style.borderWidth = frm.borderWidth.value + 'px';
+					new_td.style.borderColor = frm.borderColor.value;
+					new_td.style.borderStyle = frm.borderStyle.value;
+					if (frm.td_width.value) {
+						new_td.style.width = frm.td_width.value + 'px';
+					}
+				}
+			}
+			ta_preview.innerHTML = '';
+			ta_preview.appendChild(ta_out);
+		}
+
+		function insert_table() {
+			var ta_preview = document.getElementById('preview'); //for preview
+			if (!opener) {
+				alert('not exist parent page');
+				closeSelf();
+			}
+			var ta_preview = document.getElementById('preview');
+			if (ta_preview.firstChild) {
+				ta_wysiwyg.InsertTable(ta_preview.firstChild);
+				closeSelf();
+			} else {
+				alert('not exist a table.');
+			}
+		}
+
+		function closeSelf() {
+			ta_wysiwyg.close_window_modal();
+			self.close();
+		}
+	</script>
 </head>
-<body onload="preview();"> 
-<fieldset class="fieldset"><legend class="legend">Insert Table</legend><table width="100%" border="0" cellpadding="2" cellspacing="0" class="table"> 
-        <tr> 
-          <td height="22" class="title_p10">Setting</td> 
-        </tr> 
-        <tr> 
-          <td align="center" valign="middle"><form name="frm_setting" id="frm_setting"> 
-              <table width="500" border="0" cellpadding="0" cellspacing="1" class="table"> 
-                <tr> 
-                  <td width="100" height="22" class="title_p10">Row</td> 
-                  <td width="150" height="22" class="txt_p10"><select name="row" class="textbox" id="row" onchange="preview();">
-                    <option value="3" selected="3">3</option>
-                  </select>
-				  <script type="text/javascript">
-				  var ta_select = document.frm_setting.row;
-				  var option = document.createElement('option');
-				  for(var i=1;i<=30;i++){
-					  option1 = option.cloneNode(true);
-					  option1.innerHTML = i;
-					  option1.value = i;
-					  ta_select.appendChild(option1)	;				  
-				  }
-				  </script></td> 
-                  <td width="100" height="22" class="title_p10">Col</td> 
-                  <td width="150" height="22" class="txt_p10"><select name="col" class="textbox" id="col" onchange="preview();">
-                    <option value="3" selected="selected">3</option>
-                  </select>
-                    <script type="text/javascript">
-				  var ta_select = document.frm_setting.col;
-				  var option = document.createElement('option');
-				  for(var i=1;i<=30;i++){
-					  option1 = option.cloneNode(true);
-					  option1.innerHTML = i;
-					  option1.value = i;
-					  ta_select.appendChild(option1)	;				  
-				  }
-				    </script> </td> 
-                </tr> 
-                <tr> 
-                  <td width="90" height="22" class="title_p10">Width</td> 
-                  <td height="22" class="txt_p10"><input name="width" type="text" class="textbox" id="width3"  onblur="preview();" onkeyup="if(this.value){this.form.td_width.value='';}" value="80%" size="8" maxlength="5" /></td>
-                  <td height="22" class="title_p10">Height</td> 
-                  <td height="22" class="txt_p10"><input name="height" type="text" class="textbox" id="height"  onblur="preview();" size="8" maxlength="5"  /></td> 
-                </tr> 
-                <tr> 
-                  <td height="22" class="title_p10">Padding</td> 
-                  <td height="22" class="txt_p10">
-				  <select name="cellPadding" class="textbox" id="cellPadding"   onblur="preview();">
-                      <option value="0" selected="selected">0</option>
-                    </select>
-                    <script type="text/javascript">
-				  var ta_select = document.frm_setting.cellPadding;
-				  var option = document.createElement('option');
-				  for(var i=0;i<=50;i++){
-					  option1 = option.cloneNode(true);
-					  option1.innerHTML = i;
-					  option1.value = i;
-					  ta_select.appendChild(option1)	;				  
-				  }
-				    </script></td> 
-                  <td height="22" class="title_p10">Spacing</td> 
-                  <td height="22" class="txt_p10">
-				  <select name="cellSpacing" class="textbox" id="cellSpacing" onchange="if(this.value=='0'){this.form.borderCollapse.value='collapse'}else{this.form.borderCollapse.value='separate'}" onblur="preview();">
-                      <option value="0" selected="selected">0</option>
-                    </select>
-                    <script type="text/javascript">
-				  var ta_select = document.frm_setting.cellSpacing;
-				  var option = document.createElement('option');
-				  for(var i=0;i<=50;i++){
-					  option1 = option.cloneNode(true);
-					  option1.innerHTML = i;
-					  option1.value = i;
-					  ta_select.appendChild(option1)	;				  
 
-				  }
-				    </script></td> 
-                </tr>
-                <tr>
-                  <td height="22" class="title_p10">BorderColor</td>
-                  <td height="22" class="txt_p10"><input name="borderColor" type="text" class="textbox" id="borderColor"  onblur="preview();" value="#CCCCCC" size="7" maxlength="7" />
-                    <img src="icon/color_swatch.gif" width="16" height="16" hspace="2" align="absmiddle" id='color_swatch1' />
-<script type="text/javascript">
-js_layer_colorpicker(document.getElementById('borderColor'),'-80',60,document.getElementById('color_swatch1'));
-</script>     			  </td>
-                  <td height="22" class="title_p10">BorderWidth</td>
-                  <td height="22" class="txt_p10">                    <select name="borderWidth" class="textbox" id="borderWidth"  onblur="preview();">
-                      <option value="1" selected="selected">1</option>
-                    </select>
-                    <script type="text/javascript">
-				  var ta_select = document.frm_setting.borderWidth;
-				  var option = document.createElement('option');
-				  for(var i=0;i<=50;i++){
-					  option1 = option.cloneNode(true);
-					  option1.innerHTML = i;
-					  option1.value = i;
-					  ta_select.appendChild(option1)	;				  
-				  }
-				    </script>px</td>
-                </tr>
-                <tr>
-                  <td height="22" class="title_p10">BGColor</td>
-                  <td height="22" class="txt_p10"><input name="backgroundColor" type="text" class="textbox" id="backgroundColor"  onblur="preview();" value="#FFFFFF" size="7" maxlength="7" />
-                    <img src="icon/color_swatch.gif" width="16" height="16" hspace="2" align="absmiddle" id='color_swatch2' />
-<script type="text/javascript">
-js_layer_colorpicker(document.getElementById('backgroundColor'),'-80',60,document.getElementById('color_swatch2'));
-</script>     		  </td>
-                  <td height="22" class="title_p10">BorderStyle</td>
-                  <td height="22" class="txt_p10"><select name="borderStyle" class="textbox" id="borderStyle"  onblur="preview();">
-                    <option value="none">none</option>
-                    <option value="dotted">dotted</option>
-                    <option value="dashed">dashed</option>
-                    <option value="solid" selected="selected">solid</option>
-                    <option value="double">double</option>
-                    <option value="groove">groove</option>
-                    <option value="ridge">ridge</option>
-                    <option value="inset">inset</option>
-                    <option value="outset">outset</option>
-                                                                                                            </select></td>
-                </tr>
-                <tr>
-                  <td height="22" class="title_p10">TD Width</td>
-                  <td height="22" class="txt_p10"><input name="td_width" type="text" class="textbox" id="td_width" size="8" maxlength="5"  onkeyup="if(this.value){this.form.width.value='';}"  onblur="preview();"/>
-                    px</td>
-                  <td height="22" class="title_p10">Collapse</td>
-                  <td height="22" class="txt_p10"><select name="borderCollapse" class="textbox" id="borderCollapse"  onblur="preview();">
-                      <option value="collapse" selected="selected">collapse</option>
-                      <option value="separate">separate</option>
-                  </select></td>
-                </tr>
-                <tr align="right">
-                  <td height="24" colspan="4" class="none"><input name="button" type="button" class="btn" onclick="preview()" value="Preview" />
-                  <input type="button" class="btn" value="Insert" onclick="insert_table()" /> <input type="button" class="btn" value="Cancel" onclick="closeSelf();" /></td>
-                </tr> 
+<body onload="preview();">
+	<form name="frm_setting" id="frm_setting">
+		<div class="container-fluid" style="height: 100%;">
+			<div class="d-flex justify-content-center flex-wrap" style="height: 100%;">
+				<div class=" align-self-center" style="width:100%;max-width:1000px;max-height:100%">
+					<h1 class="text-center" style="font-size:20px; font-weight: bold">Insert Table</h1>
+					<dl>
+						<dt>Preview</dt>
+						<dd>
+							<div class="card">
+								<div class="card-body">
+									<div id="preview" class="border12px rounded" style=" font-size:normal;background-color:#fff; height:150px; overflow:auto; padding:5px; "></div>
+								</div>
+							</div>
 
-            </table> 
-            </form></td> 
-        </tr> 
-				<tr> 
-          <td height="22" class="title_p10">Preview</td> 
-        </tr> 
-        <tr> 
-          <td align="center"><div id="preview" class="border12px" style=" font-size:normal;width:500px; background-color:#eeeeee; height:150px; overflow:auto; padding:5px; "></div></td> 
-        </tr> 
-    </table></fieldset>
+						</dd>
+						<dd>
+							<div class="text-right">
+								<input name="button" type="button" class="btn btn-success" onclick="preview()" value="Preview" />
+								<input type="button" class="btn btn-info" value="Insert" onclick="insert_table()" />
+								<input type="button" class="btn btn-danger" value="Cancel" onclick="closeSelf();" />
+							</div>
+						</dd>
+					</dl>
+					<dl>
+						<dt>Setting</dt>
+						<dd>
+							<div class="form-group row">
+								<label class="col-sm-2 col-lg-1 col-form-label">Row</label>
+								<div class="col-sm-10 col-lg-5">
+									<input name="row" type="number" class="form-control form-control-sm" id="row" onchange="preview();" value="3" min="1" max="100">
+								</div>
+
+								<label class="col-sm-2 col-lg-1 col-form-label">Col</label>
+								<div class="col-sm-10 col-lg-5">
+									<input name="col" type="number" class="form-control form-control-sm" id="col" onchange="preview();" value="5" min="1" max="100">
+								</div>
+								<label class="col-sm-2 col-lg-1 col-form-label">Width</label>
+								<div class="col-sm-10 col-lg-5">
+									<input name="width" type="text" class="form-control form-control-sm" id="width3" onblur="preview();" onkeyup="if(this.value){this.form.td_width.value='';}"
+									  value="98%" />
+								</div>
+								<label class="col-sm-2 col-lg-1 col-form-label">Height</label>
+								<div class="col-sm-10 col-lg-5">
+									<input name="height" type="text" class="form-control form-control-sm" id="height" onblur="preview();" value="" />
+								</div>
+								<label class="col-sm-2 col-lg-1 col-form-label">Padding</label>
+								<div class="col-sm-10 col-lg-5">
+									<input name="cellPadding" type="number" class="form-control form-control-sm" id="cellPadding" onchange="preview();" value="5"
+									  min="0" max="100">
+								</div>
+								<label class="col-sm-2 col-lg-1 col-form-label">Spacing</label>
+								<div class="col-sm-10 col-lg-5">
+									<input name="cellSpacing" type="number" class="form-control form-control-sm" id="cellSpacing" onchange="if(this.value=='0'){this.form.borderCollapse.value='collapse'}else{this.form.borderCollapse.value='separate'}"
+									  value="5" min="0" max="100">
+								</div>
+
+								<label class="col-sm-2 col-lg-1 col-form-label">borderColor</label>
+								<div class="col-sm-10 col-lg-5">
+									<input name="borderColor" type="color" class="form-control form-control-sm" id="borderColor" style="padding:0" onblur="preview();"
+									  value="#CCCCCC" size="7" maxlength="7" />
+								</div>
+
+								<label class="col-sm-2 col-lg-1 col-form-label">backgroundColor</label>
+								<div class="col-sm-10 col-lg-5">
+									<input name="backgroundColor" type="color" class="form-control form-control-sm" id="backgroundColor" style="padding:0" onblur="preview();"
+									  value="#ffffff" size="7" maxlength="7" />
+								</div>
+								<label class="col-sm-2 col-lg-1 col-form-label">borderWidth</label>
+								<div class="col-sm-10 col-lg-5">
+									<input name="borderWidth" type="text" class="form-control form-control-sm" id="borderWidth" onchange="preview();" value="1px">
+								</div>
+								<label class="col-sm-2 col-lg-1 col-form-label">borderStyle</label>
+								<div class="col-sm-10 col-lg-5">
+									<select name="borderStyle" class="form-control form-control-sm" id="borderStyle" onblur="preview();">
+										<option value="none">none</option>
+										<option value="dotted">dotted</option>
+										<option value="dashed">dashed</option>
+										<option value="solid" selected="selected">solid</option>
+										<option value="double">double</option>
+										<option value="groove">groove</option>
+										<option value="ridge">ridge</option>
+										<option value="inset">inset</option>
+										<option value="outset">outset</option>
+									</select>
+								</div>
+								<label class="col-sm-2 col-lg-1 col-form-label">td Width</label>
+								<div class="col-sm-10 col-lg-5">
+									<div class="input-group mb-3">
+										<input name="td_width" type="number" class="form-control form-control-sm" id="td_width" onchange="preview();" value="" min="0"
+										  max="100">
+										<div class="input-group-append">
+											<span class="input-group-text">px</span>
+										</div>
+									</div>
+								</div>
+								<label class="col-sm-2 col-lg-1 col-form-label">borderCollapse</label>
+								<div class="col-sm-10 col-lg-5">
+									<select name="borderCollapse" class="form-control form-control-sm" id="borderCollapse" onblur="preview();">
+										<option value="collapse" selected="selected">collapse</option>
+										<option value="separate">separate</option>
+									</select>
+								</div>
+
+							</div>
+						</dd>
+					</dl>
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+	</form>
 </body>
+
 </html>
