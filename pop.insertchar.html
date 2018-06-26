@@ -1,152 +1,219 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" class="bootstrap4">
+
 <head>
-<!--
+	<!--
 저작권:mins가 가집니다.
 허락받지 않고서는 쓸 수 없습니다.
 -=---------------------------------=-
 테이블 삽입 : 테이블을 설정 생성 해서 삽입
 -->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert Character</title>
-<style type="text/css">
-input,select{border-width:1; border-style:solid;  border-color:#999999;font-size:9pt;}
-form{margin:0px; padding:0px;}
-#div_charmap{font-size:0px;}
-#div_charmap input{width:24px;height:24px; font-size:12pt; margin:1px; cursor:pointer;}
-</style>
-<link href="pop.css" rel="stylesheet" type="text/css">
-<script type="text/javascript">
-//<!--
-if(window.dialogArguments){
- opener = window.dialogArguments;
-}
-if(window.parent != window.self){
-	opener = window.parent;
-}
-if(opener.mb_wysiwyg.ta_wysiwyg){
-var ta_wysiwyg = opener.mb_wysiwyg.ta_wysiwyg;
-}
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert Character</title>
 
-
-var chars = new Array();
-var chars_name = new Array();
-
-chars_name.push('[#?@]일반문장부호');
-chars.push('!"#%&\'()*,-./:;?@[\]_{|}¡¦§©«¬­®°µ¶·»¿–—―‗‘’‚‛“”„†‡•‥…‰′″‹›※‼‾⁄');
-chars_name.push('[￦$￥]화폐기호');
-chars.push('$￠￡¤￥???\€＄￠￡￥￦');
-chars_name.push('[℃?℉]단위기호');
-chars.push('℃?℉ℓ№℡™ΩÅ?㎀㎁㎂㎃㎄㎈㎉㎊㎋㎌㎍㎎㎏㎐㎑㎒㎓㎔㎕㎖㎗㎘㎙㎚㎛㎜㎝㎞㎟㎠㎡㎢㎣㎤㎥㎦㎧㎨㎩㎪㎫㎬㎭㎮㎯㎰㎱㎲㎳㎴㎵㎶㎷㎸㎹㎺㎻㎼㎽㎾㎿㏀㏁㏂㏃㏄㏅㏆㏇㏈㏉㏊㏏㏐㏓㏖㏘㏛㏜㏝');
-chars_name.push('[¼Ⅵⅸ]여러가지숫자');
-chars.push('0123456789¼½¾⅓⅔⅛⅜⅝⅞ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ０１２３４５６７８９');
-chars_name.push('[←↕↘]화살표');
-chars.push('←↑→↓↔↕↖↗↘↙↨⇒⇔');
-chars_name.push('[±∑∞]수학기호');
-chars.push('+<=>±×÷∀∂∃∆∇∈∋∏∑−∕∙√∝∞∟∠∥∧∨∩∪∫∬∮∴∵∼∽≈≒≠≡≤≥≪≫⊂⊃⊆⊇⊙⊥');
-chars_name.push('[①⑴ⓐ]괄호영숫자');
-chars.push('①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑴⑵⑶⑷⑸⑹⑺⑻⑼⑽⑾⑿⒀⒁⒂⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ');
-chars_name.push('[┓┨┭]테두리모양');
-chars.push('─━│┃┌┍┎┏┐┑┒┓└┕┖┗┘┙┚┛├┝┞┟┠┡┢┣┤┥┦┧┨┩┪┫┬┭┮┯┰┱┲┳┴┵┶┷┸┹┺┻┼┽┾┿╀╁╂╃╄╅╅╆╇╈╉╊╋═║╒╓╔╕╖╗╘╙╚╛╜╝╞╟╠╡╢╣╤╥╦╧╨╩╪╫╬');
-chars_name.push('[▒▣▥]블록요소도형');
-chars.push('▀▄█▌▐░▒▓■□▣▤▥▦▧▨▩▪▫▬▲△▶▷►▼▽◀◁◄◆◇◈◊○◎●◐◑◘◙◦');
-chars_name.push('[★♠♧]여러가지도형');
-chars.push('★☆☎☏☜☞☺☻☼♀♂♠♡♣♤♥♦♧♨♩♪♫♬♭');
-chars_name.push('[２Ａ＠]전각기호');
-chars.push('！＂＃＄％＆＇（）＊＋，－．／０１２３４５６７８９：；＜＝＞？＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ［＼］＾＿｀ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ｛｜｝～￠￡￢￣￥￦');
-chars_name.push('[ΧΨΩ]그리스어');
-chars.push(";΄΅Ά·ΈΉΊΌΎΏΐΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩΪΫάέήίΰαβγδεζηθικλμνξοπρςστυφχψωϊϋόύώΣΤΥΦΧΨΩΪΫάέήίΰαβγδεζηθικλμνξοπρςστυφχψωϊϋόύώ");
-
-chars_name.push('[あいう]히라가나');
-chars.push('ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔ゛゜ゝゞ');
-chars_name.push('[アイウ]가타카나');
-chars.push('ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶヷヸヹヺ・ーヽヾ ｡｢｣､･ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝﾞﾟ');
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
 
-function mk_charmap(num){
-	var st='',ed='';
-	var str='';
-	var ta = document.getElementById('div_charmap');
-	if(!chars[num]) return;
-	var ta_arr = chars[num].split('');
-	var btn = document.createElement('input');
-	btn.type='button';
-	
-	ta.innerHTML ='';
-	for(var i = 0,m=ta_arr.length;i<=m;i++){
-		if(ta_arr[i] && ta_arr[i] != '?'){
-			btn1 = btn.cloneNode(true);
-			btn1.title = ta_arr[i];
-			btn1.value = ta_arr[i];
-			btn1.onclick = function(){
-				selectchar(this);
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	    crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	    crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	    crossorigin="anonymous"></script>
+
+	<link href="pop.css" rel="stylesheet" type="text/css">
+
+
+	<style type="text/css">
+		input,
+		select {
+			border-width: 1;
+			border-style: solid;
+			border-color: #999999;
+			font-size: 9pt;
+		}
+
+		form {
+			margin: 0px;
+			padding: 0px;
+		}
+
+		#div_charmap {
+			font-size: 0px;
+		}
+
+		#div_charmap input {
+			width: 28px;
+			height: 28px;
+			font-size: 14pt;
+			line-height: 1em;
+			vertical-align: middle;
+			margin: 2px;
+			padding:2px;
+			cursor: pointer;
+		}
+	</style>
+	<script type="text/javascript">
+		//<!--
+		function closeSelf() {
+			try {
+				if (ta_wysiwyg) ta_wysiwyg.close_window_modal();
+				self.close()
+			} catch (e) {
+
 			}
 		}
-		ta.appendChild(btn1);
-	}
-}
-function selectchar(this_s){
-	var ta = document.getElementById('txt:insertchar');
-	ta.value+=this_s.value
-	this_s.blur();
-}
+		if (window.dialogArguments) {
+			opener = window.dialogArguments;
+		}
 
-function insert_char(){
-	var ta = document.getElementById('txt:insertchar');
-	if(!opener){alert('not exist parent page'); closeSelf();}
-	ta_wysiwyg.InsertChar(ta.value);
-	closeSelf();
-}
+		if (window.parent != window.self) {
+			opener = window.parent;
+		}
+		var ta_wysiwyg = null;
+		try {
+			if (opener && opener.mb_wysiwyg && opener.mb_wysiwyg.ta_wysiwyg) {
+				var ta_wysiwyg = opener.mb_wysiwyg.ta_wysiwyg;
+			}
+		} catch (e) {}
 
-function mk_select(){
-//chars_name
- var ta = document.getElementById('select_charmap');
- var newOpt=null;
- for(var i = 0 , m = chars_name.length;i<m;i++)
- {
-	 newOpt=document.createElement("OPTION");
-//	 newOpt.text=chars_name[i];
-	 newOpt.innerHTML=chars_name[i];	 
-	 newOpt.name=chars_name[i];
-	 newOpt.value=i;
-	 ta.appendChild(newOpt);
- }
-}
+		if (opener == null) {
+			alert('Not Exist Parent Window');
+			closeSelf();
+		}
+		// -->
+	</script>
+	<script type="text/javascript">
+		//<!--
 
-function closeSelf(){
-		ta_wysiwyg.close_window_modal();
-		self.close();
-}
-//-->
-</script>
+		var chars = new Array();
+		var chars_name = new Array();
+
+		chars_name.push('[#?@]일반문장부호');
+		chars.push('!"#%&\'()*,-./:;?@[\]_{|}¡¦§©«¬­®°µ¶·»¿–—―‗‘’‚‛“”„†‡•‥…‰′″‹›※‼‾⁄');
+		chars_name.push('[￦$￥]화폐기호');
+		chars.push('$￠￡¤￥???\€＄￠￡￥￦');
+		chars_name.push('[℃?℉]단위기호');
+		chars.push('℃?℉ℓ№℡™ΩÅ?㎀㎁㎂㎃㎄㎈㎉㎊㎋㎌㎍㎎㎏㎐㎑㎒㎓㎔㎕㎖㎗㎘㎙㎚㎛㎜㎝㎞㎟㎠㎡㎢㎣㎤㎥㎦㎧㎨㎩㎪㎫㎬㎭㎮㎯㎰㎱㎲㎳㎴㎵㎶㎷㎸㎹㎺㎻㎼㎽㎾㎿㏀㏁㏂㏃㏄㏅㏆㏇㏈㏉㏊㏏㏐㏓㏖㏘㏛㏜㏝');
+		chars_name.push('[¼Ⅵⅸ]여러가지숫자');
+		chars.push('0123456789¼½¾⅓⅔⅛⅜⅝⅞ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ０１２３４５６７８９');
+		chars_name.push('[←↕↘]화살표');
+		chars.push('←↑→↓↔↕↖↗↘↙↨⇒⇔');
+		chars_name.push('[±∑∞]수학기호');
+		chars.push('+<=>±×÷∀∂∃∆∇∈∋∏∑−∕∙√∝∞∟∠∥∧∨∩∪∫∬∮∴∵∼∽≈≒≠≡≤≥≪≫⊂⊃⊆⊇⊙⊥');
+		chars_name.push('[①⑴ⓐ]괄호영숫자');
+		chars.push('①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑴⑵⑶⑷⑸⑹⑺⑻⑼⑽⑾⑿⒀⒁⒂⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ');
+		chars_name.push('[┓┨┭]테두리모양');
+		chars.push('─━│┃┌┍┎┏┐┑┒┓└┕┖┗┘┙┚┛├┝┞┟┠┡┢┣┤┥┦┧┨┩┪┫┬┭┮┯┰┱┲┳┴┵┶┷┸┹┺┻┼┽┾┿╀╁╂╃╄╅╅╆╇╈╉╊╋═║╒╓╔╕╖╗╘╙╚╛╜╝╞╟╠╡╢╣╤╥╦╧╨╩╪╫╬');
+		chars_name.push('[▒▣▥]블록요소도형');
+		chars.push('▀▄█▌▐░▒▓■□▣▤▥▦▧▨▩▪▫▬▲△▶▷►▼▽◀◁◄◆◇◈◊○◎●◐◑◘◙◦');
+		chars_name.push('[★♠♧]여러가지도형');
+		chars.push('★☆☎☏☜☞☺☻☼♀♂♠♡♣♤♥♦♧♨♩♪♫♬♭');
+		chars_name.push('[２Ａ＠]전각기호');
+		chars.push('！＂＃＄％＆＇（）＊＋，－．／０１２３４５６７８９：；＜＝＞？＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ［＼］＾＿｀ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ｛｜｝～￠￡￢￣￥￦');
+		chars_name.push('[ΧΨΩ]그리스어');
+		chars.push(
+			";΄΅Ά·ΈΉΊΌΎΏΐΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩΪΫάέήίΰαβγδεζηθικλμνξοπρςστυφχψωϊϋόύώΣΤΥΦΧΨΩΪΫάέήίΰαβγδεζηθικλμνξοπρςστυφχψωϊϋόύώ"
+		);
+
+		chars_name.push('[あいう]히라가나');
+		chars.push('ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔ゛゜ゝゞ');
+		chars_name.push('[アイウ]가타카나');
+		chars.push(
+			'ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶヷヸヹヺ・ーヽヾ ｡｢｣､･ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝﾞﾟ'
+		);
+
+
+
+		function mk_charmap(num) {
+			var st = '',
+				ed = '';
+			var str = '';
+			var ta = document.getElementById('div_charmap');
+			if (!chars[num]) return;
+			var ta_arr = chars[num].split('');
+			var btn = document.createElement('input');
+			btn.type = 'button';
+			btn.className ="btn btn-outline-dark"
+
+			ta.innerHTML = '';
+			for (var i = 0, m = ta_arr.length; i <= m; i++) {
+				if (ta_arr[i] && ta_arr[i] != '?') {
+					btn1 = btn.cloneNode(true);
+					btn1.title = ta_arr[i];
+					btn1.value = ta_arr[i];
+					btn1.onclick = function () {
+						selectchar(this);
+					}
+				}
+				ta.appendChild(btn1);
+			}
+		}
+
+		function selectchar(this_s) {
+			var ta = document.getElementById('txt:insertchar');
+			ta.value += this_s.value
+			this_s.blur();
+		}
+
+		function insert_char() {
+			var ta = document.getElementById('txt:insertchar');
+			if (!opener) {
+				alert('not exist parent page');
+				closeSelf();
+			}
+			ta_wysiwyg.InsertChar(ta.value);
+			closeSelf();
+		}
+
+		function mk_select() {
+			//chars_name
+			var ta = document.getElementById('select_charmap');
+			var newOpt = null;
+			for (var i = 0, m = chars_name.length; i < m; i++) {
+				newOpt = document.createElement("OPTION");
+				//	 newOpt.text=chars_name[i];
+				newOpt.innerHTML = chars_name[i];
+				newOpt.name = chars_name[i];
+				newOpt.value = i;
+				ta.appendChild(newOpt);
+			}
+		}
+
+		function closeSelf() {
+			ta_wysiwyg.close_window_modal();
+			self.close();
+		}
+		//-->
+	</script>
 </head>
+
 <body onLoad="mk_charmap('0');">
-<form id="frm_root" onSubmit="insert_char();return false;">
-<fieldset class="fieldset"><legend class="legend">Insert Character (문자표)</legend>
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="border">
-  <tr>
-    <td align="right"><select name="select" id="select_charmap" onchange="mk_charmap(this.value);">
-      </select>
-        <script type="text/javascript">
-		mk_select();
-		</script></td>
-  </tr>
-  <tr>
-    <td height="200" align="center" bgcolor="#CCCCCC">
-      <div class="title"  id="div_charmap" style=" text-align:left; margin:2px;height:200px; overflow-y:scroll; "></div></td>
-  </tr>
-  <tr>
-    <td height="24" align="center">
-      <input name="txt:insertchar" type="text" class="textbox" id="txt:insertchar" style=" font-size:12pt;background-color:#F2F2F2; width:98%; margin:0px; " /></td>
-  </tr>
-  <tr>
-    <td height="24" align="right"><input name="button" type="button" class="btn" onclick="insert_char();"  value="Insert" />
-        <input name="button"  type="button"  class="btn" onclick="closeSelf()" value="Cancel" />
-    </td>
-  </tr>
-</table>
-</fieldset>
-</form>
+	<div class="container-fluid" style="height: 100%;">
+		<div class="d-flex justify-content-center flex-wrap" style="height: 100%;">
+			<div class=" align-self-center" style="width:100%;max-width:1000px;max-height:100%">
+				<form id="frm_root" onSubmit="insert_char();return false;">
+					<h1 class="text-center" style="font-size:20px; font-weight: bold">Insert Character (문자표)</h1>
+					<select name="select" class="form-control" id="select_charmap" onchange="mk_charmap(this.value);">
+					</select>
+					<script type="text/javascript">
+						mk_select();
+					</script>
+					<div class="title" id="div_charmap" style=" text-align:left; margin:2px;height:200px; overflow-y:scroll; "></div>
+					<input name="txt:insertchar" type="text" class="textbox form-control" id="txt:insertchar" autofocus >
+					<div class="text-right mt-1">
+							<input name="button" type="submit" class="btn btn-info" value="Insert" />
+							<input name="button" type="button" class="btn btn-danger" onclick="closeSelf()" value="Cancel" />
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+
+
 </body>
+
 </html>

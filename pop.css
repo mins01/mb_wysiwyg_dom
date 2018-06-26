@@ -1,7 +1,12 @@
-body {
-    padding:0px;margin:0px;
-    font-family: "돋움","굴림", Seoul, "한강체",Arial, Helvetica, sans-serif;
+html,body{
+    padding:0;margin:0;
+    /* height: 100%; */
+    /* font-family: "돋움","굴림", Seoul, "한강체",Arial, Helvetica, sans-serif; */
     background-color:transparent
+}
+html.bootstrap4,
+html.bootstrap4 body {
+    height: 100%;
 }
 *{
 scrollbar-face-color:rgb(153,153,153); 
@@ -20,7 +25,7 @@ fieldset.fieldset{border:1px solid #cccccc; font-size:12px; margin:2px; padding:
 fieldset.fieldset table{font-size:12px;}
 legend.legend{border:1px solid #cccccc; padding:1px 3px; margin:2px; font-size:12px; font-weight:bold; background-image:url(icon/backgroundImage.gif); background-position:bottom; background-repeat:repeat-x;}
 fieldset.fieldset input,select,textarea,file{font-size:12px; border-width:1px;}
-fieldset.fieldset file.textbox,input.textbox{ border:1px inset #666666;}
+/* fieldset.fieldset file.textbox,input.textbox{ border:1px inset #666666;} */
 fieldset.fieldset input.btn{ cursor:pointer; border:1px outset #666666; background-color:#FFFFFF; background-image:url(icon/backgroundImage.gif); background-position:bottom; background-repeat:repeat-x;}
 
 /* none */
@@ -31,3 +36,6 @@ table.none td{border-style:none;}
 
 /* */
 .title_p10{background-color:#eeeeee; padding:1px 5px; font-weight:bold;}
+
+
+
