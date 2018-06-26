@@ -168,7 +168,7 @@ padding:0px;
 
 
 .mb_wysiwyg-Modal{
-  height: 100%;
+  
 }
 .mb_wysiwyg-Modal-opened{  
 
@@ -177,6 +177,7 @@ padding:0px;
   display: none;
 }
 .mb_wysiwyg-Modal-opened  .mb_wysiwyg-Modal-layout{
+  height: 100%;
   display: block;
   position: fixed;
   top:0;bottom: 0;right:0;left:0;
@@ -191,7 +192,7 @@ padding:0px;
 .mb_wysiwyg-Modal-bg{
   position: absolute;
   z-index: 101;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 .mb_wysiwyg-Modal-box{
   position: absolute;
@@ -201,6 +202,20 @@ padding:0px;
   position: absolute;
   z-index: 103;
   top:5px; right:5px;
+
+  margin: 0;
+  border: 0px solid #abc;
+  background-color: #abc;
+  font-size: 12px;
+  height: 2em;
+  width: 2em;
+  padding: 0;
+  border-radius: 50%;
+  box-shadow: 2px 2px 5px #000;
+  opacity: 0.5;
+}
+.mb_wysiwyg-Modal-btn_close:hover{
+  opacity: 1;
 }
 .mb_wysiwyg-Modal-iframe{
   width:100%;height:100%;

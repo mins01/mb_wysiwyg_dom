@@ -15,12 +15,12 @@
 
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	  crossorigin="anonymous">
+	    crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	  crossorigin="anonymous"></script>
+	    crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	  crossorigin="anonymous"></script>
+	    crossorigin="anonymous"></script>
 
 	<link href="pop.css" rel="stylesheet" type="text/css">
 	<style>
@@ -254,57 +254,63 @@
 </head>
 
 <body id="body">
-	<div class="container-fluid">
-		<h1 class="text-center" style="font-size:20px; font-weight: bold">Insert Image</h1>
-		<dl>
-			<dt>Select Image</dt>
-			<dd>
-				<form action="" onsubmit="insertImage.insertImageByURL(this.inputURL.value);return false" onchange="insertImage.previewImageFromUrl()">
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text">URL</span>
-						</div>
-						<input type="text" class="form-control" name="inputURL" id="inputURL" placeholder="http://..." attern="https?://.+" aria-label="input URL"
-						  required>
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="submit">Insert</button>
-						</div>
+	<div class="container-fluid" style="height: 100%;">
+		<div class="d-flex justify-content-center flex-wrap"  style="height: 100%;">
+				<div class=" align-self-center" style="width:100%;max-width:1000px;max-height:100%">
+						<h1 class="text-center" style="font-size:20px; font-weight: bold">Insert Image</h1>
+						<dl>
+							<dt>Select Image</dt>
+							<dd>
+								<form action="" onsubmit="insertImage.insertImageByURL(this.inputURL.value);return false" onchange="insertImage.previewImageFromUrl()">
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text">URL</span>
+										</div>
+										<input type="text" class="form-control" name="inputURL" id="inputURL" placeholder="http://..." attern="https?://.+" aria-label="input URL"
+											required>
+										<div class="input-group-append">
+											<button class="btn btn-outline-secondary" type="submit">Insert</button>
+										</div>
+									</div>
+								</form>
+							</dd>
+							<dd>
+								<form action="" enctype="multipart/form-data" onsubmit="insertImage.uploadImageAndInsertImage(this); return false;" onchange="insertImage.previewImageFromLocal()">
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text">File</span>
+										</div>
+										<div class="custom-file">
+											<input type="file" accept="image/*" id="inputFile" name="inputFile" class="custom-file-input" placeholder="Image File" aria-label="Select Image File"
+												required>
+											<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+										</div>
+										<div class="input-group-append">
+											<button class="btn btn-outline-secondary" type="submit">Insert</button>
+										</div>
+									</div>
+								</form>
+							</dd>
+						</dl>
+						<dl>
+							<dt>Priview</dt>
+							<dd class="card ondrop">
+								<div class="text-center card-body  p-2">
+									<img class="preview-image rounded" id="preview-image" src="about:blank" onerror="insertImage.onErrorPreviewImage(this)" onload="insertImage.onLoadPreviewImage(this)">
+								</div>
+							</dd>
+						</dl>
+			
+			
+						<ul class="list-unstyled text-right m-3" style="font-size:8px">
+							<li>USED LIB</li>
+							<li>bootstrap : https://getbootstrap.com/</li>
+							<li>jquery : http://jquery.com/</li>
+						</ul>
 					</div>
-				</form>
-			</dd>
-			<dd>
-				<form action="" enctype="multipart/form-data" onsubmit="insertImage.uploadImageAndInsertImage(this); return false;" onchange="insertImage.previewImageFromLocal()">
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text">File</span>
-						</div>
-						<div class="custom-file">
-							<input type="file" accept="image/*" id="inputFile" name="inputFile" class="custom-file-input" placeholder="Image File" aria-label="Select Image File"
-							  required>
-							<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-						</div>
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="submit">Insert</button>
-						</div>
-					</div>
-				</form>
-			</dd>
-		</dl>
-		<dl>
-			<dt>Priview</dt>
-			<dd class="card ondrop">
-				<div class="text-center card-body  p-2">
-					<img class="preview-image rounded" id="preview-image" src="about:blank" onerror="insertImage.onErrorPreviewImage(this)" onload="insertImage.onLoadPreviewImage(this)">
-				</div>
-			</dd>
-		</dl>
+		</div>
+		
 
-
-		<ul class="list-unstyled text-right m-3" style="font-size:8px">
-			<li>USED LIB</li>
-			<li>bootstrap : https://getbootstrap.com/</li>
-			<li>jquery : http://jquery.com/</li>
-		</ul>
 	</div>
 </body>
 

@@ -2295,7 +2295,12 @@ mb_wysiwyg.Modal = {
 	},
 	"close":function(){
 		document.body.className  = document.body.className.replace(' mb_wysiwyg-Modal-opened',' ');
-		this.iframe.src = 'about:blank';
+		try{
+			this.iframe.src = 'about:blank';
+		}catch(e){
+
+		}
+		
 		
 		
 	}
