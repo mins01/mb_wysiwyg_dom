@@ -560,3 +560,30 @@
   display: block;
   height: 90% !important;
 }
+
+.mbw-ctrl-button.mbw-saveTemp,
+.mbw-ctrl-button.mbw-loadTemp{
+  font-family: "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  position: relative;
+}
+.mbw-ctrl-button.mbw-saveTemp::before,
+.mbw-ctrl-button.mbw-loadTemp::before{
+  position: absolute;
+  left: 0;top:0;right:0;bottom: 0;
+  content: "💾";
+  z-index: 1;
+}
+.mbw-ctrl-button.mbw-saveTemp::after,
+.mbw-ctrl-button.mbw-loadTemp::after{
+  position: relative;
+  z-index: 2;
+  display: block;
+  content: "save";
+  text-align: center;
+  font-weight: bold;
+  font-variant:small-caps;
+}
+.mbw-ctrl-button.mbw-loadTemp::after
+{
+  content: "load";
+}

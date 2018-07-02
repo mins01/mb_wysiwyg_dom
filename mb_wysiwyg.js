@@ -131,7 +131,7 @@ var mb_wysiwyg = function(v_ta, v_width, v_height, init_value,init_title){
 	//=======================================================================
 	// 기타 변수 설정
 	//=======================================================================
-	if(!init_value){init_value=this.textarea.value;}
+	if(!init_value){init_value=this.getTextareaText();}
 	this.value = init_value || '';
 	if(!init_title){init_title='mb_wysiwyg Ver.'+this.version;}
 	this.title = init_title || '';
@@ -203,7 +203,7 @@ mb_wysiwyg.prototype.remove = function(){
 }
 mb_wysiwyg.prototype.remove_wysiwyg = function(){
 	this.layout_root.parentNode.insertBefore(this.textarea,this.layout_root)
-	this.textarea.value = this.textarea.defaultValue;
+	this.setTextareaText(this.textarea.defaultValue);
 	try{
 		this.textarea.className = this.textareaClone.className; //클래스 복사
 	}catch(e){}
@@ -1364,11 +1364,9 @@ mb_wysiwyg.prototype._init_event = function(){
 //====================================
 mb_wysiwyg.prototype._init_content = function(){ //ifarme content init
 	try{
-		this.setIframeHtml(this.textarea.value);
-		//this.ifrm_document.body.innerHTML ='';
-		//this._pasteHTML(this.textarea.value);
+		this.setIframeHtml(this.getTextareaText());
 	}catch(e){
-		var str = this.ifrm_dtd+'<html><head>'+this.ifrm_css+this.ifrm_meta+'</head><body>'+this.textarea.value+'</body></html>'
+		var str = this.ifrm_dtd+'<html><head>'+this.ifrm_css+this.ifrm_meta+'</head><body>'+this.getTextareaText()+'</body></html>'
 		this.setIframeHtml(str);
 	}
 	this.ifrm_window.focus();
@@ -1489,6 +1487,8 @@ mb_wysiwyg.prototype._mk_ModeChange = function(){
 	var h_p = this.mk_ctrl_button_btn('plusmark','높이증가','plusmark');
 //	h_p.hspace='1';
 	var btn_stretch = this.mk_ctrl_button_btn('stretch','stretch','stretch');
+	var btn_saveTemp = this.mk_ctrl_button_btn('saveTemp','saveTemp','saveTemp');
+	var btn_loadTemp = this.mk_ctrl_button_btn('loadTemp','loadTemp','loadTemp');
 	// var maker_home =  this.mk_image_btn('questionmark','만든이 홈페이지로','questionmark');
 	var maker_home =  this.mk_ctrl_button_btn('questionmark','만든이 홈페이지로','questionmark');
 //	maker_home.hspace='2';
@@ -1507,7 +1507,30 @@ mb_wysiwyg.prototype._mk_ModeChange = function(){
 	this.isStrech = false;
 	this.btn_stretch.setAttribute('data-isStrech',this.isStrech?'1':'0');
 
+	// 자동 저장 실행
+	this_s.input_title('Start auto save');
+	console.log('Start auto save');
+	setInterval(function(){
+		if(this_s.autoSaveTemp()){
+			this_s.input_title('Temporary data auto save completed');
+			console.log('Temporary data auto save completed');
+		}else{
+			this_s.input_title('Temporary data auto save failed');
+			console.log('Temporary data auto save failed');
+		}
+	},1000*60);
 
+	btn_saveTemp.onclick = function(){
+		if(!confirm('Save temporary data?')) return;
+		this_s.saveTemp();
+		this_s.input_title('Temporary data save completed');
+	}
+	btn_loadTemp.onclick = function(){
+		var dt = (new Date(this_s.getSaveTempTime())).toLocaleString();
+		if(!confirm('Load temporary data('+dt+')?')) return;
+		this_s.loadTemp();
+		this_s.input_title('Temporary data load completed');
+	}
 	input_design.onclick=function(){
 		this_s.ModeChange(!this_s.isDesignmode);this.blur();
 		this_s.input_design.setAttribute('data-isDesignmode',this_s.isDesignmode?'1':'0');
@@ -1536,6 +1559,8 @@ mb_wysiwyg.prototype._mk_ModeChange = function(){
 	td_right.appendChild(h_i);
 	td_right.appendChild(h_p);
 	td_right.appendChild(btn_stretch);
+	td_right.appendChild(btn_saveTemp);
+	td_right.appendChild(btn_loadTemp);
 	td_right.appendChild(maker_home);
 	return div_out;
 }
@@ -1673,33 +1698,38 @@ mb_wysiwyg.prototype.sync = function(force){
 	if(force||this.layout_editer_ifrme.style.display=='none'){
 		if(this.browsername=='MSIE') this.ifrm_document.designMode="Off";
 		try{
-			this.setIframeHtml(this.textarea.value);
-			//this.ifrm_document.body.innerHTML ='';
-			//this._pasteHTML(this.textarea.value);
+			this.setIframeHtml(this.getTextareaText());
 		}catch(e){
-			var str = this.ifrm_dtd+'<html><head>'+this.ifrm_css+this.ifrm_meta+'</head><body>'+this.textarea.value+'</body></html>'
+			var str = this.ifrm_dtd+'<html><head>'+this.ifrm_css+this.ifrm_meta+'</head><body>'+this.getTextareaText()+'</body></html>'
 			this.setIframeHtml(str);
 		}
 		if(this.browsername=='MSIE') this.ifrm_document.designMode="On";				  
 	}else{
-		//this.textarea.value = this.ifrm_document.body.innerHTML;
-		this.textarea.value = this.getIframeHtml();
-		//IE에서 tag대문자로 된거 소문자로
-		if(this.isXhtml){
-			this.textarea.value = this.tagForXhtml(this.textarea.value);
-		}
-		//this.textarea.value = 
+		this.setTextareaText(this.getIframeHtml(this.isXhtml));
 	}
 	this._init_event();
 }
-mb_wysiwyg.prototype.getIframeHtml = function(){
+/**
+ * 편집내용 가져오기 적용하기
+ */
+mb_wysiwyg.prototype.setTextareaText = function(text){
+	return this.textarea.value = text;
+}
+mb_wysiwyg.prototype.getTextareaText = function(){
+	return this.textarea.value;
+}
+mb_wysiwyg.prototype.getIframeHtml = function(isXhtml){
 	if(this.ctrlContType==0){ //body의 내용만
-		return this.ifrm_document.body.innerHTML;
+		var res = this.ifrm_document.body.innerHTML;
 	}else{
 		var d = document.createElement('div');
 		d.appendChild(this.ifrm_document.getElementsByTagName('html')[0].cloneNode(true));
-		return d.innerHTML;
+		var res = d.innerHTML;
 	}
+	if(isXhtml){
+		return this.tagForXhtml(res);
+	}
+	return res;
 }
 mb_wysiwyg.prototype.setIframeHtml = function(text){
 	if(this.ctrlContType==0){ //body의 내용만
@@ -1826,8 +1856,7 @@ mb_wysiwyg.prototype.input_value = function( str )
 		this.ifrm_document.write(str);
 		this.ifrm_document.close();
 	}
-	this.textarea.value = str;
-//alert(this.textarea.value);
+	this.setTextareaText(str);
 	this._init_event();
 }
 mb_wysiwyg.prototype.input_title = function( str ) 
@@ -2440,6 +2469,48 @@ mb_wysiwyg.prototype.mk_element = function(type,v2,v3) // DOM으로 DIV 만들�
 
 	return span;
 }
+//====================================
+// localstorage 저장하기
+//====================================
+// 자동 저장하기
+mb_wysiwyg.prototype.autoSaveTemp = function(){
+	var tm = this.getSaveTempTime();
+	var now = (new Date).getTime();
+	var gap = now - tm;
+	console.log('autoSaveTemp','gap',gap);
+	if(now - tm > 1000*60*5){
+		this.saveTemp()
+		return true;
+	}
+	return false;
+}
+mb_wysiwyg.prototype.saveTemp = function(){
+	this.sync();
+	var k = 'mb_wysiwyg.k_'+this.id+'_'+window.location.pathname;
+	var text = this.getTextareaText();
+	window.localStorage.setItem(k,text);
+	// console.log('saveTemp',k,text);
+
+	k = 'mb_wysiwyg.dt_'+this.id+'_'+window.location.pathname;
+	text = (new Date()).getTime()
+	window.localStorage.setItem(k,text);
+	// console.log('saveTemp',k,text);
+}
+mb_wysiwyg.prototype.getSaveTempTime = function(){
+	var k = 'mb_wysiwyg.dt_'+this.id+'_'+window.location.pathname;
+	var text = window.localStorage.getItem(k);
+	if(text == null) text = 0;
+	window.localStorage.setItem('getSaveTempTime',k,text);
+	return parseInt(text,10);
+}
+mb_wysiwyg.prototype.loadTemp = function(text){
+	var k = 'mb_wysiwyg.k_'+this.id+'_'+window.location.pathname;
+	var text = window.localStorage.getItem(k);
+	this.setTextareaText(text);
+	this.sync(true);
+	// console.log('loadTemp',k,text);
+}
+
 //====================================
 // 버튼 생성 함수 : 테스트
 //====================================

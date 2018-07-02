@@ -1,165 +1,125 @@
 <!doctype html>
 <html lang="ko">
+
 <head>
-<!--
+	<!--
 저작권:mins가 가집니다.
 허락받지 않고서는 쓸 수 없습니다.
 -=---------------------------------=-
 테이블 삽입 : 테이블을 설정 생성 해서 삽입
 -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>mb_wysiwyg</title>
-</head >
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>mb_wysiwyg</title>
+</head>
 <link rel="stylesheet" type="text/css" charset="utf-8" href="pop.css" />
 
 <script type="text/javascript" src="../js/_M/_M.js"></script>
 <script type="text/javascript" src="../js/_M/UI/_M.UI.js"></script>
-<link rel="stylesheet" type="text/css" href="../js/_M/UI/POPLAYER/_M.UI.POPLAYER.css"/>
+<link rel="stylesheet" type="text/css" href="../js/_M/UI/POPLAYER/_M.UI.POPLAYER.css" />
 <script type="text/javascript" src="../js/_M/UI/POPLAYER/_M.UI.POPLAYER.js"></script>
 
 <!--
 <link rel="stylesheet" type="text/css" href="fontawesome.css"/>
 </link>
 -->
-<link rel="stylesheet" type="text/css" href="bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="bootstrap.css" />
 </link>
 
 <body>
-<h1>예제 : utf-8</h1>
-<script>
-function tetete(){
-alert('폼 서브밋 되었습니다.');
-return true;
-}
-</script>
- <form action="test.php" name="frm" method="post" onSubmit="wysiwyg.submit();return tetete();"> 
-  <p> 
-    <input type=submit value='실험전송'> 
-     <br> 
-   </p> 
-  <h1><strong>사용하실 분은 제게 연락주세요. </strong></h1> 
-  <br>
-  <textarea name='b_text' id="b_text" ><span style="background-color: rgb(153, 0, 0); color: rgb(255, 255, 255);">동해물</span>과 <span style="color: rgb(0, 0, 255);">백두산</span>이 마르고 닳도록<br /><a href="http://www.mins01.com">공대여자 홈페이지</a><br /><table style="border: 1px solid rgb(204, 204, 204); background-color: rgb(255, 255, 255); border-collapse: collapse;" width="80%" cellpadding="0" cellspacing="0"><tbody><tr><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;1</td><td style="border: 1px solid rgb(204, 204, 204); text-align: center;">&nbsp;2</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;3</td></tr><tr><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;4<sub>233</sub></td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;1<sup>235</sup></td><td style="border: 1px solid rgb(204, 204, 204); text-align: right;">&nbsp;6<sup>3</sup>41</td></tr><tr><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;7</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;8</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;9</td></tr></tbody></table><br /><hr style="width: 100%; height: 2px;" /><ol><li>123</li><li>3</li><li>4234</li></ol><ul><li>ABC</li><li>SD<br />SD</li><li>asd</li></ul>®µ)'&amp;<br /><br />
-  </textarea>
-  <input type="button" onclick="wysiwyg.remove();" value="웹에디터 제거" />
-	<input type="button" onclick="wysiwyg.mk_wysiwyg();" value="웹에디터 재생성" />
-  <link href="./mb_wysiwyg.css" rel="stylesheet" type="text/css"> 
-  <p> 
-     <textarea id='b_text2'><IFRAME style="BORDER-RIGHT: #3399ff 2px dotted; BORDER-TOP: #3399ff 2px dotted; BORDER-LEFT: #3399ff 2px dotted; BORDER-BOTTOM: #3399ff 2px dotted" border=2 src="http://www.mins01.com" frameBorder=2 width=400 height=300>iframe test</IFRAME></textarea> 
-   <p>
-      <script src="./set.toolbar.js" charset='UTF-8'></script> 
-      <script src="./set.toolbar.simple.js" charset='UTF-8'></script> 
-      <script src="./mb_wysiwyg.js" charset='UTF-8'></script> 
-      <script>
-document.write('첫번째 에디터를 생성합니다.<br>');
-var wysiwyg = new mb_wysiwyg(document.frm['b_text'],600,300,'','제목 : 모든메뉴');
-//wysiwyg.path=".";
-wysiwyg.icon_pack="black_16px";
-//wysiwyg.icon_pack="wr_24px";
-wysiwyg.c_table_type = true;
-//wysiwyg.submit();//를 필수적으로 글 등록 전에 실행해야함. 자동 onsubmit 이벤트 수정 동작 안함
-wysiwyg.mk_wysiwyg();
-//wysiwyg.mk_wysiwyg([툴바],[아이콘팩]);
-document.write('생성완료<br>');
-     </script> 
-      <script>
-document.write('두번째 에디터를 생성합니다.<br>');
-//--버튼추가 끝
-var popWin = null;
-var WC_open = function(file){
-	if(file){
-		popWin = window.open("/web_work/web/WC/WC.html?open="+file,'popWin','width=800,height=600');
-	}else{
-		popWin = window.open("/web_work/web/WC/WC.html?",'popWin','width=800,height=600');
-	}
-}
-//WC 콜백함수
-var WCUI_postAction_save = function(file,url,popwin){
-	//alert(file+"이 저장되었습니다");
-	//var img = _M.DOM.create('img');
-	//document.body.appendChild(img);
-	//alert("사용하는 URL : "+url);
-	//popwin 와 popWin은 같다.
-	if(popWin){
-		if(confirm("그림그리기 창을 닫으시겠습니까?")){
-			popWin.close();
+	<h1>예제 : utf-8</h1>
+	<script>
+		function tetete() {
+			alert('폼 서브밋 되었습니다.');
+			return true;
 		}
-		wysiwyg2.InsertImage('<img src="/web_work/web/WC/'+url+'">');
-	}
-	//img.src= url;
-}
-cfg_toolbar_simple.push(['drawImage','그림그리기','drawImage',function(){WC_open();}]);
-//--
-var wysiwyg2 = new mb_wysiwyg(document.getElementById('b_text2'),'100%',100);
-//wysiwyg2.path=".";
-//wysiwyg2.icon_pack="wr_24px";
-wysiwyg2.c_table_type = false;
-//wysiwyg.submit();//를 필수적으로 글 등록 전에 실행해야함. 자동 onsubmit 이벤트 수정 동작 안함
+	</script>
+	<form action="test.php" name="frm" method="post" onSubmit="wysiwyg.submit();return tetete();">
+		<p>
+			<input type=submit value='실험전송'>
+			<br>
+		</p>
+		<h1>
+			<strong>사용하실 분은 제게 연락주세요. </strong>
+		</h1>
+		<br>
+		<textarea name='b_text' id="b_text"><span style="background-color: rgb(153, 0, 0); color: rgb(255, 255, 255);">동해물</span>과 <span style="color: rgb(0, 0, 255);">백두산</span>이 마르고 닳도록<br /><a href="http://www.mins01.com">공대여자 홈페이지</a><br /><table style="border: 1px solid rgb(204, 204, 204); background-color: rgb(255, 255, 255); border-collapse: collapse;" width="80%" cellpadding="0" cellspacing="0"><tbody><tr><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;1</td><td style="border: 1px solid rgb(204, 204, 204); text-align: center;">&nbsp;2</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;3</td></tr><tr><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;4<sub>233</sub></td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;1<sup>235</sup></td><td style="border: 1px solid rgb(204, 204, 204); text-align: right;">&nbsp;6<sup>3</sup>41</td></tr><tr><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;7</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;8</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;9</td></tr></tbody></table><br /><hr style="width: 100%; height: 2px;" /><ol><li>123</li><li>3</li><li>4234</li></ol><ul><li>ABC</li><li>SD<br />SD</li><li>asd</li></ul>®µ)'&amp;<br /><br />
+  </textarea>
+		<input type="button" onclick="wysiwyg.remove();" value="웹에디터 제거" />
+		<input type="button" onclick="wysiwyg.mk_wysiwyg();" value="웹에디터 재생성" />
+		<link href="./mb_wysiwyg.css" rel="stylesheet" type="text/css">
+		<p>
+			<textarea id='b_text2'><IFRAME style="BORDER-RIGHT: #3399ff 2px dotted; BORDER-TOP: #3399ff 2px dotted; BORDER-LEFT: #3399ff 2px dotted; BORDER-BOTTOM: #3399ff 2px dotted" border=2 src="http://www.mins01.com" frameBorder=2 width=400 height=300>iframe test</IFRAME></textarea>
+			<p>
+				<script src="./set.toolbar.js" charset='UTF-8'></script>
+				<script src="./set.toolbar.simple.js" charset='UTF-8'></script>
+				<script src="./mb_wysiwyg.js" charset='UTF-8'></script>
+				<script>
+					document.write('첫번째 에디터를 생성합니다.<br>');
+					var wysiwyg = new mb_wysiwyg(document.frm['b_text'], 600, 300, '', '제목 : 모든메뉴');
+					//wysiwyg.path=".";
+					// wysiwyg.icon_pack="black_16px";
+					// wysiwyg.icon_pack="wr_24px";
+					wysiwyg.c_table_type = false;
+					//wysiwyg.submit();//를 필수적으로 글 등록 전에 실행해야함. 자동 onsubmit 이벤트 수정 동작 안함
+					wysiwyg.mk_wysiwyg('', [], true);
+					//wysiwyg.mk_wysiwyg([툴바],[아이콘팩]);
+					document.write('생성완료<br>');
+				</script>
+				<script>
+					document.write('두번째 에디터를 생성합니다.<br>');
+					//--버튼추가 끝
+					var popWin = null;
+					var WC_open = function (file) {
+						if (file) {
+							popWin = window.open("/web_work/web/WC/WC.html?open=" + file, 'popWin', 'width=800,height=600');
+						} else {
+							popWin = window.open("/web_work/web/WC/WC.html?", 'popWin', 'width=800,height=600');
+						}
+					}
+					//WC 콜백함수
+					var WCUI_postAction_save = function (file, url, popwin) {
+						//alert(file+"이 저장되었습니다");
+						//var img = _M.DOM.create('img');
+						//document.body.appendChild(img);
+						//alert("사용하는 URL : "+url);
+						//popwin 와 popWin은 같다.
+						if (popWin) {
+							if (confirm("그림그리기 창을 닫으시겠습니까?")) {
+								popWin.close();
+							}
+							wysiwyg2.InsertImage('<img src="/web_work/web/WC/' + url + '">');
+						}
+						//img.src= url;
+					}
+					cfg_toolbar_simple.push(['drawImage', '그림그리기', 'drawImage', function () { WC_open(); }]);
+					//--
+					var wysiwyg2 = new mb_wysiwyg(document.getElementById('b_text2'), '100%', 100);
+					//wysiwyg2.path=".";
+					//wysiwyg2.icon_pack="wr_24px";
+					wysiwyg2.c_table_type = false;
+					//wysiwyg.submit();//를 필수적으로 글 등록 전에 실행해야함. 자동 onsubmit 이벤트 수정 동작 안함
 
-wysiwyg2.mk_wysiwyg(cfg_toolbar_simple);
-document.write('생성완료<br>');
-     </script> 
-		 <hr>
-<p> 
-<textarea id='b_text3'>b_text3</textarea> 
-</p>
-<script>
-document.write('세번째 에디터를 생성합니다.<br>');
-//--버튼추가 끝
-var wysiwyg3 = new mb_wysiwyg(document.getElementById('b_text3'),'100%',100);
-wysiwyg2.c_table_type = false;
-//wysiwyg.submit();//를 필수적으로 글 등록 전에 실행해야함. 자동 onsubmit 이벤트 수정 동작 안함
+					wysiwyg2.mk_wysiwyg(cfg_toolbar_simple);
+					document.write('생성완료<br>');
+				</script>
+				<hr>
+				<p>
+					<textarea id='b_text3'>b_text3</textarea>
+				</p>
+				<script>
+					document.write('세번째 에디터를 생성합니다.<br>');
+					//--버튼추가 끝
 
-wysiwyg3.mk_wysiwyg('',[],true);
-document.write('생성완료<br>');
-     </script> 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-   <table width="100%"  border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td bgcolor="#666666">&nbsp;</td>
-        </tr>
-        <tr>
-          <td>스크립트</td>
-        </tr>
-        <tr>
-          <td bgcolor="#CCCCCC">&lt;link href=&quot;./mb_wysiwyg.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt; <br>            &lt;script src=&quot;./set.toolbar.js&quot; charset='UTF-8'&gt;&lt;/script&gt; <br>
-&lt;script src=&quot;./set.toolbar.simple.js&quot; charset='UTF-8'&gt;&lt;/script&gt; <br>
-&lt;script src=&quot;./mb_wysiwyg.js&quot; charset='UTF-8'&gt;&lt;/script&gt; <br>
-&lt;script&gt;<br>
-document.write('첫번째 에디터를 생성합니다.&lt;br&gt;');<br>
-var wysiwyg = new mb_wysiwyg('b_text',600,300,'','제목 : 모든메뉴');<br>
-//wysiwyg.path=&quot;.&quot;;<br>
-wysiwyg.icon_pack=&quot;black_16px&quot;;<br>
-//wysiwyg.icon_pack=&quot;wr_24px&quot;;<br>
-wysiwyg.c_table_type = true;<br>
-wysiwyg.mk_wysiwyg();<br>
-//wysiwyg.mk_wysiwyg([툴바],[아이콘팩]);<br>
-document.write('생성완료&lt;br&gt;');<br>
-&lt;/script&gt; <br>
-&lt;script&gt;<br>
-document.write('두번째 에디터를 생성합니다.&lt;br&gt;');<br>
-var wysiwyg2 = new mb_wysiwyg(document.getElementById('b_text2'),'100%',100);<br>
-//wysiwyg2.path=&quot;.&quot;;<br>
-//wysiwyg2.icon_pack=&quot;wr_24px&quot;;<br>
-wysiwyg2.c_table_type = false;<br>
-//wysiwyg.submit();//를 필수적으로 글 등록 전에 실행해야함. 자동 onsubmit 이벤트 수정 동작 안함<br>
-wysiwyg2.mk_wysiwyg(cfg_toolbar_simple);<br>
-document.write('생성완료&lt;br&gt;');<br>
-&lt;/script&gt; </td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-        </tr>
-      </table>
-      <p><br> 
-   <p>  
-</form> 
-</body></html>
+					var wysiwyg3 = new mb_wysiwyg(document.getElementById('b_text3'), '100%', 100);
+					wysiwyg3.icon_pack = "black_16px";
+					wysiwyg3.c_table_type = false;
+
+					//wysiwyg.submit();//를 필수적으로 글 등록 전에 실행해야함. 자동 onsubmit 이벤트 수정 동작 안함
+
+					wysiwyg3.mk_wysiwyg();
+					document.write('생성완료<br>');
+				</script>
+	</form>
+</body>
+
+</html>
