@@ -821,7 +821,7 @@ mb_wysiwyg.prototype.mk_closeX = function(title){
 // 버튼 생성 함수 : 포맷(서식) 버튼
 //====================================
 mb_wysiwyg.prototype._FormatBlock = function(name,title,command){
-	var format_arr = new Array("h1","h2","h3","h4","h5","h6","pre","p","div","address","kbd");
+	var format_arr = new Array("h1","h2","h3","h4","h5","h6","pre","p","div","address","kbd","code");
 	var format_arr_name = new Array("<h1>","<h2>","<h3>","<h4>","<h5>","<h6>","<pre>","<p>","<div>","<address>","<kbd>");
 	var this_s = this;
 	var idname = 'mspan:'+command+':'+this.id;
@@ -859,6 +859,8 @@ mb_wysiwyg.prototype._FormatBlock = function(name,title,command){
 					this_s.mspan_close();
 					if(this.value2=='kbd'){
 						this_s._pasteHTML_tag('<kbd>','</kbd>');
+					}else if(this.value2=='code'){
+						this_s._pasteHTML_tag('<code>','</code>');
 					}else{
 						this_s._execCommand("FormatBlock",false,this.value2);
 					}
