@@ -84,6 +84,7 @@ var mb_wysiwyg = function(v_ta, v_width, v_height, init_value,init_title){
 	else if(!this.textarea.name)	this.textarea.name = this.textarea.id;
 	this.name = this.textarea.name;
 	this.id = this.textarea.id;
+	this.saveTempKey = 'mbw_temp_'+this.id; 
 	if(outname[this.textarea.id]){
 		alert('개체의 ID나 Name가 중복되었습니다!\n에디터를 만들 수 없습니다.\n\n중복된 ID,Name : '+this.textarea.id+'\nID와 Name를 학인해주시기 바랍니다.');
 		return;
@@ -2488,29 +2489,33 @@ mb_wysiwyg.prototype.autoSaveTemp = function(){
 }
 mb_wysiwyg.prototype.saveTemp = function(){
 	this.sync();
-	var k = 'mb_wysiwyg.k_'+this.id+'_'+window.location.pathname;
+	var k = this.saveTempKey+'.k';
 	var text = this.getTextareaText();
 	window.localStorage.setItem(k,text);
 	// console.log('saveTemp',k,text);
 
-	k = 'mb_wysiwyg.dt_'+this.id+'_'+window.location.pathname;
+	k = this.saveTempKey+'.dt';
 	text = (new Date()).getTime()
 	window.localStorage.setItem(k,text);
 	// console.log('saveTemp',k,text);
 }
 mb_wysiwyg.prototype.getSaveTempTime = function(){
-	var k = 'mb_wysiwyg.dt_'+this.id+'_'+window.location.pathname;
+	var k = this.saveTempKey+'.dt';
 	var text = window.localStorage.getItem(k);
 	if(text == null) text = 0;
 	window.localStorage.setItem('getSaveTempTime',k,text);
 	return parseInt(text,10);
 }
 mb_wysiwyg.prototype.loadTemp = function(text){
-	var k = 'mb_wysiwyg.k_'+this.id+'_'+window.location.pathname;
+	var k = this.saveTempKey+'.k';
 	var text = window.localStorage.getItem(k);
 	this.setTextareaText(text);
 	this.sync(true);
 	// console.log('loadTemp',k,text);
+}
+mb_wysiwyg.prototype.clearTemp = function(text){
+	var k = this.saveTempKey+'.k';
+	window.localStorage.removeItem(k);
 }
 
 //====================================
