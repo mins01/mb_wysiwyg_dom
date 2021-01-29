@@ -47,9 +47,24 @@
   margin-bottom: 2px;
   background-color: #F2F2F2;
   cursor: pointer;
+	display: inline-block;
 }
 
-.mb_wysiwyg .btn_100p * {
+.mb_wysiwyg .btn_50p {
+  width: 50%;
+  font-size: 12px;
+  overflow: hidden;
+  border-width: 0px;
+  border-style: none;
+  border-color: #FFFFFF;
+  margin-bottom: 2px;
+  background-color: #F2F2F2;
+  cursor: pointer;
+	display: inline-block;
+}
+
+.mb_wysiwyg .btn_100p *
+, .mb_wysiwyg .btn_50p *{
   margin: 0;
   padding: 0;
 }
