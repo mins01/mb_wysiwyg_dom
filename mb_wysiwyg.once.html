@@ -18,6 +18,10 @@
 <link rel="stylesheet" type="text/css" href="../js/_M/UI/POPLAYER/_M.UI.POPLAYER.css" />
 <script type="text/javascript" src="../js/_M/UI/POPLAYER/_M.UI.POPLAYER.js"></script>
 
+<!-- <link rel="stylesheet" type="text/css" href="modules/ui_tableControlPanel/tableControlPanel.css" /> -->
+<script type="text/javascript" src="modules/ui_tableControlPanel/tableControlPanel.js"></script>
+
+
 <!--
 <link rel="stylesheet" type="text/css" href="fontawesome.css"/>
 </link>
@@ -54,6 +58,9 @@
 				<script src="./set.toolbar.simple.js" charset='UTF-8'></script>
 				<script src="./mb_wysiwyg.js" charset='UTF-8'></script>
 				<script>
+
+					mb_wysiwyg_head_css+='<link rel="stylesheet" type="text/css" href="modules/ui_tableControlPanel/tableControlPanel.css" />';
+
 					document.write('첫번째 에디터를 생성합니다.<br>');
 					var wysiwyg = new mb_wysiwyg(document.frm['b_text'], 600, 300, '', '제목 : 모든메뉴');
 					//wysiwyg.path=".";
@@ -64,6 +71,9 @@
 					wysiwyg.mk_wysiwyg('', [], true);
 					//wysiwyg.mk_wysiwyg([툴바],[아이콘팩]);
 					document.write('생성완료<br>');
+					//--- 테이블 컨트롤
+
+
 				</script>
 				<script>
 					document.write('두번째 에디터를 생성합니다.<br>');

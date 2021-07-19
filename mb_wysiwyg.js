@@ -1744,16 +1744,34 @@ mb_wysiwyg.prototype.setIframeHtml = function(text){
 		try{
 			this.ifrm_document.body.innerHTML = text;
 			document.getElementsByName('head')[0].innerHTML=this.ifrm_css+this.ifrm_meta; //설정된 해더로 재 설정.
+			if(tableControlPanel){
+				this.ifrm_document.body.className='tcp-enabled'
+				tableControlPanel.removeEvent(this.ifrm_window);
+				tableControlPanel.remove();
+				tableControlPanel.addEvent(this.ifrm_window);
+			}
 		}catch(e){
-			var str = '<html><head>'+this.ifrm_css+this.ifrm_meta+'</head><body>'+text+'</body></html>'
+			var str = '<html><head>'+this.ifrm_css+this.ifrm_meta+'</head><body class="tcp-enabled">'+text+'</body></html>'
 			this.ifrm_document.open();
 			this.ifrm_document.write(str);
 			this.ifrm_document.close();
+			if(tableControlPanel){
+				this.ifrm_document.body.className='tcp-enabled'
+				tableControlPanel.removeEvent(this.ifrm_window);
+				tableControlPanel.remove();
+				tableControlPanel.addEvent(this.ifrm_window);
+			}
 		}
+		
 	}else{
 		this.ifrm_document.open();
 		this.ifrm_document.write(text);
 		this.ifrm_document.close();
+		if(tableControlPanel){
+			tableControlPanel.removeEvent(this.ifrm_window);
+			tableControlPanel.remove();
+			// tableControlPanel.addEvent(this.ifrm_window);
+		}
 	}
 	return true;
 }
