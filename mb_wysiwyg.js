@@ -30,7 +30,7 @@ temp = null;
 
 
 var mb_wysiwyg = function(v_ta, v_width, v_height, init_value,init_title){
-	this.version = '20140424'; //version : date  
+	this.version = '20140424'; //version : date
 	this.window_modal_type = 'position_fixed';
 	this.path =".";
 	if(ta_wysiwyg_path){
@@ -84,6 +84,7 @@ var mb_wysiwyg = function(v_ta, v_width, v_height, init_value,init_title){
 	else if(!this.textarea.name)	this.textarea.name = this.textarea.id;
 	this.name = this.textarea.name;
 	this.id = this.textarea.id;
+	this.saveTempKey = 'mbw_temp_'+this.id;
 	if(outname[this.textarea.id]){
 		alert('개체의 ID나 Name가 중복되었습니다!\n에디터를 만들 수 없습니다.\n\n중복된 ID,Name : '+this.textarea.id+'\nID와 Name를 학인해주시기 바랍니다.');
 		return;
@@ -96,7 +97,7 @@ var mb_wysiwyg = function(v_ta, v_width, v_height, init_value,init_title){
 	this.ifrm = null;
 
 	this.ifrm_element = null;
-	this.ifrm_window = null;	
+	this.ifrm_window = null;
 	this.ifrm_document = null;
 	this.txtRange = null
 
@@ -107,7 +108,7 @@ var mb_wysiwyg = function(v_ta, v_width, v_height, init_value,init_title){
 	this.height = v_height || '300px';
 	if(this.height.toString().indexOf('px')==-1 && this.height.toString().indexOf('%')==-1){
 		this.height+='px';
-	}	
+	}
 
 	//=======================================================================
 	// 모드체인지 변수 설정
@@ -116,7 +117,7 @@ var mb_wysiwyg = function(v_ta, v_width, v_height, init_value,init_title){
 	this.input_html = null
 	//=======================================================================
 	// 색상표
-	//=======================================================================	
+	//=======================================================================
 	this.ForeColor_pallete = null;
 	this.HiliteColor_pallete = null;
 	//=======================================================================
@@ -135,7 +136,7 @@ var mb_wysiwyg = function(v_ta, v_width, v_height, init_value,init_title){
 	this.value = init_value || '';
 	if(!init_title){init_title='mb_wysiwyg Ver.'+this.version;}
 	this.title = init_title || '';
-	
+
 	this.ck_browser=false;
 	temp = this._ck_browser();	//check : browser
 	this.ck_browser = temp[0];	//this class support? true:false
@@ -145,7 +146,7 @@ var mb_wysiwyg = function(v_ta, v_width, v_height, init_value,init_title){
 	this.c_table_gap = 0x11;	//layer C-Table :  color gap
 
 	this.mspan = new Array();
-	
+
 	// this.insertimage_filename = 'pop.insertimage.html';  //old
 	this.insertimage_filename = 'pop.insertimage2.html';  //
 //  this.insertimage_path = this.path+'/insertimage';    //uploaded Image dir
@@ -172,17 +173,17 @@ mb_wysiwyg.ta_wysiwyg = null
 mb_wysiwyg.prototype.mk_wysiwyg = function(v_cfg_toolbar,v_icon_pack,v_use_button){
 	if(this.stat==1){alert('이미 에디터가 생성되어있습니다.');return false;}
 	if(!this.ck_browser){alert(this.browsername); document.write("<!--not support this browser-->"); return;}
-	
+
 	//========================================== 아이콘팩 설정
 	if(!v_icon_pack) icon_pack=this.icon_pack;
 	this.icon_path = this.path+'/icon/'+icon_pack;
-	
+
 	this.mk_layout();	//레이아웃 생성
 	this.mk_toolbar(v_cfg_toolbar,v_icon_pack,v_use_button);	//툴바 생성
 	this.mk_editer();	//에디터 생성
 
 //	this.execute('insertbronreturn',true); //FF에선 엔터를 <BR/>로 처리
-	
+
 	this.HeightReSize(0);
 	this.ModeChange(true);	//워지웍을 우선
 //	this.ModeChange(false);	//소스보기를 우선
@@ -210,9 +211,9 @@ mb_wysiwyg.prototype.remove_wysiwyg = function(){
 	try{
 		this.textarea.style.cssText = this.textareaClone.style.cssText; // 스타일 복사
 	}catch(e){}
-	
+
 	this.layout_root.parentNode.removeChild(this.layout_root);
-	this.stat = 0;	
+	this.stat = 0;
 }
 //========================================================================
 // 레이아웃 생성함수
@@ -228,7 +229,7 @@ mb_wysiwyg.prototype.mk_layout = function(){
 	this.layout_toolbar_tools= document.createElement('div');//툴바용 div 안의 툴들
 	this.layout_editer= document.createElement('div');	//에디터용 div
 	this.layout_editer_ifrme = document.createElement('div'); //에디터용 div -> iframe용
-	this.layout_editer_ifrme.style.overflow='hidden';	
+	this.layout_editer_ifrme.style.overflow='hidden';
 	this.layout_editer_textarea = document.createElement('div'); //에디터용 div -> textarea용
 	this.layout_editer_textarea.style.overflow='hidden';
 
@@ -309,12 +310,12 @@ mb_wysiwyg.prototype.mk_toolbar = function(v_cfg_toolbar,v_icon_pack,v_use_butto
 if(cfg_toolbar.length<1){
 //if(true ||cfg_toolbar.length<1){
 	cfg_toolbar = new Array();	//툴바메뉴 구성
-	
+
 	cfg_toolbar.push(Array('t_section','구분자','t_section')); // section, division
 	cfg_toolbar.push(Array('FontName','글자종류','FontName'));
 	cfg_toolbar.push(Array('FontSize','글자크기','FontSize'));
 	cfg_toolbar.push(Array('FormatBlock','서식','FormatBlock'));
-	
+
 	cfg_toolbar.push(Array('t_section','구분자','t_section')); // section, division
 	cfg_toolbar.push(Array('bold','굵게','Bold'));
 	cfg_toolbar.push(Array('Italic','이탈릭','Italic'));
@@ -335,15 +336,15 @@ if(cfg_toolbar.length<1){
 	cfg_toolbar.push(Array('Outdent','내어쓰기','Outdent'));
 	cfg_toolbar.push(Array('InsertOrderedList','순차목록','InsertOrderedList'));
 	cfg_toolbar.push(Array('InsertUnorderedList','비순차목록','InsertUnorderedList'));
-	
+
 	cfg_toolbar.push(Array('t_section','구분자','t_section')); // section, division
 	cfg_toolbar.push(Array('CreateLink','링크만들기','CreateLink'));
-	cfg_toolbar.push(Array('UnLink','링크지우기','UnLink'));	
+	cfg_toolbar.push(Array('UnLink','링크지우기','UnLink'));
 	cfg_toolbar.push(Array('InsertTable','테이블삽입','InsertTable'));
 	cfg_toolbar.push(Array('InsertImage','이미지삽입','InsertImage'));
-	cfg_toolbar.push(Array('InsertMedia','미디어삽입','InsertMedia'));	
-	cfg_toolbar.push(Array('InsertIFrame','Iframe삽입','InsertIFrame'));	
-	cfg_toolbar.push(Array('InsertFolder','접히는내용삽입','InsertFolder'));	
+	cfg_toolbar.push(Array('InsertMedia','미디어삽입','InsertMedia'));
+	cfg_toolbar.push(Array('InsertIFrame','Iframe삽입','InsertIFrame'));
+	cfg_toolbar.push(Array('InsertFolder','접히는내용삽입','InsertFolder'));
 	cfg_toolbar.push(Array('InsertChar','특수문자삽입','InsertChar'));
 	cfg_toolbar.push(Array('InsertHorizontalRule','수평선삽입','InsertHorizontalRule'));
 
@@ -352,7 +353,7 @@ if(cfg_toolbar.length<1){
 	cfg_toolbar.push(Array('Redo','Redo','Redo'));
 	cfg_toolbar.push(Array('Zoom','Zoom','Zoom')); //only IE
 	cfg_toolbar.push(Array('t_section','구분자','t_section')); // section, division
-	
+
 	cfg_toolbar.push(Array('Help','도움말','Help'));
 	cfg_toolbar.push(Array('Test','실험용','Test')); //for test
 
@@ -371,7 +372,7 @@ if(cfg_toolbar.length<1){
 	this.layout_toolbar.className="toolbar";
 
 	for(var i=0;i<m;i++)
-	{	
+	{
 		if(cfg_toolbar[i][3]){
 			var temp = this._addbutton(cfg_toolbar[i][0],cfg_toolbar[i][1],cfg_toolbar[i][2],cfg_toolbar[i][3]);
 		}else{
@@ -386,7 +387,7 @@ if(cfg_toolbar.length<1){
 //	document.write('<div id="'+this.div_toolbar+'"  class="toolbar" style="background-image:url('+this.icon_path+'/backgroundImage.gif);">');
 	for(var i=0;i<m;i++)
 	{
-		str+=this._addbutton(cfg_toolbar[i][0],cfg_toolbar[i][1],cfg_toolbar[i][2])+' ';		/// section, division	
+		str+=this._addbutton(cfg_toolbar[i][0],cfg_toolbar[i][1],cfg_toolbar[i][2])+' ';		/// section, division
 
 	}
 	document.write(str);
@@ -401,21 +402,21 @@ mb_wysiwyg.prototype._addbutton = function(name,title,command,fn){
 	if(fn && typeof(fn) == 'function') //커스텀 버튼
 	btn = this._CustomButton(name,title,command,fn);
 	else if(command == 'InsertIFrame')
-	btn = this._InsertIFrame(name,title,command);	
+	btn = this._InsertIFrame(name,title,command);
 	else if(command == 'InsertFolder')
-	btn = this._InsertFolder(name,title,command);		
+	btn = this._InsertFolder(name,title,command);
 	else if(command == 'InsertTable')
 	btn = this._InsertTable(name,title,command);
 	else if(command == 'Help')
-	btn = this._Help(name,title,command);	
+	btn = this._Help(name,title,command);
 	else if(command == 'Test')
-	btn = this._Test(name,title,command);	
+	btn = this._Test(name,title,command);
 	else if(command == 'InsertImage')
 	btn = this._InsertImage(name,title,command);
 	else if(command == 'InsertMedia')
-	btn = this._InsertMedia(name,title,command);		
+	btn = this._InsertMedia(name,title,command);
 	else if(command == 'InsertChar')
-	btn = this._InsertChar(name,title,command);	
+	btn = this._InsertChar(name,title,command);
 	else if(command == 'FontName')
 	btn = this._FontName(name,title,command);
 	else if(command == 'FontSize')
@@ -427,13 +428,13 @@ mb_wysiwyg.prototype._addbutton = function(name,title,command,fn){
 	else if(command == 'HiliteColor')
 	btn = this._HiliteColor(name,title,command);
 	else if(command == 'CreateLink')
-	btn = this._CreateLink(name,title,command);	
+	btn = this._CreateLink(name,title,command);
 	else if(command == 'UnLink')
-	btn = this._UnLink(name,title,command);		
+	btn = this._UnLink(name,title,command);
 	else if(command == 'FormatBlock')
 	btn = this._FormatBlock(name,title,command);
 	else if(command == 'Zoom')
-	btn = this._Zoom(name,title,command);		
+	btn = this._Zoom(name,title,command);
 	else if(command == 't_section')
 	btn = this._t_section(name,title,command);
 	else if(command == 't_Tag')
@@ -499,7 +500,7 @@ mb_wysiwyg.prototype._InsertFolder = function(name,title,command){
 		var image_btn = this.mk_div();
 		image_btn.style.display="none";
 		return image_btn;
-	}	
+	}
 	image_btn.onclick = function(){
 		this_s.InsertFolder();
 	}
@@ -520,7 +521,7 @@ mb_wysiwyg.prototype.InsertFolder = function(){
 		color ='#336699';
 	}
 	//var button2 = button1.cloneNode(true);
-	//button2.id = 'btn2_'+date.getTime() ;	
+	//button2.id = 'btn2_'+date.getTime() ;
 	var div =  document.createElement('div');
 	div.id=id;
 	with(div.style){
@@ -529,9 +530,9 @@ mb_wysiwyg.prototype.InsertFolder = function(){
 		display = 'none';
 		backgroundColor='#f2f2f2';
 		border='1px dotted #cccccc';
-	}		
+	}
 	div.innerHTML = '<div><p>이곳에 원하는 내용을 적어주세요.</p></div>'
-	
+
 	var fn ="var ta=document.getElementById('"+id+"'),btn1=document.getElementById('"+button1.id+"');"
 	fn+="if(ta.style.display !='none'){";
 	fn+="ta.style.display = 'none';";
@@ -539,7 +540,7 @@ mb_wysiwyg.prototype.InsertFolder = function(){
 	fn+="}else{";
 	fn+="ta.style.display = '';";
 	fn+="btn1.value='펼쳐진 내용';}";
-	
+
 	button1.onclick = fn;
 	//button2.onclick = fn;
 	root.appendChild(button1);
@@ -759,7 +760,7 @@ mb_wysiwyg.prototype.currentParent = function(shTagName,Limit){
 	}
 	if(shTagName){
 		shTagName = shTagName.toUpperCase()
-		var ilimit = 0; 
+		var ilimit = 0;
 		if(!Limit){ Limit = 5; }
 		while(fn && fn.nodeName!=shTagName && ilimit<Limit){
 			fn = fn.firstChild;
@@ -809,19 +810,19 @@ mb_wysiwyg.prototype.mk_closeX = function(title){
 	new_td =new_tr.insertCell(-1);
 	new_td.appendChild(div_title);
 	new_td.align="center";
-	
+
 	new_td =new_tr.insertCell(-1);
 	new_td.appendChild(closebtn);
 	new_td.align="right";
-	new_td.valign="top";	
-	
+	new_td.valign="top";
+
 	return div_out;
 }
 //====================================
 // 버튼 생성 함수 : 포맷(서식) 버튼
 //====================================
 mb_wysiwyg.prototype._FormatBlock = function(name,title,command){
-	var format_arr = new Array("h1","h2","h3","h4","h5","h6","pre","p","div","address","kbd");
+	var format_arr = new Array("h1","h2","h3","h4","h5","h6","pre","p","div","address","kbd","code");
 	var format_arr_name = new Array("<h1>","<h2>","<h3>","<h4>","<h5>","<h6>","<pre>","<p>","<div>","<address>","<kbd>");
 	var this_s = this;
 	var idname = 'mspan:'+command+':'+this.id;
@@ -837,53 +838,60 @@ mb_wysiwyg.prototype._FormatBlock = function(name,title,command){
 		div1.className='view';
 		div1.style.overflow='visible';
 		div1.style.width='180px';
-		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';
 
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
-	
+
 		var input_temp = this.mk_element('button');
 		//input_temp.type='button';
 		input_temp.className="btn_100p";
 		input_temp.type="button"
-		
+
 		var tmp_arr = format_arr;
 		for(i=0,m=tmp_arr.length;i<m;i++){
 			var div1_child = input_temp.cloneNode(true);
 			div1_child.value2 = format_arr[i];
 			var temp = this.mk_element(format_arr[i]);
 			temp.innerHTML = '&lt;'+format_arr[i]+'&gt;'+'가Ab韓';
-			div1_child.appendChild(temp);			
+			div1_child.appendChild(temp);
 			if(this.browsername !='MSIE'){
 				div1_child.onclick=function(){
 					this_s.mspan_close();
 					if(this.value2=='kbd'){
-						this_s._pasteHTML_tag('<kbd>','</kbd>');
+						// this_s._pasteHTML_tag('<kbd>','</kbd>');
+						this_s._coverRange('kdb');
+					}else if(this.value2=='code'){
+						this_s._coverRange('code');
 					}else{
 						this_s._execCommand("FormatBlock",false,this.value2);
 					}
-					
+
 					return false;
 				}
 			}else{
 				div1_child.onclick=function(){
 					this_s.mspan_close();
 					if(this.value2=='kbd'){
-						this_s._pasteHTML_tag('<kbd>','</kbd>');
+						// this_s._pasteHTML_tag('<kbd>','</kbd>');
+						this_s._coverRange('kdb');
+					}else if(this.value2=='code'){
+						this_s._coverRange('code');
+
 					}else{
 						this_s._execCommand("FormatBlock",false,'<'+this.value2+'>');
 					}
 					return false;
-				}				
+				}
 			}
 			var div2 = this.mk_div();
 			div2.appendChild(div1_child);
 			div1.appendChild(div2);
 		}
-		
+
 		span.appendChild(div1);
 		span.appendChild(image_btn);
-		
+
 
 		image_btn.onclick=function(){
 			this_s.mspan_close();
@@ -923,13 +931,13 @@ mb_wysiwyg.prototype._Zoom = function(name,title,command){		//only IE
 	// image_btn.title=title;
 	// image_btn.alt=title;
 	//이미지 버튼 마우스 오버 기능(구분자 빼고 적용)
-	// image_btn.onmouseover=function(){	
+	// image_btn.onmouseover=function(){
 	// this.className='imgbtn_1';
 	// }
-	// image_btn.onmouseout=function(){ 
+	// image_btn.onmouseout=function(){
 	// this.className='imgbtn_0';
-	// }	
-//	str += '<input class="imgbtn" type="text" readonly="true" size="5" maxlength="5" value="100%" style="margin:0px;padding:0px;text-align:center;" title="'+title+'" alt="'+title+'" onclick="'+this.mspan_onclick_cmd()+'" />';	
+	// }
+//	str += '<input class="imgbtn" type="text" readonly="true" size="5" maxlength="5" value="100%" style="margin:0px;padding:0px;text-align:center;" title="'+title+'" alt="'+title+'" onclick="'+this.mspan_onclick_cmd()+'" />';
 
 
 
@@ -942,15 +950,15 @@ mb_wysiwyg.prototype._Zoom = function(name,title,command){		//only IE
 		div1.className='view';
 		div1.style.overflow='visible';
 		div1.style.width='120px';
-		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
-		
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';
+
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
-	
+
 		var input_temp = this.mk_element('input');
 		input_temp.type='button';
 		input_temp.className="btn_100p";
-		
+
 		var tmp_arr = format_arr;
 		for(i=0,m=tmp_arr.length;i<m;i++){
 			var div1_child = input_temp.cloneNode(true);
@@ -958,7 +966,7 @@ mb_wysiwyg.prototype._Zoom = function(name,title,command){		//only IE
 				div1_child.onclick=function(){
 					this_s.mspan_close();
 					image_btn.innerHTML = image_btn.value = this.value;
-					
+
 					this_s.Zoom(this.value);
 					return false;
 				}
@@ -987,8 +995,8 @@ mb_wysiwyg.prototype.Zoom = function(value){
 mb_wysiwyg.prototype._FontName = function(name,title,command){
 
 
-	var font_eng_arr = new Array("Arial","Arial Black","Arial Narrow","Courier New","System","Times New Roman","Tahoma","Terminal","Verdana");
-	var font_kor_arr = new Array("굴림","돋움","바탕","궁서");	
+	var font_eng_arr = new Array("Arial","Arial Black","Arial Narrow","Courier New","System","Times New Roman","Tahoma","Terminal","Verdana","Roboto","Courier New","Courier","monospace");
+	var font_kor_arr = new Array("굴림","돋움","바탕","궁서","굴림체","돋움체","바탕체","궁서체");
 
 	var this_s = this;
 	var idname = 'mspan:'+command+':'+this.id;
@@ -1004,15 +1012,15 @@ mb_wysiwyg.prototype._FontName = function(name,title,command){
 		var div1 = this.mk_span();
 		div1.className='view';
 		div1.style.overflow='visible';
-		div1.style.width='130px';
-		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
+		div1.style.width='260px';
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';
 
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
 
 		var input_temp = this.mk_element('input');
 		input_temp.type='button';
-		input_temp.className="btn_100p";
+		input_temp.className="btn_50p";
 
 		var tmp_arr = font_kor_arr;
 		for(i=0,m=tmp_arr.length;i<m;i++){
@@ -1067,7 +1075,7 @@ var this_s = this;
 		div1.className='view';
 		div1.style.overflow='visible';
 		div1.style.width='130px';
-		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';
 
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
@@ -1075,7 +1083,7 @@ var this_s = this;
 		var input_temp = this.mk_element('input');
 		input_temp.type='button';
 		input_temp.className="btn_100p";
-		
+
 		var tmp_arr = font_size;
 		for(i=0,m=tmp_arr.length;i<m;i++){
 			var div1_child = input_temp.cloneNode(true);
@@ -1124,8 +1132,8 @@ mb_wysiwyg.prototype._ForeColor = function(name,title,command){
 		div1.className='view';
 		div1.style.overflow='visible';
 		div1.style.width=Math.floor(color_arr.length*((7*3)+1)+10)+'px';
-		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
-		
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';
+
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
 
@@ -1190,8 +1198,8 @@ mb_wysiwyg.prototype._HiliteColor = function(name,title,command){
 		div1.style.overflow='visible';
 //		div1.style.width='150px';
 		div1.style.width=Math.floor(color_arr.length*((7*3)+1)+10)+'px';
-		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';		
-		
+		// div1.style.backgroundImage='url("'+this.icon_path+'/backgroundImage.gif")';
+
 		var closeX = this.mk_closeX(title);
 		div1.appendChild(closeX);
 
@@ -1321,14 +1329,14 @@ mb_wysiwyg.prototype.mk_editer = function(){	//make editer in html
 }
 mb_wysiwyg.prototype._designmode = function(bool){
 	var bool = bool?bool:true;
-	
+
 	this.ifrm_document.designMode="On";
 	this.ModeChange(bool);
 	return;
 }
 mb_wysiwyg.prototype._DeleteTextarea = function(bool){
 	var ta_ById = document.getElementById( this.id ) ;
-	var ta_ByName = document.getElementsByName( this.name ) ;	
+	var ta_ByName = document.getElementsByName( this.name ) ;
 	var object = null;
 	if ( ta_ById && ta_ById.tagName == 'TEXTAREA' ){
 	object = ta_ById;
@@ -1349,15 +1357,15 @@ mb_wysiwyg.prototype._DeleteTextarea = function(bool){
 	}else{
 		return object;
 	}
-	
+
 }
 //====================================
 // 이벤트 초기화, iframe의 이벤트를 초기화 시킨다.
 //====================================
-mb_wysiwyg.prototype._init_event = function(){ 
+mb_wysiwyg.prototype._init_event = function(){
 	//this.ifrm_window.onkeydown = (function(thisC){ return function(event){ thisC._documentOnkeyDown(event); } })(this);
 	this.ifrm_document.onkeydown = (function(thisC){ return function(event){ thisC._documentOnkeyDown(event); } })(this);
-	
+
 }
 //====================================
 // 내용 초기화. textarea에서 iframe으로 값을 복사한다.
@@ -1385,7 +1393,7 @@ mb_wysiwyg.prototype._ck_browser = function(){
 	var ck_safari = str_userAgent.indexOf("mac");
 	var ck_gecko = str_userAgent.indexOf("gecko");
 	var ck_opera = str_userAgent.indexOf("opera");
-	
+
 	var isIE11 = !!navigator.userAgent.match(/Trident.*rv[ :]*11\./)
 	if(isIE11){ //IE11
 		return Array(true,'MSIE 11');
@@ -1403,7 +1411,7 @@ mb_wysiwyg.prototype._ck_browser = function(){
 	else if ( ck_opera!= -1 && navigator.appName == 'Opera' && parseInt( navigator.appVersion ) >= 9 )
 	{
     return Array(true,'Opera');
-    //return Array(false,'Opera:not support');	  
+    //return Array(false,'Opera:not support');
 	}
 	// Safari
 	else if ( ck_safari && str_userAgent.indexOf( 'safari' ) != -1 )
@@ -1462,14 +1470,14 @@ mb_wysiwyg.prototype._mk_ModeChange = function(){
 	titlebar.style.overflow='hidden';
 	titlebar.style.lineHeight='19px';
 	this.titlebar_title =titlebar;
-	
+
 /*	var input_design = this.mk_element("input");
 	input_design.type="button";
 	input_design.className="btn_80"
 	input_design.value="Design";
 	input_design.title="디자인 모드";
 	input_design.style.margin="1px";*/
-	
+
 // 	var input_design = this.mk_image_btn('designmode','디자인 모드','designmode');
 // //	input_design.hspace='2';
 // 	var input_html = this.mk_image_btn('codemode','코드 모드','codemode');
@@ -1492,7 +1500,7 @@ mb_wysiwyg.prototype._mk_ModeChange = function(){
 	// var maker_home =  this.mk_image_btn('questionmark','만든이 홈페이지로','questionmark');
 	var maker_home =  this.mk_ctrl_button_btn('questionmark','만든이 홈페이지로','questionmark');
 //	maker_home.hspace='2';
-	
+
 	maker_home.onclick=function(){
 		window.open("http://www.mins01.com","_blank");
 	}
@@ -1575,13 +1583,13 @@ mb_wysiwyg.prototype.stretch = function(bool){
 		this.layout_root.className = this.layout_root.className.replace('stretch','').replace(' {2,}',' ');
 	}
 	this.isStrech = bool;
-	
+
 }
 //====================================
 // 에디터 높이 제어 생성
 //====================================
 mb_wysiwyg.prototype.HeightReSize = function(type){
-	var height1 = 0; 
+	var height1 = 0;
 	height1 = this.strtoint(this.ifrm_element.style.height);
 	if(type==1 && height1 < 1000){
 		this.ifrm_element.style.height = (height1+100).toString()+'px';
@@ -1613,7 +1621,7 @@ mb_wysiwyg.prototype.ModeChange = function(bool,force){		//true:iframe , fase:te
 		this.layout_editer_ifrme.style.display='';
 		this.ModeChangeFocus_ifame();
 		// this.input_design.style.backgroundColor='#BBF9B0';
-		// this.input_html.style.backgroundColor='';		
+		// this.input_html.style.backgroundColor='';
 
 	}else{
 		if(this.layout_editer_textarea.style.display=='none' ||force)
@@ -1626,7 +1634,7 @@ mb_wysiwyg.prototype.ModeChange = function(bool,force){		//true:iframe , fase:te
 		this.ModeChangeFocus_textarea();
 		// this.input_design.style.backgroundColor='';
 		// this.input_html.style.backgroundColor='#BBF9B0';
-		
+
 	}
 	this.isDesignmode = bool;
 	this._init_event();
@@ -1637,7 +1645,7 @@ mb_wysiwyg.prototype.ModeChange = function(bool,force){		//true:iframe , fase:te
 //=== 태그를 XHTML 형식에 맞게(계속 수정중)
 mb_wysiwyg.prototype.tagForXhtml = function(str){
 	var regTag = new RegExp('(<[^>]*>|.[^<]*)','gm')
-	
+
 	var snglTags = Array('BASE','META','LINK','HR','BR','BASEFONT','PARAM','IMG','AREA','INPUT','ISINDEX','COL');
 	var regSnglTags = Array();
 	var regSnglReplaceTags = Array();
@@ -1647,16 +1655,16 @@ mb_wysiwyg.prototype.tagForXhtml = function(str){
 	}
 	var regUpper = new RegExp('(<)(/[A-Z]+|[A-Z]+)( |)([^>]*)(>)','i');
 	var regAttr = new RegExp('([^=]*=)(.*)','m');
-	
-	
+
+
 	var tags = str.match(regTag);
 	var tNum = 0;
 	var tArr = Array();
 	var tArr2 = Array();
 	var t = Array();
-	
+
 	if(!tags){	//아무런 내용도 없을 경우
-		return '';	
+		return '';
 	}
 	for(var i=0,m=tags.length;i<m;i++){
 		if(tags[i].substr(0,1)==='<'){
@@ -1685,7 +1693,7 @@ mb_wysiwyg.prototype.tagForXhtml = function(str){
 						}
 						tArr2[i3] = t[1]+t[2];
 					}
-					
+
 				}
 				tArr[4] = tArr2.join(' ');
 				tags[i]=tArr[1]+tArr[2].toLowerCase()+tArr[3]+tArr[4]+tArr[5];
@@ -1703,7 +1711,7 @@ mb_wysiwyg.prototype.sync = function(force){
 			var str = this.ifrm_dtd+'<html><head>'+this.ifrm_css+this.ifrm_meta+'</head><body>'+this.getTextareaText()+'</body></html>'
 			this.setIframeHtml(str);
 		}
-		if(this.browsername=='MSIE') this.ifrm_document.designMode="On";				  
+		if(this.browsername=='MSIE') this.ifrm_document.designMode="On";
 	}else{
 		this.setTextareaText(this.getIframeHtml(this.isXhtml));
 	}
@@ -1752,12 +1760,12 @@ mb_wysiwyg.prototype.setIframeHtml = function(text){
 mb_wysiwyg.prototype.ModeChangeFocus_ifame = function(){
 	var ta = document.getElementById(this.ifrm_id);
 	/*============= 맨 민으로 커서 보내기 : 사용안함
-	this._execCommand("SelectAll", false, null);	
+	this._execCommand("SelectAll", false, null);
 	try{
 		if(this.browsername=='MSIE'){
 			var rng = ta.contentWindow.document.selection.createRange();
 			rng.collapse(false);
-			rng.select();					
+			rng.select();
 		}
 		else {
 			var sel = ta.contentWindow.getSelection();
@@ -1779,7 +1787,7 @@ mb_wysiwyg.prototype.ModeChangeFocus_textarea = function(){
 			range.moveEnd('character',ta.value.length);
 			range.moveStart('character',ta.value.length);
 			range.select();
-		}else 
+		}else
 		//===============================*/
 		ta.focus();
 
@@ -1790,44 +1798,44 @@ mb_wysiwyg.prototype.ModeChangeFocus_textarea = function(){
 mb_wysiwyg.prototype.ed_submit = function(){
 	// 이 함수는 사용되지 않는다.
 	return true;
-  if(!this.ck_browser){document.write("<!--not support this browser-->"); return;} 
+  if(!this.ck_browser){document.write("<!--not support this browser-->"); return;}
   if(ck_submit) return;	//onsubmit 이벤트는 한번만 수정하면 된다.
   var this_s =  this;
-  ck_submit = true;  
+  ck_submit = true;
 	var frm =	this.textarea.form;
 	var ori_submit = frm.onsubmit;
 	//frm.onsubmit.toString() = "return confirm('dfdf');";
 	//alert(ori_submit);
-	//frm.onsubmit = function(){  this_s.submit(); return ori_submit(); }	//Reset form.onsubmit	
-/*	
+	//frm.onsubmit = function(){  this_s.submit(); return ori_submit(); }	//Reset form.onsubmit
+/*
  if(frm.attachEvent){
-	frm.onsubmit = function(){ }	//Reset form.onsubmit		 
-	frm.attachEvent("onsubmit", ori_submit);	 
+	frm.onsubmit = function(){ }	//Reset form.onsubmit
+	frm.attachEvent("onsubmit", ori_submit);
 	frm.attachEvent("onsubmit", this.submit );
  }
  else{
-	frm.onsubmit = function(){ }	//Reset form.onsubmit			 
+	frm.onsubmit = function(){ }	//Reset form.onsubmit
 	frm.addEventListener("submit", this.submit , false);
- 	frm.addEventListener("submit", ori_submit , false);	
+ 	frm.addEventListener("submit", ori_submit , false);
 	frm.onsubmit = ori_submit;
  }
-//*/	
-	
+//*/
+
 
 }
 mb_wysiwyg.prototype.exit_event = function(evt){
 	if(evt && evt.stopPropagation){
-		evt.stopPropagation(); 
+		evt.stopPropagation();
 		evt.preventDefault();
-		evt.cancelBubble = true;		
+		evt.cancelBubble = true;
 	}else if(evt){
 		 evt.keyCode = 0;
 		 evt.cancelBubble = true;
 		 evt.returnValue = false;
 	}else{
-		 window.event.keyCode = 0; 
+		 window.event.keyCode = 0;
 		 window.event.cancelBubble = true;
-		 window.event.returnValue = false;    
+		 window.event.returnValue = false;
 	}
 	return false;
 }
@@ -1845,7 +1853,7 @@ mb_wysiwyg.prototype.submit = function(){
 //====================================
 // 외부에서 제어할 때 사용하는 함수
 //====================================
-mb_wysiwyg.prototype.input_value = function( str ) 
+mb_wysiwyg.prototype.input_value = function( str )
 {
 //this.ifrm.style.position="absolute";
 	try{
@@ -1859,7 +1867,7 @@ mb_wysiwyg.prototype.input_value = function( str )
 	this.setTextareaText(str);
 	this._init_event();
 }
-mb_wysiwyg.prototype.input_title = function( str ) 
+mb_wysiwyg.prototype.input_title = function( str )
 {
 	this.titlebar_title.innerHTML = str;
 }
@@ -1871,7 +1879,7 @@ mb_wysiwyg.prototype._execCommand = function(sCommand,bUserInterface,vValue){
 	this.ifrm_window.focus();
 	if(!sCommand) return false;
 	bUserInterface = bUserInterface==null?false:bUserInterface;
-	vValue = vValue==null?null:vValue;	
+	vValue = vValue==null?null:vValue;
 	try{
 		var r = this.ifrm_document.execCommand(sCommand, bUserInterface, vValue);
 		if(!r && this.txtRange){
@@ -1879,12 +1887,12 @@ mb_wysiwyg.prototype._execCommand = function(sCommand,bUserInterface,vValue){
 			this.txtRange.select();
 			this.txtRange = null;
 		}
-		return r;		
+		return r;
 	}catch(e){
 		return false;
 	}
 	this.ifrm_window.focus();
-	
+
 }
 mb_wysiwyg.prototype.execute = function(sCommand,bUserInterface,vValue){
 	this._execCommand(sCommand,bUserInterface,vValue);
@@ -1913,7 +1921,7 @@ mb_wysiwyg.prototype._getRNG = function(){
 			return rng;
 		}else{
 			//var sel = this.ifrm_window.getSelection();
-			var rng = sel.getRangeAt(0); 
+			var rng = sel.getRangeAt(0);
 			return rng;
 		}
 	}catch(e){  alert('Error:_getRNG : '+e.description+':'+(e.number & 0xFFFF)); }
@@ -1945,7 +1953,7 @@ mb_wysiwyg.prototype._pasteHTML = function(sHTML){
 			else if(!sHTML.nodeType){ sHTML = document.createTextNode(sHTML);	} //for Opera
 			var sel = this.ifrm_window.getSelection();
 			if(sel.rangeCount==0){return;}
-			
+
 			var rng = sel.getRangeAt(0);
 	        var pos = rng.startOffset;
 	        sel.removeAllRanges();
@@ -1957,7 +1965,7 @@ mb_wysiwyg.prototype._pasteHTML = function(sHTML){
 			if(container.nodeName.toLowerCase()=='html'){		//for FF , <HTML> -> <BODY>
 			container = this.ifrm_document.body;
 			}
-			// pickup in chediter 
+			// pickup in chediter
 			if (container.nodeType==3 && sHTML.nodeType==3) {		//nodeType : 1(Element Node), 3(Text Node)
 				container.insertData(pos, sHTML.nodeValue);
 
@@ -1990,15 +1998,43 @@ mb_wysiwyg.prototype._pasteHTML = function(sHTML){
 					range.setEnd(sel.focusNode, 0); //selection Range to end
 					range.setStart(sel.focusNode, 0);
 				}
-				
+
 			}
 			sel.addRange(range);
-		}	
-	//}catch(e){  
+		}
+	//}catch(e){
 	//alert('Error:_pasteHTML : '+e.description+':'+(e.number & 0xFFFF));
 	//}
 
 
+}
+mb_wysiwyg.prototype.escapeHtml=function(text) {
+  var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+
+  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+mb_wysiwyg.prototype._coverRange = function(tag){
+	this.ifrm_window.focus();
+	if(this.browsername=='MSIE'){
+		var rng = this.ifrm_document.selection.createRange();
+		//rng.collapse(true);
+		//rng.expand("character");
+		sHTML = '<'+tag+'>'+rng.text+'</'+tag+'>';
+		rng.pasteHTML(sHTML);
+		rng.select();
+	}else{
+		var rng = this.ifrm_window.getSelection().getRangeAt(0);
+		var d = document.createElement(tag);
+		d.appendChild(rng.cloneContents());
+		rng.deleteContents();
+		rng.insertNode(d);
+	}
 }
 mb_wysiwyg.prototype._pasteHTML_tag = function(sTag,eTag){
 	this.ifrm_window.focus();
@@ -2007,10 +2043,10 @@ mb_wysiwyg.prototype._pasteHTML_tag = function(sTag,eTag){
 		//rng.collapse(true);
 		//rng.expand("character");
 		sHTML = sTag+rng.text+eTag;
-		rng.pasteHTML(sHTML);	
+		rng.pasteHTML(sHTML);
 		rng.select();
 	}else{
-		var rng = this.ifrm_window.getSelection().getRangeAt(0); 
+		var rng = this.ifrm_window.getSelection().getRangeAt(0);
 		sHTML = sTag+rng.toString()+eTag;
 		rng.deleteContents();
 		rng.insertNode(rng.createContextualFragment(sHTML));
@@ -2022,10 +2058,10 @@ mb_wysiwyg.prototype._pasteHTML_tag_remove = function(){
 		var rng = this.ifrm_document.selection.createRange();
 		sHTML = rng.text.replace(/<(.)*>/g,'');
 		rng.text='';
-		rng.pasteHTML(sHTML);	
+		rng.pasteHTML(sHTML);
 		rng.select();
 	}else{
-		var rng = this.ifrm_window.getSelection().getRangeAt(0); 
+		var rng = this.ifrm_window.getSelection().getRangeAt(0);
 		sHTML = rng.toString().replace(/<(.)*>/g,'');
 		rng.deleteContents();
 		rng.insertNode(rng.createContextualFragment(sHTML));
@@ -2047,9 +2083,9 @@ mb_wysiwyg.prototype._htmlspecialchars = function( str )	//PHP:htmlspecialchars
 	str = str.toString() ;
 	str = str.replace(/&/g, "&amp;") ;
 	str = str.replace(/</g, "&lt;") ;
-	str = str.replace(/>/g, "&gt;") ;	
+	str = str.replace(/>/g, "&gt;") ;
 	str = str.replace(/\"/g, "&quot;") ;
-	str = str.replace(/'/g, "&#39;") ;	
+	str = str.replace(/'/g, "&#39;") ;
 	return str ;
 }
 mb_wysiwyg.prototype._htmlspecialchars_totext = function( str ) //PHP:htmlspecialchars
@@ -2057,20 +2093,20 @@ mb_wysiwyg.prototype._htmlspecialchars_totext = function( str ) //PHP:htmlspecia
 	str = str.toString() ;
 	str = str.replace(/&amp;/g, "&") ;
 	str = str.replace(/&lt;/g, "<") ;
-	str = str.replace(/&gt;/g, ">") ;	
+	str = str.replace(/&gt;/g, ">") ;
 	str = str.replace(/&quot;/g, "\"") ;
-	str = str.replace(/&#39;/g, "'");	
+	str = str.replace(/&#39;/g, "'");
 	return str;
 }
 //====================================
 // 색상 테이블 생성함수
 //====================================
-//var color_arr = new Array('00','11','22','33','44','55','66','77','88','99','AA','BB','CC','DD','EE','FF');	
+//var color_arr = new Array('00','11','22','33','44','55','66','77','88','99','AA','BB','CC','DD','EE','FF');
 //0x11을 gap으로 했을 경우: 느립니다.
 var color_arr = new Array('00','33','66','99','cc','ff');	//기본 6단계
 mb_wysiwyg.prototype.c_table_black= function(type,ta){
 	var div_out = this.mk_span();
-	//div_out.className="float_left";	
+	//div_out.className="float_left";
 	var span_out = this.mk_div();
 	var img = this.mk_element('input');
 	img.type = 'button';
@@ -2089,8 +2125,8 @@ mb_wysiwyg.prototype.c_table_black= function(type,ta){
 		for(i=0,m=color_arr.length;i<m;i++){
 			var r = color_arr[i].toString();
 			var g = color_arr[i].toString();
-			var b = color_arr[i].toString();                
-			
+			var b = color_arr[i].toString();
+
 			var rgb = '#'+r+g+b;
 			img_c = img.cloneNode(true);
 			img_c.style.backgroundColor = rgb;
@@ -2101,20 +2137,20 @@ mb_wysiwyg.prototype.c_table_black= function(type,ta){
 						}
 						img_c.onmouseover = function(){
 							ta.style.color = this.style.backgroundColor;
-						}							
+						}
 					}else if(type=='1'){
 						img_c.onclick = function(){
 							this_s.HiliteColor(this);
 						}
 						img_c.onmouseover = function(){
 							ta.style.backgroundColor = this.style.backgroundColor;
-						}							
+						}
 					}
 			span_out.appendChild(img_c);
 			if(i != (m-1)){
 				var temp=this.mk_element('br');
 				span_out.appendChild(temp);
-			}			
+			}
 		}
 		div_out.appendChild(span_out);
 	return div_out;
@@ -2145,7 +2181,7 @@ mb_wysiwyg.prototype.c_table_= function(ru,gu,bu,type,ta){
 	var r,g,b;
 	var m = color_arr.length;
     for(j=0;j<m;j++){
-		if(ru){    
+		if(ru){
 		if(ru==2) var r = color_arr[Math.ceil(m/2)];
 		else var r = color_arr[j].toString();
 		}
@@ -2161,8 +2197,8 @@ mb_wysiwyg.prototype.c_table_= function(ru,gu,bu,type,ta){
 			for(i=0,m=color_arr.length;i<m;i++){
 				if(!ru)        var r = color_arr[i].toString();
 				if(!gu)        var g = color_arr[i].toString();
-				if(!bu)        var b = color_arr[i].toString();                
-				
+				if(!bu)        var b = color_arr[i].toString();
+
 				var rgb = '#'+r+g+b;
 				img_c = img.cloneNode(true);
 				img_c.style.backgroundColor = rgb;
@@ -2173,20 +2209,20 @@ mb_wysiwyg.prototype.c_table_= function(ru,gu,bu,type,ta){
 						}
 						img_c.onmouseover = function(){
 							ta.style.color = this.style.backgroundColor;
-						}							
+						}
 					}else if(type=='1'){
 						img_c.onclick = function(){
 							this_s.HiliteColor(this);
 						}
 						img_c.onmouseover = function(){
 							ta.style.backgroundColor = this.style.backgroundColor;
-						}							
+						}
 					}
 
 				//span_out.appendChild(img_c);
 				div_out.appendChild(img_c);
 			}
-			
+
 			//div_out.appendChild(span_out);
 			if(j != (m-1)){
 				var temp=this.mk_element('br');
@@ -2213,10 +2249,10 @@ mb_wysiwyg.prototype.c_table_total= function(type){
 	new_td.innerHTML = '가Ab韓';
 	new_td.className ="border12px";
 	new_td.style.borderStyle='solid';
-	new_td.style.borderWidth='1px';	
-	new_td.style.lineHeight='18px';	
+	new_td.style.borderWidth='1px';
+	new_td.style.lineHeight='18px';
 	preview = new_td;
-	
+
 	var new_tr = ta.insertRow(-1);
 	new_td =new_tr.insertCell(-1);
 	new_td.noWrap=true;
@@ -2226,44 +2262,44 @@ mb_wysiwyg.prototype.c_table_total= function(type){
 
 	new_td =new_tr.insertCell(-1);
 	new_td.noWrap=true;
-	new_td.className="nopadding";	
+	new_td.className="nopadding";
 	var temp = this.c_table_(1,0,0,type,preview)
 	new_td.appendChild(temp);
 
 	new_td =new_tr.insertCell(-1);
-	new_td.noWrap=true;	
-	new_td.className="nopadding";	
+	new_td.noWrap=true;
+	new_td.className="nopadding";
 	var temp =  this.c_table_(0,1,0,type,preview)
 	new_td.appendChild(temp);
 
 	new_td =new_tr.insertCell(-1);
-	new_td.noWrap=true;	
-	new_td.className="nopadding";	
+	new_td.noWrap=true;
+	new_td.className="nopadding";
 	var temp = this.c_table_(0,0,1,type,preview)
 	new_td.appendChild(temp);
 
 	var new_tr = ta.insertRow(-1);
 	new_td =new_tr.insertCell(-1);
-	new_td.noWrap=true;	
-	new_td.className="nopadding";	
+	new_td.noWrap=true;
+	new_td.className="nopadding";
 	var temp = this.c_table_black(type,preview)
 	new_td.appendChild(temp);
 
 	new_td =new_tr.insertCell(-1);
-	new_td.noWrap=true;	
-	new_td.className="nopadding";	
+	new_td.noWrap=true;
+	new_td.className="nopadding";
 	var temp = this.c_table_(1,0,2,type,preview)
 	new_td.appendChild(temp);
 
 	new_td =new_tr.insertCell(-1);
-	new_td.noWrap=true;	
-	new_td.className="nopadding";	
+	new_td.noWrap=true;
+	new_td.className="nopadding";
 	var temp =  this.c_table_(2,1,0,type,preview)
 	new_td.appendChild(temp);
 
 	new_td =new_tr.insertCell(-1);
-	new_td.noWrap=true;	
-	new_td.className="nopadding";	
+	new_td.noWrap=true;
+	new_td.className="nopadding";
 	var temp = this.c_table_(0,2,1,type,preview)
 	new_td.appendChild(temp);
 
@@ -2282,22 +2318,22 @@ mb_wysiwyg.prototype.popup_simple= function(url,name , width, height)
  var resizable =0;
  var left = (screen.width-width)/2;
  var top = (screen.height-height)/3;
-  
+
   toolbar_str = toolbar ? 'yes' : 'no';
   menubar_str = menubar ? 'yes' : 'no';
   statusbar_str = statusbar ? 'yes' : 'no';
   scrollbar_str = scrollbar ? 'yes' : 'no';
   resizable_str = resizable ? 'yes' : 'no';
-  w_result = window.open(url, name, 'left='+left+',top='+top+',width='+width+',height='+height+',toolbar='+toolbar_str+',menubar='+menubar_str+',status='+statusbar_str+',scrollbars='+scrollbar_str+',resizable='+resizable_str); 
+  w_result = window.open(url, name, 'left='+left+',top='+top+',width='+width+',height='+height+',toolbar='+toolbar_str+',menubar='+menubar_str+',status='+statusbar_str+',scrollbars='+scrollbar_str+',resizable='+resizable_str);
  return w_result;
 }
 //--------------------------------------------------------window open
-mb_wysiwyg.prototype.window_open = function(url, name, width, height) 
-{ 
+mb_wysiwyg.prototype.window_open = function(url, name, width, height)
+{
  var left = (screen.width-width)/2;
- var top = (screen.height-height)/3; 
+ var top = (screen.height-height)/3;
  var property ='left='+left+',top='+top+',height='+height+',width='+width+',toolbar=no,directories=no,status=no,linemenubar=no,scrollbars=no,resizable=no,modal=yes,dependent=yes';
- var win = window.open(url, name, property); 
+ var win = window.open(url, name, property);
  return win;
 }
 //--------------------------------------------------------showModelessDialog for FF
@@ -2320,9 +2356,9 @@ mb_wysiwyg.Modal = {
 		iframe.className = 'mb_wysiwyg-Modal-iframe';
 		iframe.allowTransparency = true;
 		box.appendChild(iframe);
-		
 
-		
+
+
 		var btn_close = this.btn_close = document.createElement('button');
 		btn_close.className = 'mb_wysiwyg-Modal-btn_close ';
 		btn_close.type="button";
@@ -2347,17 +2383,17 @@ mb_wysiwyg.Modal = {
 		}catch(e){
 
 		}
-		
-		
-		
+
+
+
 	}
 }
-mb_wysiwyg.prototype.window_modal = function(url, name, width, height) 
-{ 
+mb_wysiwyg.prototype.window_modal = function(url, name, width, height)
+{
 	this.txtRange = this.currentElement();
- /* 
- if (window.showModalDialog) { 
- window.showModalDialog(url, window, 'dialogWidth:'+width+'px;dialogHeight:'+height+'px'); 
+ /*
+ if (window.showModalDialog) {
+ window.showModalDialog(url, window, 'dialogWidth:'+width+'px;dialogHeight:'+height+'px');
  } */
  if(this.window_modal_type =='position_fixed'){
 	mb_wysiwyg.Modal.open(url);
@@ -2366,19 +2402,19 @@ mb_wysiwyg.prototype.window_modal = function(url, name, width, height)
 									,"style":"width:98%;height:98%;margin:2%;border-width:0px;","allowTransparency":"false"});
 	this._M_UI_POPLAYER.html(d);
 	this._M_UI_POPLAYER.openByElement(this.layout_root);
- }else if (window.showModelessDialog) { 
+ }else if (window.showModelessDialog) {
  var property ='dialogWidth:'+(parseInt(width)+10)+'px;dialogHeight:'+(parseInt(height)+40)+'px;'+'scroll:no;resizable:no;help:no;center:yes;status:no;edge:raised;unadorned:yes;';
- var win = window.showModelessDialog(url, window, property); 
- } else { 
+ var win = window.showModelessDialog(url, window, property);
+ } else {
  var win = this.window_open(url, name, width, height)
  }
  return win;
 }
-mb_wysiwyg.prototype.close_window_modal = function(url, name, width, height) 
-{ 
- /* 
- if (window.showModalDialog) { 
- window.showModalDialog(url, window, 'dialogWidth:'+width+'px;dialogHeight:'+height+'px'); 
+mb_wysiwyg.prototype.close_window_modal = function(url, name, width, height)
+{
+ /*
+ if (window.showModalDialog) {
+ window.showModalDialog(url, window, 'dialogWidth:'+width+'px;dialogHeight:'+height+'px');
  } */
  if(this.window_modal_type =='position_fixed'){
 	mb_wysiwyg.Modal.close();
@@ -2387,24 +2423,24 @@ mb_wysiwyg.prototype.close_window_modal = function(url, name, width, height)
  }
 }
 //--------------------------------------------------------showModelessDialog for FF : abled scroll
-mb_wysiwyg.prototype.window_modal_scroll = function(url, name, width, height) 
-{ 
- /* 
- if (window.showModalDialog) { 
- window.showModalDialog(url, window, 'dialogWidth:'+width+'px;dialogHeight:'+height+'px'); 
+mb_wysiwyg.prototype.window_modal_scroll = function(url, name, width, height)
+{
+ /*
+ if (window.showModalDialog) {
+ window.showModalDialog(url, window, 'dialogWidth:'+width+'px;dialogHeight:'+height+'px');
  } */
- if (window.showModelessDialog) { 
+ if (window.showModelessDialog) {
  var property ='dialogWidth:'+(parseInt(width)+10)+'px;dialogHeight:'+(parseInt(height)+40)+'px;'+'scroll:yes;resizable:no;help:no;center:yes;status:no;edge:raised;unadorned:yes;';
- window.showModelessDialog(url, window, property); 
- } else { 
- var win = this.window_open(url, name, width, height) } 
+ window.showModelessDialog(url, window, property);
+ } else {
+ var win = this.window_open(url, name, width, height) }
 }
 
 //=======================================================================
 // util 함수
 //=======================================================================
-mb_wysiwyg.prototype.mk_image_btn = function(name,title,command) // DOM으로 이미지 버튼 만들기 
-{	
+mb_wysiwyg.prototype.mk_image_btn = function(name,title,command) // DOM으로 이미지 버튼 만들기
+{
 	if(this.use_button){
 		return this.mk_button_btn(name,title,command);
 	}
@@ -2422,13 +2458,13 @@ mb_wysiwyg.prototype.mk_image_btn = function(name,title,command) // DOM으로 �
 	if(command != 't_section'){
 		//이미지 버튼 마우스 오버 기능(구분자 빼고 적용)
 		image_btn.onmouseover=function(){	this.className='imgbtn_1';}
-		image_btn.onmouseout=function(){ this.className='imgbtn_0';}	
+		image_btn.onmouseout=function(){ this.className='imgbtn_0';}
 	}
 	return image_btn;
 }
 // 버튼으로 만들기. class 설정됨
 mb_wysiwyg.prototype.mk_button_btn = function(name,title,command)
-{	
+{
 	// var icon = this.icon_path+'/icon.'+command.toLowerCase()+'.gif';
 	var image_btn = document.createElement('button');
 	image_btn.title=title;
@@ -2440,7 +2476,7 @@ mb_wysiwyg.prototype.mk_button_btn = function(name,title,command)
 }
 // 버튼으로 만들기. class 설정됨
 mb_wysiwyg.prototype.mk_ctrl_button_btn = function(name,title,command)
-{	
+{
 	// var icon = this.icon_path+'/icon.'+command.toLowerCase()+'.gif';
 	var image_btn = document.createElement('button');
 	image_btn.title=title;
@@ -2451,17 +2487,17 @@ mb_wysiwyg.prototype.mk_ctrl_button_btn = function(name,title,command)
 	return image_btn;
 }
 
-mb_wysiwyg.prototype.mk_div = function(v1,v2,v3) // DOM으로 DIV 만들기 
-{	
+mb_wysiwyg.prototype.mk_div = function(v1,v2,v3) // DOM으로 DIV 만들기
+{
 	var div = document.createElement('div');
 	return div;
 }
-mb_wysiwyg.prototype.mk_span = function(v1,v2,v3) // DOM으로 SPAN 만들기 
-{	
+mb_wysiwyg.prototype.mk_span = function(v1,v2,v3) // DOM으로 SPAN 만들기
+{
 	var span = document.createElement('span');
 	return span;
 }
-mb_wysiwyg.prototype.mk_element = function(type,v2,v3) // DOM으로 DIV 만들기 
+mb_wysiwyg.prototype.mk_element = function(type,v2,v3) // DOM으로 DIV 만들기
 {
 	if(!type){ return false;}
 	var span = document.createElement(type);
@@ -2486,29 +2522,33 @@ mb_wysiwyg.prototype.autoSaveTemp = function(){
 }
 mb_wysiwyg.prototype.saveTemp = function(){
 	this.sync();
-	var k = 'mb_wysiwyg.k_'+this.id+'_'+window.location.pathname;
+	var k = this.saveTempKey+'.k';
 	var text = this.getTextareaText();
 	window.localStorage.setItem(k,text);
 	// console.log('saveTemp',k,text);
 
-	k = 'mb_wysiwyg.dt_'+this.id+'_'+window.location.pathname;
+	k = this.saveTempKey+'.dt';
 	text = (new Date()).getTime()
 	window.localStorage.setItem(k,text);
 	// console.log('saveTemp',k,text);
 }
 mb_wysiwyg.prototype.getSaveTempTime = function(){
-	var k = 'mb_wysiwyg.dt_'+this.id+'_'+window.location.pathname;
+	var k = this.saveTempKey+'.dt';
 	var text = window.localStorage.getItem(k);
 	if(text == null) text = 0;
 	window.localStorage.setItem('getSaveTempTime',k,text);
 	return parseInt(text,10);
 }
 mb_wysiwyg.prototype.loadTemp = function(text){
-	var k = 'mb_wysiwyg.k_'+this.id+'_'+window.location.pathname;
+	var k = this.saveTempKey+'.k';
 	var text = window.localStorage.getItem(k);
 	this.setTextareaText(text);
 	this.sync(true);
 	// console.log('loadTemp',k,text);
+}
+mb_wysiwyg.prototype.clearTemp = function(text){
+	var k = this.saveTempKey+'.k';
+	window.localStorage.removeItem(k);
 }
 
 //====================================
@@ -2549,7 +2589,7 @@ mb_wysiwyg.prototype.Test = function(evt){
 //this._pasteHTML(ta);
 alert('test');
 
-//var height; 
+//var height;
 //	height = this.strtoint(this.ifrm_element.style.height);
 //	alert('에디터의 높이 :'+height);
 */
